@@ -1,0 +1,107 @@
+<mat-tab-group dynamicHeight>
+  <mat-tab label="Resident info">
+    <mat-card>
+      <form [formGroup]="residentForm" (ngSubmit)="onAddNewResident()">
+        <div class="picture-preview">
+          <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && residentForm.get('image').valid">
+            <img [src]="imagePreview" [alt]="residentForm.value.firstName">
+          </div>
+          <div class="iconPicture">
+            <input type="file" #filePicker (change)="onImagePicked($event)">
+            <mat-icon matSuffix (click)="filePicker.click()">add_a_photo</mat-icon>
+          </div>
+        </div>
+        <mat-form-field>
+          <input matInput type="text" formControlName="lastName" name="Last Name" required minlength="3" placeholder="Last Name">
+          <mat-error>Please enter your last name</mat-error>
+          <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="text" formControlName="firstName" name="First Name" required minlength="3" placeholder="First Name">
+          <mat-error>Please enter your first name</mat-error>
+          <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
+        </mat-form-field>
+
+        <mat-form-field>
+          <!-- <input matInput type="text" formControlName="appartmentInfo" required placeholder="Appartement"> -->
+          <mat-select formControlName="appartmentInfo" required placeholder="Appartement "  >
+            <mat-option *ngFor="let appartment of appartments" [value]="appartment.id">{{ appartment.appartmentName}}</mat-option>
+          </mat-select>
+           <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>  -->
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="isRentPaid" required placeholder="Is the appartement paid this month?">
+            <mat-option value="true">Yes</mat-option>
+            <mat-option value="false">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput  formControlName="phoneNumber" type="tel" name="phoneNumber" required minlength="3"
+            placeholder="Phone Number">
+          <mat-error>Please enter your phoneNumber</mat-error>
+          <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="rent" type="number" name="rent" required minlength="3" placeholder="Rent">
+          <mat-error>Please enter the rent</mat-error>
+          <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="contractEndDate" [matDatepicker]="contractEndDate" placeholder="Next visit date">
+          <mat-datepicker-toggle matSuffix [for]="contractEndDate"></mat-datepicker-toggle>
+          <mat-datepicker #contractEndDate></mat-datepicker>
+          <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="nextVisitDate" [matDatepicker]="nextVisitDate" placeholder="Next visit date">
+          <mat-datepicker-toggle matSuffix [for]="nextVisitDate"></mat-datepicker-toggle>
+          <mat-datepicker #nextVisitDate></mat-datepicker>
+        </mat-form-field>
+        <mat-action-row>
+          <button mat-raised-button type="submit" color="accent" [disabled]="residentForm.invalid" (click)="onAddNewResident()">
+            Save resident</button>
+
+          <!--   <button mat-button color="primary">Edit</button>
+
+                  <button mat-button  color="warn" >Delete</button> -->
+        </mat-action-row>
+      </form>
+    </mat-card>
+    <button mat-button aria-label="Saved" class="openSnackBarCss">
+    </button>
+  </mat-tab>
+  <mat-tab label="Contract Info">
+    <div>
+      Empty
+    </div>
+  </mat-tab>
+  <mat-tab label="Appartment Info">
+    <div>
+      <mat-list>
+          <mat-list-item> Appartment Name:  {{getOneAppartment(residentForm.value.appartmentInfo)?.appartmentName}}</mat-list-item>
+          <mat-divider> </mat-divider>
+          <mat-list-item > Appartment Code Name: {{getOneAppartment(residentForm.value.appartmentInfo)?.appartmentCodeName}} </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item> Rent: {{getOneAppartment(residentForm.value.appartmentInfo)?.rent}} </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>Monthly Expense:  {{getOneAppartment(residentForm.value.appartmentInfo)?.monthlyExpenses}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>Ean Meter: {{getOneAppartment(residentForm.value.appartmentInfo)?.eanNumber}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>Electricity Meter: {{getOneAppartment(residentForm.value.appartmentInfo)?.electricityMeter}}</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>Hot Water Meter: {{getOneAppartment(residentForm.value.appartmentInfo)?.hotWaterMeter}}</mat-list-item>
+          <mat-divider></mat-divider>
+
+          <mat-list-item>test: {{residentForm.value.appartmentInfo | json}}</mat-list-item>
+          <mat-list-item>test: {{appartments | json}}</mat-list-item>
+        </mat-list>
+    </div>
+  </mat-tab>
+  <mat-tab label="Document">
+    <div>
+      Empty
+    </div>
+  </mat-tab>
+</mat-tab-group>

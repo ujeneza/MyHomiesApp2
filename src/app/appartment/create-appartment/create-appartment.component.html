@@ -1,0 +1,47 @@
+
+<mat-card>
+  <form [formGroup]="appartmentForm" (submit)="onSaveAppartment()">
+    <mat-form-field>
+      <input matInput type="text" formControlName="appartmentCodeName" name="appartmentCodeName" required minlength="3" placeholder="Appartment Code">
+      <mat-error>Please enter your last name</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" formControlName="appartmentName" name="appartmenName"required minlength="3" placeholder="Appartment Name">
+      <mat-error>Please enter your first name</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="number"  formControlName="rent" name="rent" required placeholder="Rent">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="number" formControlName="monthlyExpenses"  name="monthlyExpenses" placeholder="Monthly Expenses">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="number" formControlName="eanNumber"  name="eanNumber" placeholder="Ean Code">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="number" formControlName="electricityMeter"  name="electricityMeter"  placeholder="Electricity Meter">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="number" formControlName="hotWaterMeter"  name="hotWaterMeter" placeholder="Hot Water Meter">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="number" formControlName="coldWaterMeter"  name="Cold Water Meter" placeholder="Cold Water Meter">
+    </mat-form-field>
+
+    <mat-action-row>
+      <button mat-raised-button type="submit" color="accent" [disabled]="appartmentForm.invalid">
+        Save</button>
+    </mat-action-row>
+
+  </form>
+  <button mat-button aria-label="Saved" class="openSnackBarCss">
+  </button>
+</mat-card>
+

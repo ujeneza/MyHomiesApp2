@@ -1,0 +1,40 @@
+
+.mat-toolbar{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 50%;
+  padding-bottom: 1rem;
+  justify-items: center;
+
+ /*  background-image: url("/MyHomiesPictures/window-3042834_1280.jpg");
+  background-repeat: no-repeat; /* Do not repeat the image */
+
+ /*  outline-style: solid;
+  outline-color: #3f51b5; */
+
+}
+.address{
+  font-size: 13px;
+  color: white;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  word-wrap:break-word;
+  height: 100%;
+  width: 70%;
+}
+span{
+  white-space: normal;
+
+}
+.title{
+  text-decoration: underline;
+  font-size: 15px;
+}
+
+
+
