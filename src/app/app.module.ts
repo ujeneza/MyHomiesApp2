@@ -55,6 +55,8 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from './footer/footer.component';
 import { AppartmentComponent } from './appartment/appartment.component';
 import { CreateAppartmentComponent } from './appartment/create-appartment/create-appartment.component';
+import { ResidentFilesComponent } from './residents/resident-files/resident-files.component';
+import { ContractInfoComponent } from './residents/contract-info/contract-info.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { CreateAppartmentComponent } from './appartment/create-appartment/create
     FooterComponent,
     AppartmentComponent,
     CreateAppartmentComponent,
+    ResidentFilesComponent,
+    ContractInfoComponent,
   ],
   imports: [
     BrowserModule,
