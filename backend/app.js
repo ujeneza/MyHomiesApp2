@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const path = require("path");
 
 const residentRoutes = require("./routes/residents");
-const appartmentRoutes = require ("./routes/appartments")
+const appartmentRoutes = require("./routes/appartments");
+const residentContractRoutes = require("./routes/contract-resident");
 
 const app = express();
 
@@ -36,6 +37,8 @@ app.use((req, res, next) => {
 
 app.use("/api/residents", residentRoutes);
 app.use("/api/appartments", appartmentRoutes);
+app.use("/api/residents/residentContract", residentContractRoutes);
+
 
 module.exports = app;
 

@@ -4,7 +4,7 @@ export interface ContractInfo {
   inventoryEntryDate: Date;
   coldWaterIndex: number;
   hotWaterIndex: number;
-  ContractDate: Date;
+  ContractSignDate: Date;
   entryDate: Date;
   ContractEndDate: Date;
   exitDate: Date;
