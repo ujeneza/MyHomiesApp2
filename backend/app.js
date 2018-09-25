@@ -5,7 +5,7 @@ const path = require("path");
 
 const residentRoutes = require("./routes/residents");
 const appartmentRoutes = require("./routes/appartments");
-const residentContractRoutes = require("./routes/contract-resident");
+const contractInfoRoutes = require("./routes/contract-info");
 
 const app = express();
 
@@ -20,6 +20,7 @@ mongoose.connect('mongodb://localhost/residents', )
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/images", express.static(path.join("backend/images")));
+app.use("/docs", express.static(path.join("backend/docs")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -37,7 +38,7 @@ app.use((req, res, next) => {
 
 app.use("/api/residents", residentRoutes);
 app.use("/api/appartments", appartmentRoutes);
-app.use("/api/residents/residentContract", residentContractRoutes);
+app.use("/api/residents/contractInfos", contractInfoRoutes);
 
 
 module.exports = app;

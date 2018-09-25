@@ -25,7 +25,7 @@
 
         <mat-form-field>
           <!-- <input matInput type="text" formControlName="appartmentInfo" required placeholder="Appartement"> -->
-          <mat-select formControlName="appartmentInfo" required placeholder="Appartement "  >
+          <mat-select formControlName="appartmentInfo" required placeholder="Appartement "  (selectionChange)="updateSelectedAppartment($event.value)">
             <mat-option *ngFor="let appartment of appartments" [value]="appartment.id">{{ appartment.appartmentName}}</mat-option>
           </mat-select>
            <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>  -->
@@ -79,21 +79,20 @@
   <mat-tab label="Appartment Info">
     <div>
       <mat-list>
-          <mat-list-item> Appartment Name:  {{getOneAppartment(residentForm.value.appartmentInfo)?.appartmentName}}</mat-list-item>
+          <mat-list-item> Appartment Name:  {{selectedAppartment?.appartmentName}}</mat-list-item>
           <mat-divider> </mat-divider>
-          <mat-list-item > Appartment Code Name: {{getOneAppartment(residentForm.value.appartmentInfo)?.appartmentCodeName}} </mat-list-item>
+          <mat-list-item > Appartment Code Name: {{selectedAppartment?.appartmentCodeName}} </mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item> Rent: {{getOneAppartment(residentForm.value.appartmentInfo)?.rent}} </mat-list-item>
+          <mat-list-item> Rent: {{selectedAppartment?.rent}} </mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item>Monthly Expense:  {{getOneAppartment(residentForm.value.appartmentInfo)?.monthlyExpenses}}</mat-list-item>
+          <mat-list-item>Monthly Expense:  {{selectedAppartment?.monthlyExpenses}}</mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item>Ean Meter: {{getOneAppartment(residentForm.value.appartmentInfo)?.eanNumber}}</mat-list-item>
+          <mat-list-item>Ean Meter: {{selectedAppartment?.eanNumber}}</mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item>Electricity Meter: {{getOneAppartment(residentForm.value.appartmentInfo)?.electricityMeter}}</mat-list-item>
+          <mat-list-item>Electricity Meter: {{selectedAppartment?.electricityMeter}}</mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item>Hot Water Meter: {{getOneAppartment(residentForm.value.appartmentInfo)?.hotWaterMeter}}</mat-list-item>
+          <mat-list-item>Hot Water Meter: {{selectedAppartment?.hotWaterMeter}}</mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item>test: {{appartment | json}}</mat-list-item>
         </mat-list>
     </div>
   </mat-tab>

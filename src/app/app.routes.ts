@@ -1,3 +1,4 @@
+import { ContractInfoComponent } from './residents/contract-info/contract-info.component';
 import { CreateAppartmentComponent } from './appartment/create-appartment/create-appartment.component';
 import { AppartmentComponent } from './appartment/appartment.component';
 import { ResidentViewComponent } from './residents/resident-view/resident-view.component';
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'appartments', component: AppartmentComponent},
   {path: 'appartment/edit/:id', component: CreateAppartmentComponent},
   {path: 'appartment/new', component: CreateAppartmentComponent},
+  {path: 'contractInfo/new', component: ContractInfoComponent},
   {path: '**', redirectTo: '/residents', pathMatch: 'full' }
  ];
 

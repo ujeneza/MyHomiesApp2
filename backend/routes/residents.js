@@ -30,7 +30,6 @@ const storage = multer.diskStorage({
 router.post("",
  multer({ storage: storage }).single("image"),
  (req, res, next) => {
-   console.log(req);
   const url = req.protocol + "://" + req.get("host");
   const resident = new Resident({
     lastName: req.body.lastName,

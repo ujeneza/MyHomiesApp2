@@ -27,7 +27,7 @@ export class ResidentCreateComponent implements OnInit {
   imagePreview: any;
   private appartmentsSub: Subscription;
   appartments: Appartment[] = [];
-  appartment:  any;
+  selectedAppartment: Appartment;
 
 
   constructor(
@@ -41,6 +41,8 @@ export class ResidentCreateComponent implements OnInit {
   ngOnInit() {
     this.initForm();
     this.initGetAppartments();
+
+    this.selectedAppartment = this.getAppartmentFromAppartmentId(this.residentForm.get('appartmentInfo').value);
   }
 
   initForm() {
@@ -126,73 +128,15 @@ export class ResidentCreateComponent implements OnInit {
   }
 
   // get one appartment
-  getOneAppartment(id) {
+  getAppartmentFromAppartmentId(id) {
     return this.appartments.filter(item => {
       return item.id === id;
     })[0];
   }
 
 
-  updateSelectedAppartment2() {
-    this.appartment = this.getOneAppartment(this.residentForm.get('appartmentInfo').valueChanges.subscribe());
-    console.log('this.appartment');
+  updateSelectedAppartment(selectedAppartmentId) {
+    this.selectedAppartment = this.getAppartmentFromAppartmentId(selectedAppartmentId);
   }
-  updateSelectedAppartment1() {
-    this.appartment = this.residentForm.get('appartmentInfo').valueChanges.subscribe();
-    console.log('this.appartment');
-  }
-
- /*  updateSelectedAppartment1() {
-  this.residentForm.get('appartmentInfo').valueChanges.subscribe(
-      appartmentData => {
-        this.appartment = {
-              id: appartmentData.id,
-              appartmentCodeName: appartmentData.appartmentCodeName,
-              appartmentName: appartmentData.appartmentName,
-              rent: appartmentData.rent,
-              monthlyExpenses: appartmentData.monthlyExpenses,
-              eanNumber: appartmentData.eanNumber,
-              electricityMeter: appartmentData.electricityMeter,
-              hotWaterMeter: appartmentData.hotWaterMeter,
-              coldWaterMeter: appartmentData.coldWaterMeter
-        };
-      });
-      this.selectedAppartment = this.appartment;
-  }
-
-    getOneAppartment2(id) {
-   this.appartments.filter(appartment => appartment.id !== id)
-    .map(appartmentData => {
-      this.appartment = {
-            id: appartmentData.id,
-            appartmentCodeName: appartmentData.appartmentCodeName,
-            appartmentName: appartmentData.appartmentName,
-            rent: appartmentData.rent,
-            monthlyExpenses: appartmentData.monthlyExpenses,
-            eanNumber: appartmentData.eanNumber,
-            electricityMeter: appartmentData.electricityMeter,
-            hotWaterMeter: appartmentData.hotWaterMeter,
-            coldWaterMeter: appartmentData.coldWaterMeter
-      };
-    });
-  }
-
-
-  updateSelectedAppartment(event: Event): void {
-    const appartment = (event.target as HTMLInputElement).value[0];
-    this.residentForm.get('appartmentInfo').valueChanges.subscribe(appartmentData => {
-      this.appartment = {
-            id: appartmentData.id,
-            appartmentCodeName: appartmentData.appartmentCodeName,
-            appartmentName: appartmentData.appartmentName,
-            rent: appartmentData.rent,
-            monthlyExpenses: appartmentData.monthlyExpenses,
-            eanNumber: appartmentData.eanNumber,
-            electricityMeter: appartmentData.electricityMeter,
-            hotWaterMeter: appartmentData.hotWaterMeter,
-            coldWaterMeter: appartmentData.coldWaterMeter
-      };
-    });
-  } */
 
 }
