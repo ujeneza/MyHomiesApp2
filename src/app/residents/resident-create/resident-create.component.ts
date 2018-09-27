@@ -2,7 +2,6 @@ import { Appartment } from './../../app-models/residant-data-models/appartment-i
 import { Subscription } from 'rxjs';
 import { AppartmentsService } from './../../services/appartment.service';
 import { mimeType } from './mime-type.validator';
-import { map } from 'rxjs/operators';
 // tslint:disable:max-line-length
 import { Resident } from '../resident.model';
 import { ResidentsService } from '../../services/residents.service';

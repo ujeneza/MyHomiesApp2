@@ -1,10 +1,11 @@
+<button mat-raised-button (click)="openUploadDialog()">Upload</button>
 <mat-card>
   <form [formGroup]="contractInfoForm" (submit)="onSaveContractInfo()">
     <mat-form-field>
       <input matInput type="text" formControlName="reresidentId" name="residentId" required minlength="3" placeholder="resident ID">
       <mat-error>Please enter your last name</mat-error>
     </mat-form-field>
-
+    <button mat-raised-button (click)="openUploadDialog()">Upload</button>
     <mat-form-field>
       <input matInput formControlName="inventoryEntryDate" [matDatepicker]="inventoryEntryDate" name="inventoryEntryDate"required minlength="3" placeholder="Inventory Entry Date">
       <mat-datepicker-toggle matSuffix [for]="inventoryEntryDate"></mat-datepicker-toggle>
@@ -99,5 +100,6 @@
   <button mat-button aria-label="Saved" class="openSnackBarCss">
   </button>
 </mat-card>
+
 
 

@@ -1,11 +1,17 @@
+
+
 import { AppRoutingModule } from './app.routes';
 import { QuestionableBooleanPipe } from './pipes/boolean-to-text';
+
+
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Routes, RouterModule} from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { MatAutocompleteModule,
 
   MatBadgeModule,
@@ -57,6 +63,7 @@ import { AppartmentComponent } from './appartment/appartment.component';
 import { CreateAppartmentComponent } from './appartment/create-appartment/create-appartment.component';
 import { ResidentFilesComponent } from './residents/resident-files/resident-files.component';
 import { ContractInfoComponent } from './residents/contract-info/contract-info.component';
+import { FileUploadComponent } from './residents/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -71,12 +78,14 @@ import { ContractInfoComponent } from './residents/contract-info/contract-info.c
     CreateAppartmentComponent,
     ResidentFilesComponent,
     ContractInfoComponent,
+    FileUploadComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule,
     CommonModule,
     FormsModule,
+    FileUploadModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -119,6 +128,11 @@ import { ContractInfoComponent } from './residents/contract-info/contract-info.c
     MatSnackBarModule,
     MatInputModule,
     MatFormFieldModule,
+    FlexLayoutModule,
+
+
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

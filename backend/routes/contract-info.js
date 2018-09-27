@@ -76,6 +76,8 @@ router.post("", multer({ storage: storage }).fields([
   });
 });
 
+
+
 // View all contracts info
 router.get("", (req, res, next) => {
   ContractInfo.find().then(documents => {
