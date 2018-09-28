@@ -2,9 +2,6 @@
 
 import { AppRoutingModule } from './app.routes';
 import { QuestionableBooleanPipe } from './pipes/boolean-to-text';
-
-
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -85,7 +82,6 @@ import { FileUploadComponent } from './residents/file-upload/file-upload.compone
     RouterModule,
     CommonModule,
     FormsModule,
-    FileUploadModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
