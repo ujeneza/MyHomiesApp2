@@ -1,18 +1,15 @@
-import { Subject } from 'rxjs';
-import { Observable } from 'rxjs';
-import { HttpHeaders, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
+import { Subject, Observable } from 'rxjs';
 
-const url = 'http://localhost:8000/api/upload';
+const url = 'http://localhost:3000/upload';
 @Injectable({
   providedIn: 'root'
 })
-export class FileService {
+export class UploadService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  public upload(files: Set<File>): {[key: string]: Observable<number>} {
+  public upload(files: Set<File>): { [key: string]: Observable<number> } {
     // this will be the our resulting map
     const status = {};
 
@@ -23,7 +20,7 @@ export class FileService {
 
       // create a http-post request and pass the form
       // tell it to report the upload progress
-      const req = new HttpRequest ('POST', url, formData, {
+      const req = new HttpRequest('POST', url, formData, {
         reportProgress: true
       });
 
@@ -31,16 +28,16 @@ export class FileService {
       const progress = new Subject<number>();
 
       // send the http-request and subscribe for progress-updates
+
+      const startTime = new Date().getTime();
       this.http.request(req).subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
-
           // calculate the progress percentage
-          const percentDone = Math.round(100 * event.loaded / event.total);
 
+          const percentDone = Math.round((100 * event.loaded) / event.total);
           // pass the percentage into the progress-stream
           progress.next(percentDone);
         } else if (event instanceof HttpResponse) {
-
           // Close the progress-stream if we get an answer form the API
           // The upload is complete
           progress.complete();
@@ -56,13 +53,4 @@ export class FileService {
     // return the map of progress.observables
     return status;
   }
-  /*
-  downloadFile(file: string) {
-    const body = {filename: file};
-
-    return this.http.post('http://localhost:3000/file/download', body, {
-        responseType : 'blob',
-        headers: new HttpHeaders().append('Content-Type', 'application/json')
-    });
-}*/
 }

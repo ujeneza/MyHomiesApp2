@@ -1,5 +1,5 @@
-import { FileService } from './../../services/file.service';
 import { ContractInfo } from './../../app-models/residant-data-models/contract-Info.model';
+
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ContractResidentService } from './../../services/contract-resident.service';
 import {
@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { FileUploadComponent } from '../file-upload/file-upload.component';
+
 
 @Component({
   selector: 'app-contract-info',
@@ -30,7 +30,7 @@ export class ContractInfoComponent implements OnInit {
     private contractInfosService: ContractResidentService,
     private router: Router,
     public route: ActivatedRoute,
-    public dialog: MatDialog , public uploadService: FileService
+    public dialog: MatDialog ,
   ) { }
 
   ngOnInit() {
@@ -38,9 +38,9 @@ export class ContractInfoComponent implements OnInit {
   }
 
 
-  public openUploadDialog() {
+  /*public openUploadDialog() {
     const dialogRef = this.dialog.open(FileUploadComponent, { width: '50%', height: '50%' });
-  }
+  }*/
 
   initForm() {
     this.contractInfoForm = new FormGroup({

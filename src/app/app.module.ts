@@ -1,5 +1,3 @@
-
-
 import { AppRoutingModule } from './app.routes';
 import { QuestionableBooleanPipe } from './pipes/boolean-to-text';
 import { BrowserModule } from '@angular/platform-browser';
@@ -60,7 +58,8 @@ import { AppartmentComponent } from './appartment/appartment.component';
 import { CreateAppartmentComponent } from './appartment/create-appartment/create-appartment.component';
 import { ResidentFilesComponent } from './residents/resident-files/resident-files.component';
 import { ContractInfoComponent } from './residents/contract-info/contract-info.component';
-import { FileUploadComponent } from './residents/file-upload/file-upload.component';
+import { UploadModule } from './upload/upload.module';
+
 
 @NgModule({
   declarations: [
@@ -75,7 +74,6 @@ import { FileUploadComponent } from './residents/file-upload/file-upload.compone
     CreateAppartmentComponent,
     ResidentFilesComponent,
     ContractInfoComponent,
-    FileUploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -125,10 +123,7 @@ import { FileUploadComponent } from './residents/file-upload/file-upload.compone
     MatInputModule,
     MatFormFieldModule,
     FlexLayoutModule,
-
-
-
-
+    UploadModule
   ],
   providers: [],
   bootstrap: [AppComponent]
