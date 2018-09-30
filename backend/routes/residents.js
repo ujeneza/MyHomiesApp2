@@ -31,6 +31,7 @@ router.post("",
  multer({ storage: storage }).single("image"),
  (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
+  console.log(req.file);
   const resident = new Resident({
     lastName: req.body.lastName,
     firstName: req.body.firstName,

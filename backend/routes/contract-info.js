@@ -36,7 +36,7 @@ const storage = multer.diskStorage({
 });
 // add contract information
 router.post("", multer({ storage: storage }).fields([
-  { name: 'contract', maxCount: 1 },
+  { name: 'contract', maxCount: 2 },
   { name: 'inventoryExit', maxCount: 1 },
   { name: 'inventoryEntry', maxCount: 1 },
   { name: 'exitCalculation', maxCount: 1 },
@@ -57,13 +57,13 @@ router.post("", multer({ storage: storage }).fields([
     coldWaterIndex: req.body.coldWaterIndex,
     hotWaterIndex: req.body.hotWaterIndex,
     nextVisitDate:req.body.nextVisitDate,
-    contract: url + "/docs/" + req.file.filename,
-    inventoryExit: url + "/docs/" + req.file.filename,
-    inventoryEntry: url + "/docs/" + req.file.filename,
-    exitCalculation: url + "/docs/" + req.file.filename,
-    formalNoticeLetter: url + "/docs/" + req.file.filename,
-    picturesEntryInventory: url + "/docs/" + req.file.filename,
-    picturesExitInventory: url + "/docs/" + req.file.filename,
+    contract: url + "/docs/"  + req.files[0].fieldname + req.files[0].filename,
+    inventoryExit: url + "/docs/" + req.files[0].fieldname + req.files[0].filename,
+    inventoryEntry: url + "/docs/" + req.files[0].fieldname + req.files[0].filename,
+    exitCalculation: url + "/docs/" + req.files[0].fieldname + req.files[0].filename,
+    formalNoticeLetter: url + "/docs/" + req.files[0].fieldname + req.files[0].filename,
+    picturesEntryInventory: url + "/docs/" + req.files[0].fieldname + req.files[0].filename,
+    picturesExitInventory: url + "/docs/" + req.files[0].fieldname + req.files[0].filename,
   });
   contractInfo.save().then(createdContractInfo => {
     res.status(201).json({
@@ -75,7 +75,6 @@ router.post("", multer({ storage: storage }).fields([
     });
   });
 });
-
 
 
 // View all contracts info
