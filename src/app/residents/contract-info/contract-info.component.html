@@ -1,8 +1,13 @@
-<app-upload></app-upload>
+
+
+<ng-container matColumnDef="name">
+  <th mat-header-cell *matHeaderCellDef> Name </th>
+  <td mat-cell *matCellDef="let element">name  </td>
+</ng-container>
 <mat-card>
   <form [formGroup]="contractInfoForm" (submit)="onSaveContractInfo()">
     <mat-form-field>
-      <input matInput type="text" formControlName="reresidentId" name="residentId" required minlength="3" placeholder="resident ID">
+      <input matInput type="text" formControlName="reresidentId" name="residentId" required minlength="3" placeholder="Resident ID">
       <mat-error>Please enter your last name</mat-error>
     </mat-form-field>
     <mat-form-field>
@@ -56,6 +61,7 @@
       <mat-datepicker #nextVisitDate></mat-datepicker>
     </mat-form-field>
 
+    <app-upload file = "contract"></app-upload>
     <mat-form-field>
       <input matInput type="string" formControlName="contract"  name="contract" placeholder="Contract">
     </mat-form-field>
@@ -79,18 +85,10 @@
     <mat-form-field>
       <input matInput type="string" formControlName="picturesEntryInventory"  name="picturesEntryInventory" placeholder="Pictures Entry Inventory">
     </mat-form-field>
+    <mat-form-field>
+        <input matInput type="string" formControlName="picturesExitInventory"  name="picturesExitInventory" placeholder="Pictures Exit Inventory">
+      </mat-form-field>
 
-
-
-      <div class="picture-preview">
-        <div class="image-preview" *ngIf="filePreview !== '' && filePreview && contractInfoForm.get('picturesExitInventory').valid">
-          <img [src]="filePreview" [alt]="contractInfoForm.value.firstName">
-        </div>
-        <div class="iconPicture">
-            <input type="file" #filePicker (change)="onPicturesExitInventoryPicked($event)"  name="picturesExitInventory" placeholder="Pictures Exit Inventory">
-          <mat-icon matSuffix (click)="filePicker.click()">Add Pictures Exit Inventory </mat-icon>
-        </div>
-      </div>
     <mat-action-row>
       <button mat-raised-button type="submit" color="accent" [disabled]="contractInfoForm.invalid">
         Save</button>

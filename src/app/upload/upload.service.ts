@@ -1,5 +1,12 @@
+import { FileResident } from './../app-models/residant-data-models/file-resisent.models';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpRequest,
+  HttpEventType,
+  HttpResponse
+} from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 
 const url = 'http://localhost:3000/api/file';
@@ -7,6 +14,8 @@ const url = 'http://localhost:3000/api/file';
   providedIn: 'root'
 })
 export class UploadService {
+  private fileResidents: FileResident[] = [];
+  private fileResidentsUpdate = new Subject<FileResident[]>();
   constructor(private http: HttpClient) {}
 
   public upload(files: Set<File>): { [key: string]: Observable<number> } {
@@ -52,5 +61,31 @@ export class UploadService {
 
     // return the map of progress.observables
     return status;
+  }
+
+  // get all files
+  getFileResidents() {
+    this.http
+      .get<{ message: string; fileResidents: any }>(url)
+      .pipe(
+        map(fileResidentData => {
+          return fileResidentData.fileResidents.map(contract => {
+            return {
+              id: contract._id,
+              contract: contract.contract
+            };
+          });
+        })
+      )
+      .subscribe(transformedFileResidents => {
+        this.fileResidents = transformedFileResidents;
+        this.fileResidentsUpdate.next([...this.fileResidents]);
+        // this.router.navigate(['appartments']);
+      });
+  }
+
+  // listener
+  getFileResidentUpdateListener() {
+    return this.fileResidentsUpdate.asObservable();
   }
 }

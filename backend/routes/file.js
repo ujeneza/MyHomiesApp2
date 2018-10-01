@@ -42,6 +42,7 @@ const storage = multer.diskStorage({
   }
 });
 
+// Add contract files
 router.post("", multer({ storage: storage }).array('file',4),
 (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
@@ -58,6 +59,23 @@ router.post("", multer({ storage: storage }).array('file',4),
         id: createdContract._id
       }
     });
+  });
+});
+
+
+// View all contracts files
+router.get("", (req, res, next) => {
+  FileResident.find().then(documents => {
+    if (documents) {
+      res.status(200).json({
+        message: "Contract Info fetched successfully!",
+        fileResidents: documents
+      });
+    } else {
+      res.status(404).json({
+        message: "Contract Info not found!"
+      });
+    }
   });
 });
 

@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, EventEmitter, Output } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { UploadService } from '../upload.service';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import {MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-dialog',
@@ -18,8 +19,11 @@ export class DialogComponent implements OnInit {
  @ViewChild('file') file;
 
   public files: Set<File> = new Set();
+  @Output() private childEvent = new EventEmitter();
 
-  constructor(public dialogRef: MatDialogRef<DialogComponent>, public uploadService: UploadService) {}
+  constructor(public dialogRef: MatDialogRef<DialogComponent>,
+              public uploadService: UploadService,
+              @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {}
 
@@ -40,6 +44,7 @@ export class DialogComponent implements OnInit {
   }
 
   closeDialog() {
+    this.childEvent.emit(this.file);
     // if everything was uploaded already, just close the dialog
     if (this.uploadSuccessful) {
       return this.dialogRef.close();

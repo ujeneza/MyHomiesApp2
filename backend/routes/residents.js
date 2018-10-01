@@ -9,6 +9,7 @@ const MIME_TYPE_MAP = {
   "image/jpg": "jpg"
 };
 
+// Create a storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const isValid = MIME_TYPE_MAP[file.mimetype];
@@ -27,6 +28,8 @@ const storage = multer.diskStorage({
     cb(null, name + "-" + Date.now() + "." + ext);
   }
 });
+
+// Add a new resident
 router.post("",
  multer({ storage: storage }).single("image"),
  (req, res, next) => {
@@ -54,7 +57,7 @@ router.post("",
     });
   });
 });
-
+// Update a resident
 router.put("/:id",
 multer({ storage: storage }).single("image"),
 (req,res,next) => {
@@ -80,6 +83,7 @@ multer({ storage: storage }).single("image"),
   });
 });
 
+// Get all residents
 router.get("", (req, res, next) => {
   Resident.find().then(documents => {
     res.status(200).json({
@@ -89,6 +93,7 @@ router.get("", (req, res, next) => {
   });
 });
 
+// Get one resident
 router.get("/:id", (req, res, next) => {
   Resident.findById(req.params.id).then(resident => {
     if (resident) {
