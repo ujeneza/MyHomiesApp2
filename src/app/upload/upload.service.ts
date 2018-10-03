@@ -9,12 +9,13 @@ import {
 } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 
-const url = 'http://localhost:3000/api/file';
+const url = 'http://localhost:3000/api/file/';
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
   private fileResidents: FileResident[] = [];
+  fileResident: FileResident;
   private fileResidentsUpdate = new Subject<FileResident[]>();
   constructor(private http: HttpClient) {}
 
@@ -64,7 +65,7 @@ export class UploadService {
   }
 
   // get all files
-  getFileResidents() {
+  getAllFileResidents() {
     this.http
       .get<{ message: string; fileResidents: any }>(url)
       .pipe(
@@ -87,5 +88,23 @@ export class UploadService {
   // listener
   getFileResidentUpdateListener() {
     return this.fileResidentsUpdate.asObservable();
+  }
+
+  // get on file
+  getFileResident(id: string) {
+    return this.http.get<FileResident>(url + id);
+  }
+
+  // Delete a file
+
+  deleteFileResident(fileResidentId: string) {
+    this.http.delete(url + fileResidentId).subscribe(() => {
+      const updatedFileResidents = this.fileResidents.filter(
+        fileResident => fileResident.id !== fileResidentId
+      );
+      console.log(updatedFileResidents);
+      this.fileResidents = updatedFileResidents;
+      this.fileResidentsUpdate.next([...this.fileResidents]);
+    });
   }
 }

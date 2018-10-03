@@ -1,4 +1,6 @@
 export interface FileResident {
 id: string;
-contract: File;
+name: string;
+lastModified: Date;
+uploadDate: Date;
 }
