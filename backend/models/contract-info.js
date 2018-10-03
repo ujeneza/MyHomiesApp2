@@ -1,6 +1,6 @@
 const mongoose = require ('mongoose');
 const contractInfoSchema = mongoose.Schema({
-  residentId: {type: String},
+  reresidentId: {type: String},
   inventoryEntryDate:{type: Date},
   inventoryExitDate: {type: Date},
   contractSignDate:{type: Date},

@@ -41,7 +41,6 @@ router.get("", (req, res, next) => {
         message: "appartment not found!"
       });
     }
-    
   });
 });
 

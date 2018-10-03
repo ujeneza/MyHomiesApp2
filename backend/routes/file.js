@@ -47,21 +47,19 @@ router.post("", multer({ storage: storage }).array('file',4),
 (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
   console.log(req.files);
-  const fileResident = new FileResident ({
+  const contract = new FileResident ({
     contract: url + "/uploads/" + req.files[0].fieldname +"/" + req.files[0].filename
   });
-  console.log(fileResident + "before saving");
-  fileResident.save().then(createdFileResident => {
+  console.log(contract);
+  contract.save().then(createdContract => {
     res.status(201).json({
       message: "Contract added successfully",
-      fileResident: {
-        ...createdFileResident,
-        id: createdFileResident._id
+      contractInfo: {
+        ...createdContract,
+        id: createdContract._id
       }
     });
-
   });
-  console.log(fileResident + "after saving");
 });
 
 
@@ -81,36 +79,6 @@ router.get("", (req, res, next) => {
   });
 });
 
-// get one file
-router.get("/:id", (req, res, next) => {
-  FileResident.findById(req.params.id).then(fileResident => {
-    if (fileResident) {
-      res.status(200).json(fileResident);
-      console.log(fileResident);
-    } else {
-      res.status(404).json({ message: "Post not found!" });
-    }
-  });
-});
-
-// Delete a file
-
-router.delete("/:id", (req, res, next) => {
-  console.log(FileResident + 'tous les files');
-  FileResident.deleteOne({_id: req.params.id }).then(result => {
-    if (result) {
-      res.status(200).json({
-        message: "Contract Info fetched successfully!",
-      });
-    } else {
-      res.status(404).json({
-        message: "Contract Info not found!"
-      });
-    }
-  });
-
-
-});
 
 // formidable, example marche
 /*
