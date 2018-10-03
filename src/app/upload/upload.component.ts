@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { FileResident } from './../app-models/residant-data-models/file-resisent.models';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from './dialog/dialog.component';
 import { UploadService } from './upload.service';
@@ -30,11 +30,21 @@ export class UploadComponent {
       width: '50%',
       height: '50%'
     });
-    dialogRef.afterClosed().subscribe(fileResidentData => {
-      this.fileResidents = fileResidentData;
-      console.log('The dialog was closed');
-    });
+
+    dialogRef.componentInstance.uploadService.getAllFileResidents();
+    this.fileResidentsSub = this.uploadService.getFileResidentUpdateListener().subscribe(
+     (fileResidents: FileResident[]) => {
+       this.fileResidents = fileResidents;
+     }
+   );
+
   }
+
+
+/*   dialogRef.afterClosed().subscribe(fileResidentData => {
+    this.fileResidents = fileResidentData;
+    console.log('The dialog was closed');
+  }); */
 
   getFileResidentId(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -46,8 +56,6 @@ export class UploadComponent {
 
   // Delete one fileResident
   onDelete(fileResidentId: string) {
-    const id  = document.getElementById;
-    console.log(id);
     this.uploadService.deleteFileResident(fileResidentId);
   }
 
@@ -57,8 +65,10 @@ export class UploadComponent {
     this.fileResidentsSub = this.uploadService.getFileResidentUpdateListener().subscribe(
       (fileResidents: FileResident[]) => {
         this.fileResidents = fileResidents;
+        console.log(fileResidents);
       }
     );
+
 
   }
 }

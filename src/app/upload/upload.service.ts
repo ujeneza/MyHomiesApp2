@@ -70,10 +70,11 @@ export class UploadService {
       .get<{ message: string; fileResidents: any }>(url)
       .pipe(
         map(fileResidentData => {
-          return fileResidentData.fileResidents.map(contract => {
+          return fileResidentData.fileResidents.map(fileResident => {
             return {
-              id: contract._id,
-              contract: contract.contract
+              id: fileResident ._id,
+              name: fileResident.name,
+              lastModifiedDate: fileResident.lastModifiedDate
             };
           });
         })

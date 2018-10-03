@@ -1,6 +1,6 @@
 export interface FileResident {
 id: string;
 name: string;
-lastModified: Date;
+lastModifiedDate: Date;
 uploadDate: Date;
 }

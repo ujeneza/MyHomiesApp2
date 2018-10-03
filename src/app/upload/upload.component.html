@@ -3,30 +3,32 @@
     <mat-card-title>Contract</mat-card-title>
     <button class="uploadFileButton" mat-raised-button (click)="openUploadDialog()">Upload files</button>
   </mat-card-title-group>
-  <div class="fileInfoAdjustement"  *ngFor="let fileResident of fileResidents">
-    <mat-divider > </mat-divider>
-    <div *ngIf="fileResidents">
-    <mat-list>
-      <mat-list-item style="  height:initial">
-        <mat-icon matListIcon>attachment</mat-icon>
-        <h3 matLine style="word-wrap: break-word; white-space: pre-wrap">
-          <span style="font-weight: bold;">File Name:</span> {{fileResident.name}} </h3>
-        <p matLine>
-          <span style="word-wrap: break-word; white-space: pre-wrap;">
-            <span style=" font-style: italic;">Upload date: </span>{{fileResident.lastModified | date:"dd/MM/yyyy"}} </span>
-        </p>
-      </mat-list-item>
-    </mat-list>
-    <div class="button-row">
-      <button mat-mini-fab color="primary" class="buttonIconFile" matTooltip="Download the file" aria-label="Button that displays a tooltip when focused or hovered over">
-        <i class="material-icons">cloud_download</i>
-      </button>
-      <button mat-mini-fab color="warn"  class="buttonIconFile" matTooltip="Delete the file"   aria-label="Button that displays a tooltip when focused or hovered over"><i
-          class="material-icons">
-          delete_sweep
-        </i></button>
+  <div *ngFor="let fileResident of fileResidents">
+    <div class="fileInfoAdjustement" *ngIf="fileResidents">
+      <mat-divider> </mat-divider>
+      <mat-list>
+        <mat-list-item style="  height:initial">
+          <mat-icon matListIcon>attachment</mat-icon>
+          <h3 matLine style="word-wrap: break-word; white-space: pre-wrap">
+            <span style="font-weight: bold;">File Name:</span> {{fileResident.name}} </h3>
+          <p matLine>
+            <span style="word-wrap: break-word; white-space: pre-wrap;">
+              <span style=" font-style: italic;">Upload date: </span> {{fileResident.lastModifiedDate |
+              date:"dd/MM/yyyy"}} </span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+      <div class="button-row">
+        <button mat-mini-fab color="primary" class="buttonIconFile" matTooltip="Download the file" aria-label="Button that displays a tooltip when focused or hovered over">
+          <i class="material-icons">cloud_download</i>
+        </button>
+        <button mat-mini-fab color="warn" (click)="onDelete(fileResident.id)" class="buttonIconFile" matTooltip="Delete the file"
+          aria-label="Button that displays a tooltip when focused or hovered over"><i class="material-icons">
+            delete_sweep
+          </i></button>
+      </div>
     </div>
   </div>
-  </div>
   <mat-divider> </mat-divider>
+
 </mat-card>

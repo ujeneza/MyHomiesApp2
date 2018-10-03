@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material';
 import { UploadService } from '../upload.service';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import {MAT_DIALOG_DATA} from '@angular/material';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dialog',
@@ -17,6 +18,8 @@ export class DialogComponent implements OnInit {
   showCancelButton = true;
   uploading = false;
   uploadSuccessful = false;
+  fileResidents: FileResident[] = [];
+  private fileResidentsSub: Subscription;
  @ViewChild('file') file;
 
   public files: Set<File> = new Set();
@@ -45,13 +48,30 @@ export class DialogComponent implements OnInit {
     this.file.nativeElement.click();
   }
 
+  closeDialogdelete() {
+    this.closeDialog2();
+  }
+
+  closeDialog2() {
+    this.uploadService.getAllFileResidents();
+    this.fileResidentsSub = this.uploadService.getFileResidentUpdateListener().subscribe(
+      (fileResidents: FileResident[]) => {
+        this.fileResidents = fileResidents;
+        console.log(fileResidents);
+      }
+    );
+    console.log('I m running');
+  }
+
 
   closeDialog() {
     // if everything was uploaded already, just close the dialog
     if (this.uploadSuccessful) {
+      this.closeDialog2();
       console.log(this.files);
       return ( this.dialogRef.close());
     }
+
 
     // set the component state to "uploading"
     this.uploading = true;
@@ -98,6 +118,7 @@ export class DialogComponent implements OnInit {
       // ... and the component is no longer uploading
       this.uploading = false;
     });
+
   }
 
  /*  closeDialog() {

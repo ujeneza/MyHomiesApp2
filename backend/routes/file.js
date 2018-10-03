@@ -48,9 +48,10 @@ router.post("", multer({ storage: storage }).array('file',4),
   const url = req.protocol + "://" + req.get("host");
   console.log(req.files);
   const fileResident = new FileResident ({
-    contract: url + "/uploads/" + req.files[0].fieldname +"/" + req.files[0].filename
+    name: req.files[0].originalname,
+    lastModifiedDate: Date.now(),
+    contractPath: url + "/uploads/" + req.files[0].fieldname +"/" + req.files[0].filename
   });
-  console.log(fileResident + "before saving");
   fileResident.save().then(createdFileResident => {
     res.status(201).json({
       message: "Contract added successfully",
