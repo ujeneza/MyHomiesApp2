@@ -1,12 +1,10 @@
-import { map } from 'rxjs/operators';
-
-import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FileResident } from './../app-models/residant-data-models/file-resisent.models';
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from './dialog/dialog.component';
 import { UploadService } from './upload.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-upload',
@@ -15,8 +13,8 @@ import { UploadService } from './upload.service';
 })
 export class UploadComponent {
   fileResidents: FileResident[] = [];
+  private fileResidentsSub: Subscription;
   fileResident: FileResident;
-  private fileResidentsSub = Subscription;
 
   @Input()
   file: string;
@@ -24,8 +22,7 @@ export class UploadComponent {
     public dialog: MatDialog,
     public uploadService: UploadService,
     public router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute) {}
 
   public openUploadDialog() {
     const dialogRef = this.dialog.open(DialogComponent, {
@@ -38,11 +35,7 @@ export class UploadComponent {
       console.log('The dialog was closed');
     });
   }
-  // Get one resident:
 
-  addFiles() {
-
-  }
   getFileResidentId(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.uploadService
@@ -58,13 +51,14 @@ export class UploadComponent {
     this.uploadService.deleteFileResident(fileResidentId);
   }
 
- /*  onCloseDialog() {
+
+  onCloseDialog() {
     this.uploadService.getAllFileResidents();
-    this.fileResidentsSub = this.uploadService
-      .getFileResidentUpdateListener()
-      .map()
-      .subscribe((fileResidents: FileResident[]) => {
+    this.fileResidentsSub = this.uploadService.getFileResidentUpdateListener().subscribe(
+      (fileResidents: FileResident[]) => {
         this.fileResidents = fileResidents;
-      });
-  } */
+      }
+    );
+
+  }
 }
