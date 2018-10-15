@@ -13,7 +13,6 @@
       <mat-list-item *ngFor="let file of files">
 
         <h4 mat-line>{{file.name}}</h4>
-        <h4 mat-line data ="data.contract"></h4>
 
         <mat-progress-bar *ngIf="progress" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
 

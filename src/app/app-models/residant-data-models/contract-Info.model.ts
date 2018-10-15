@@ -10,11 +10,4 @@ export interface ContractInfo {
   exitDate: Date;
   inventoryExitDate: Date;
   nextVisitDate: Date;
-  contract: File | string;
-  inventoryExit: File | string;
-  inventoryEntry: File | string;
-  exitCalculation: File | string;
-  formalNoticeLetter: File | string;
-  picturesEntryInventory: File | string;
-  picturesExitInventory: File | string;
 }

@@ -25,10 +25,10 @@
 
         <mat-form-field>
           <!-- <input matInput type="text" formControlName="appartmentInfo" required placeholder="Appartement"> -->
-          <mat-select formControlName="appartmentInfo" required placeholder="Appartement "  (selectionChange)="updateSelectedAppartment($event.value)">
+          <mat-select formControlName="appartmentInfo" required placeholder="Appartement " (selectionChange)="updateSelectedAppartment($event.value)">
             <mat-option *ngFor="let appartment of appartments" [value]="appartment.id">{{ appartment.appartmentName}}</mat-option>
           </mat-select>
-           <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>  -->
+          <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>  -->
         </mat-form-field>
         <mat-form-field>
           <mat-select formControlName="isRentPaid" required placeholder="Is the appartement paid this month?">
@@ -37,7 +37,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field>
-          <input matInput  formControlName="phoneNumber" type="tel" name="phoneNumber" required minlength="3"
+          <input matInput formControlName="phoneNumber" type="tel" name="phoneNumber" required minlength="3"
             placeholder="Phone Number">
           <mat-error>Please enter your phoneNumber</mat-error>
           <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
@@ -77,28 +77,26 @@
     </div>
   </mat-tab>
   <mat-tab label="Appartment Info">
-    <div>
+    <mat-card>
       <mat-list>
-          <mat-list-item> Appartment Name:  {{selectedAppartment?.appartmentName}}</mat-list-item>
-          <mat-divider> </mat-divider>
-          <mat-list-item > Appartment Code Name: {{selectedAppartment?.appartmentCodeName}} </mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item> Rent: {{selectedAppartment?.rent}} </mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item>Monthly Expense:  {{selectedAppartment?.monthlyExpenses}}</mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item>Ean Meter: {{selectedAppartment?.eanNumber}}</mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item>Electricity Meter: {{selectedAppartment?.electricityMeter}}</mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item>Hot Water Meter: {{selectedAppartment?.hotWaterMeter}}</mat-list-item>
-          <mat-divider></mat-divider>
-        </mat-list>
-    </div>
+        <mat-list-item> Appartment Name: {{selectedAppartment?.appartmentName}}</mat-list-item>
+        <mat-divider> </mat-divider>
+        <mat-list-item> Appartment Code Name: {{selectedAppartment?.appartmentCodeName}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item> Rent: {{selectedAppartment?.rent}} </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Monthly Expense: {{selectedAppartment?.monthlyExpenses}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Ean Meter: {{selectedAppartment?.eanNumber}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Electricity Meter: {{selectedAppartment?.electricityMeter}}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Hot Water Meter: {{selectedAppartment?.hotWaterMeter}}</mat-list-item>
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-card>
   </mat-tab>
   <mat-tab label="Document">
-    <div>
-      Empty
-    </div>
+    <app-resident-files></app-resident-files>
   </mat-tab>
 </mat-tab-group>

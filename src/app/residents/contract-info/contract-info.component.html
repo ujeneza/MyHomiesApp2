@@ -61,10 +61,12 @@
       <mat-datepicker #nextVisitDate></mat-datepicker>
     </mat-form-field>
 
-    <app-upload file = "contract"></app-upload>
-    <mat-form-field>
-      <input matInput type="string" formControlName="contract"  name="contract" placeholder="Contract">
-    </mat-form-field>
+  <div>
+
+    <app-upload fieldNameFront = "inventoryExit"></app-upload>
+  </div>
+
+
 
     <mat-form-field>
       <input matInput type="string" formControlName="inventoryExit"  name="inventoryExit" placeholder="Inventory Exit">

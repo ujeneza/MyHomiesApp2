@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { FileResident } from './../app-models/residant-data-models/file-resisent.models';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -19,7 +20,7 @@ export class UploadService {
   private fileResidentsUpdate = new Subject<FileResident[]>();
   constructor(private http: HttpClient) {}
 
-  public upload(files: Set<File>): { [key: string]: Observable<number> } {
+  public upload(files: Set<File>, fieldNameFront): { [key: string]: Observable<number> } {
     // this will be the our resulting map
     const status = {};
 
@@ -27,6 +28,7 @@ export class UploadService {
       // create a new multipart-form for every file
       const formData: FormData = new FormData();
       formData.append('file', file, file.name);
+      formData.append('fieldNameFront', fieldNameFront);
 
       // create a http-post request and pass the form
       // tell it to report the upload progress
@@ -74,7 +76,9 @@ export class UploadService {
             return {
               id: fileResident ._id,
               name: fileResident.name,
-              lastModifiedDate: fileResident.lastModifiedDate
+              lastModifiedDate: fileResident.lastModifiedDate,
+              filePath: fileResident.filePath,
+              fieldNameFront: fileResident.fieldNameFront
             };
           });
         })
@@ -84,6 +88,7 @@ export class UploadService {
         this.fileResidentsUpdate.next([...this.fileResidents]);
         // this.router.navigate(['appartments']);
       });
+      console.log(this.fileResidents + '//// les residents');
   }
 
   // listener
@@ -91,10 +96,10 @@ export class UploadService {
     return this.fileResidentsUpdate.asObservable();
   }
 
-  // get on file
+/*   // get on file
   getFileResident(id: string) {
     return this.http.get<FileResident>(url + id);
-  }
+  } */
 
   // Delete a file
 
@@ -103,9 +108,34 @@ export class UploadService {
       const updatedFileResidents = this.fileResidents.filter(
         fileResident => fileResident.id !== fileResidentId
       );
-      console.log(updatedFileResidents);
       this.fileResidents = updatedFileResidents;
       this.fileResidentsUpdate.next([...this.fileResidents]);
     });
   }
+
+  // download fileresident
+
+  downloadFileResident(filePath): Observable <any> {
+    const body = { filePath: filePath};
+    return this.http.get('http://localhost:3000/api/file/' + body.filePath, {
+      responseType : 'blob',
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    });
+  }
+
+ /*  downloadFileResident(id: string) {
+    const body = { id: id};
+    return this.http.post(url + 'downlaod', body, {
+      responseType : 'blob',
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    });
+  } */
+
+/* downloadFileResident(filePath) {
+    const body = { filePath: filePath};
+    return this.http.post(url + 'downlaod', body, {
+      responseType : 'blob',
+      headers: new HttpHeaders().append('Content-Type', 'application/json')
+    });
+  } */
 }

@@ -1,3 +1,6 @@
+import { Subscription } from 'rxjs';
+import { FileResident } from './../../app-models/residant-data-models/file-resisent.models';
+import { UploadService } from './../../upload/upload.service';
 import { ContractInfo } from './../../app-models/residant-data-models/contract-Info.model';
 
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -8,7 +11,7 @@ import {
   FormControl,
   Validators
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 
@@ -24,6 +27,9 @@ export class ContractInfoComponent implements OnInit {
   contractInfoId: string;
   contractInfo: ContractInfo;
   filePreview: any;
+  fieldNameFront: string;
+  fileResidents: FileResident[] = [];
+  private fileResidentsSub: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,12 +37,23 @@ export class ContractInfoComponent implements OnInit {
     private router: Router,
     public route: ActivatedRoute,
     public dialog: MatDialog ,
+    public uploadService: UploadService,
   ) { }
 
   ngOnInit() {
     this.initForm();
+    this.getAllFileResidents();
   }
 
+
+  getAllFileResidents() {
+    this.uploadService.getAllFileResidents();
+    this.fileResidentsSub = this.uploadService.getFileResidentUpdateListener().subscribe(
+      (fileResidents: FileResident[]) => {
+        this.fileResidents = fileResidents;
+      }
+    );
+  }
 
   /*public openUploadDialog() {
     const dialogRef = this.dialog.open(FileUploadComponent, { width: '50%', height: '50%' });

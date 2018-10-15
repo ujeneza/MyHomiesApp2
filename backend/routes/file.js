@@ -42,15 +42,19 @@ const storage = multer.diskStorage({
   }
 });
 
+
 // Add contract files
 router.post("", multer({ storage: storage }).array('file',4),
+// .array('file',5)
 (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
   console.log(req.files);
+  console.log('file added successfully');
   const fileResident = new FileResident ({
     name: req.files[0].originalname,
     lastModifiedDate: Date.now(),
-    contractPath: url + "/uploads/" + req.files[0].fieldname +"/" + req.files[0].filename
+    filePath: req.files[0].filename,
+    fieldNameFront: req.body.fieldNameFront
   });
   fileResident.save().then(createdFileResident => {
     res.status(201).json({
@@ -60,9 +64,8 @@ router.post("", multer({ storage: storage }).array('file',4),
         id: createdFileResident._id
       }
     });
-
+    console.log(fileResident);
   });
-  console.log(fileResident + "after saving");
 });
 
 
@@ -83,7 +86,7 @@ router.get("", (req, res, next) => {
 });
 
 // get one file
-router.get("/:id", (req, res, next) => {
+/* router.get("/:id", (req, res, next) => {
   FileResident.findById(req.params.id).then(fileResident => {
     if (fileResident) {
       res.status(200).json(fileResident);
@@ -92,12 +95,11 @@ router.get("/:id", (req, res, next) => {
       res.status(404).json({ message: "Post not found!" });
     }
   });
-});
+}); */
 
 // Delete a file
 
 router.delete("/:id", (req, res, next) => {
-  console.log(FileResident + 'tous les files');
   FileResident.deleteOne({_id: req.params.id }).then(result => {
     if (result) {
       res.status(200).json({
@@ -109,9 +111,31 @@ router.delete("/:id", (req, res, next) => {
       });
     }
   });
-
-
 });
+
+// Download files
+router.get("/:fileName", function(req,res,next){
+  console.log('download function');
+  const fileName = path.join(__dirname,'../uploads') +'/'+ req.params.fileName;
+  res.sendFile(fileName);
+});
+
+/* router.get('/:filePath', function (req, res){
+    filePath = req.params.filePath;
+    const dirname = path.resolve(".")+'';
+    var img = fs.readFileSync(dirname  + file);
+    res.writeHead(200, {'Content-Type': 'image/jpg' });
+    res.end(img, 'binary');
+}); */
+
+// Download files
+/* router.post("/download", function(req,res,next){
+  console.log(req.body.filePath);
+  filepath = path.join(__dirname,'../uploads') +'/'+ req.body.filePath;
+  res.sendFile(req.body.filepath);
+  // res.download(filepath, req.body.filePath);
+}); */
+
 
 // formidable, example marche
 /*
@@ -146,6 +170,19 @@ router.post("", (req, res, next) =>{
           id: createdContract ._id
         }
       });
-    }); */
+    });
+
+    router.get("/:id", (req, res, next) => {
+  FileResident.findById(req.params.id).then(fileResident => {
+    if (fileResident) {
+      res.status(200).json(fileResident);
+      console.log(fileResident);
+    } else {
+      res.status(404).json({ message: "Post not found!" });
+    }
+  });
+});
+
+    */
 
 module.exports = router;
