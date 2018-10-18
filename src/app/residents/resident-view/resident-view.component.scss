@@ -1,9 +1,17 @@
-.mat-accordion{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-self: auto;
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.matExpansionPanel{
+  margin-left: 8rem;
+  margin-right: 8rem;
 }
 .example-form {
 
@@ -11,14 +19,21 @@
 }
 
 .example-full-width {
-  width: 100%;
+  width: 80%;
 }
 
 .backSetting{
   color: blue;
   margin-left: 2rem;
 }
-.itemSetting2{
+
+.formSetting{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+/* .itemSetting2{
   width: 48%;
   margin: 0.5rem;
 }
@@ -27,7 +42,7 @@
   width: 20rem !important;
   outline-color : red;
   color:#666;
-}
+} */
 
 /* @media screen and (min-width: 400px) {
   .itemSetting2{

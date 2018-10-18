@@ -1,8 +1,10 @@
+import { Appartment } from './../../app-models/residant-data-models/appartment-info.model';
+import { AppartmentsService } from './../../services/appartment.service';
 import { mimeType } from './../resident-create/mime-type.validator';
 // tslint:disable:quotemark
 import { ResidentsService } from "../../services/residents.service";
 import { Resident } from "../resident.model";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, HostListener, ElementRef } from "@angular/core";
 import { Subscription } from "rxjs";
 import {
   ActivatedRoute,
@@ -28,18 +30,53 @@ export class ResidentViewComponent implements OnInit {
   resident: Resident;
   residentForm: FormGroup;
   imagePreview: any;
+  step = 0;
+  private appartmentsSub: Subscription;
+  appartments: Appartment[] = [];
+  selectedAppartment: Appartment;
+  selectedAppartment2: string;
+
 
   constructor(
     private residentsService: ResidentsService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private appartmentsService: AppartmentsService,
+    private element: ElementRef
+  ) {
+    this.element.nativeElement.object = this.selectedAppartment;
+  }
+
+
 
   ngOnInit() {
     this.getResidentId();
+    this.initGetAppartments();
+    this.idAppartmentInfo();
+    this.selectedAppartment = this.getAppartmentFromAppartmentId(this.residentForm.get('appartmentInfo').value);
+
   }
 
+// get data from appartment Info
+ idAppartmentInfo() {
+  const id = this.route.snapshot.paramMap.get("id");
+  this.residentsService.getResident2(id).subscribe(residentData => {
+    const selectedResident: Resident = {
+      appartmentInfo: residentData.appartmentInfo,
+    } as Resident;
+    if (selectedResident.appartmentInfo != null) {
+      this.selectedAppartment2 = selectedResident.appartmentInfo;
+      this.updateSelectedAppartment(this.selectedAppartment2);
+    } else {
+      console.log('impossible to find the appartment');
+    }
+
+  });
+ }
+
+
+// Get all residents
   onGetAllResident() {
     this.residentsService.getResidents();
     this.residentsSub = this.residentsService
@@ -49,6 +86,7 @@ export class ResidentViewComponent implements OnInit {
       });
   }
 
+  // get a resident onInit function
   getResidentId() {
     this.residentForm = new FormGroup({
       lastName: new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
@@ -88,9 +126,11 @@ export class ResidentViewComponent implements OnInit {
           nextVisitDate: this.resident.nextVisitDate,
           image: this.resident.imagePath
       });
-    });
-  }
 
+    });
+
+  }
+// update the current picture
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.residentForm.patchValue({ image: file });
@@ -102,85 +142,27 @@ export class ResidentViewComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  onGetVisibility(imagePath: string) {
-    const resident: Resident = {
-      imagePath: imagePath
-    } as Resident;
-    if (imagePath === '') {
-      return 'hidden';
-    } else if ( imagePath !== ' ') {
-      return 'visible';
+
+    // view the list of all appartments
+    initGetAppartments() {
+      this.appartmentsService.getAppartments();
+      this.appartmentsSub = this.appartmentsService
+        .getAppartmentUpdateListener()
+        .subscribe((appartments: Appartment[]) => {
+          this.appartments = appartments;
+        });
     }
+
+     // get selected appartment
+  getAppartmentFromAppartmentId(id) {
+    return this.appartments.filter(item => {
+      return item.id === id;
+    })[0];
   }
-
-/* getResidentId() {
-    const id = this.route.snapshot.paramMap.get("id");
-    this.residentsService.getResident2(id).subscribe(residentData => {
-      this.resident = {
-        id: residentData._id,
-        firstName: residentData.firstName,
-        lastName: residentData.lastName,
-        appartmentInfo: residentData.appartmentInfo,
-        isRentPaid: residentData.isRentPaid,
-        phoneNumber: residentData.phoneNumber,
-        rent: residentData.rent,
-        contractEndDate: residentData.contractEndDate,
-        nextVisitDate: residentData.nextVisitDate,
-        imagePath: residentData.imagePath.toString()
-      }; );
-  } */
-
-
-
-
-
-/*   getResidentId() {
-    const id = this.route.snapshot.paramMap.get("id");
-    this.residentsService.getResident2(id).subscribe(residentData => {
-      this.resident = {
-        id: residentData._id,
-        firstName: residentData.firstName,
-        lastName: residentData.lastName,
-        appartmentInfo: residentData.appartmentInfo,
-        isRentPaid: residentData.isRentPaid,
-        phoneNumber: residentData.phoneNumber,
-        rent: residentData.rent,
-        contractEndDate: residentData.contractEndDate,
-        nextVisitDate: residentData.nextVisitDate,
-        imagePath: residentData.imagePath.toString()
-      }; );
+  updateSelectedAppartment(selectedAppartmentId) {
+    this.selectedAppartment = this.getAppartmentFromAppartmentId(selectedAppartmentId);
   }
- */
-  /*   getResidentId() {
-    const id = this.route.snapshot.paramMap.get("ResidentId");
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has("residentId")) {
-        // this.mode = 'resident/view';
-        this.residentId = paramMap.get("residentId");
-
-        this.residentsService
-          .getResident2(this.residentId)
-          .subscribe(residentData => {
-            this.resident = {
-              id: residentData._id,
-              firstName: residentData.firstName,
-              lastName: residentData.lastName,
-              appartmentInfo: residentData.appartmentInfo,
-              isRentPaid: residentData.isRentPaid,
-              phoneNumber: residentData.phoneNumber,
-              rent: residentData.rent,
-              contractEndDate: residentData.contractEndDate,
-              nextVisitDate: residentData.nextVisitDate
-            };
-          });
-      } else {
-        this.residentId = null;
-
-        console.log("Impossible to find the resident");
-      }
-    });
-  }*/
-
+// Save
   onSave() {
      this.residentsService.updateResident(
       this.resident.id,
@@ -195,6 +177,31 @@ export class ResidentViewComponent implements OnInit {
       this.residentForm.value.image
     );
   }
+
+  onGetVisibility(imagePath: string) {
+    const resident: Resident = {
+      imagePath: imagePath
+    } as Resident;
+    if (imagePath === '') {
+      return 'hidden';
+    } else if ( imagePath !== ' ') {
+      return 'visible';
+    }
+  }
+
+  // Steps for each group of information
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
+
 
   /*   getResidentId(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -241,31 +248,4 @@ export class ResidentViewComponent implements OnInit {
   onViewAllResident() {
     this.router.navigate(["resident"]);
   }
-
-  /* getResidentId() {
-   this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('residentId')) {
-        // this.mode = 'resident/view';
-        this.residentId = paramMap.get('residentId');
-        // this.isLoading = true;
-        this.residentsService.getResident(this.residentId)
-        .subscribe(residentData => this.resident = residentData
-          // this.isLoading = false;
-
-        );
-      } else {
-        this.residentId = null;
-        console.log('Impossible to find the resident');
-      }
-    });
-
-  } */
-
-  /*  ngOnInit() {
-    this.residentsService.getResidents();
-    this.residentsSub = this.residentsService.getResidentUpdateListener()
-    .subscribe((residents: Resident[]) => {
-      this.residents = residents;
-    });
-  } */
 }

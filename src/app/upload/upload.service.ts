@@ -20,7 +20,7 @@ export class UploadService {
   private fileResidentsUpdate = new Subject<FileResident[]>();
   constructor(private http: HttpClient) {}
 
-  public upload(files: Set<File>, fieldNameFront): { [key: string]: Observable<number> } {
+  public upload(files: Set<File>, fieldNameFront, residentIdFile): { [key: string]: Observable<number> } {
     // this will be the our resulting map
     const status = {};
 
@@ -29,6 +29,7 @@ export class UploadService {
       const formData: FormData = new FormData();
       formData.append('file', file, file.name);
       formData.append('fieldNameFront', fieldNameFront);
+      formData.append('residentIdFile', residentIdFile);
 
       // create a http-post request and pass the form
       // tell it to report the upload progress
@@ -88,7 +89,6 @@ export class UploadService {
         this.fileResidentsUpdate.next([...this.fileResidents]);
         // this.router.navigate(['appartments']);
       });
-      console.log(this.fileResidents + '//// les residents');
   }
 
   // listener

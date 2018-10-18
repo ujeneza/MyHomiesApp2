@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 
 app.use("/api/residents", residentRoutes);
 app.use("/api/appartments", appartmentRoutes);
-app.use("/api/residents/contractInfos", contractInfoRoutes);
+app.use("/api/contractInfo", contractInfoRoutes);
 app.use('/api/file',fileRoutes);
 
 

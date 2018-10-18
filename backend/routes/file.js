@@ -54,7 +54,8 @@ router.post("", multer({ storage: storage }).array('file',4),
     name: req.files[0].originalname,
     lastModifiedDate: Date.now(),
     filePath: req.files[0].filename,
-    fieldNameFront: req.body.fieldNameFront
+    fieldNameFront: req.body.fieldNameFront,
+    residentIdFile: req.body.residentIdFile
   });
   fileResident.save().then(createdFileResident => {
     res.status(201).json({

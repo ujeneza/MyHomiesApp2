@@ -21,6 +21,8 @@ export class UploadComponent {
   fieldNameFront: string;
   @Input()
   labelName: string;
+  @Input() residentIdFile: string;
+
   constructor(
     public dialog: MatDialog,
     public uploadService: UploadService,
@@ -29,7 +31,7 @@ export class UploadComponent {
 
   public openUploadDialog() {
     const dialogRef = this.dialog.open(DialogComponent, {
-      data: { file: this.fileResident, name: this.fieldNameFront, label: this.labelName },
+      data: { file: this.fileResident, name: this.fieldNameFront, label: this.labelName, residentIdFile: this.residentIdFile},
       width: '50%',
       height: '50%'
     });

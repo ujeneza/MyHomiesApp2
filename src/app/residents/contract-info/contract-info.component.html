@@ -7,89 +7,61 @@
 <mat-card>
   <form [formGroup]="contractInfoForm" (submit)="onSaveContractInfo()">
     <mat-form-field>
-      <input matInput type="text" formControlName="reresidentId" name="residentId" required minlength="3" placeholder="Resident ID">
+      <input matInput type="text" formControlName="residentId"  required minlength="3" placeholder="Resident ID">
       <mat-error>Please enter your last name</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="inventoryEntryDate" [matDatepicker]="inventoryEntryDate" name="inventoryEntryDate"required minlength="3" placeholder="Inventory Entry Date">
+      <input matInput formControlName="inventoryEntryDate" [matDatepicker]="inventoryEntryDate" required minlength="3" placeholder="Inventory Entry Date">
       <mat-datepicker-toggle matSuffix [for]="inventoryEntryDate"></mat-datepicker-toggle>
       <mat-datepicker #inventoryEntryDate></mat-datepicker>
       <mat-error>Please enter your first name</mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput type="number"  formControlName="coldWaterIndex" name="coldWaterIndex" required placeholder="Cold Water Index">
+      <input matInput type="number"  formControlName="coldWaterIndex" required placeholder="Cold Water Index">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput type="number" formControlName="hotWaterIndex"  name="hotWaterIndex" placeholder="Hot Water Index">
+      <input matInput type="number" formControlName="hotWaterIndex"  placeholder="Hot Water Index">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput  formControlName="contractSignDate"  [matDatepicker]="contractSignDate" name="contractSignDate" placeholder="Contract Sign Date">
+      <input matInput  formControlName="contractSignDate"  [matDatepicker]="contractSignDate"  placeholder="Contract Sign Date">
       <mat-datepicker-toggle matSuffix [for]="contractSignDate"></mat-datepicker-toggle>
       <mat-datepicker #contractSignDate></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput  formControlName="entryDate" [matDatepicker]="entryDate"  name="entryDate"  placeholder="Entry Date">
+      <input matInput  formControlName="entryDate" [matDatepicker]="entryDate"    placeholder="Entry Date">
       <mat-datepicker-toggle matSuffix [for]="entryDate"></mat-datepicker-toggle>
       <mat-datepicker #entryDate></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput  formControlName="contractEndDate" [matDatepicker]="contractEndDate"  name="contractEndDate" placeholder="Contract End Date">
+      <input matInput  formControlName="contractEndDate" [matDatepicker]="contractEndDate"   placeholder="Contract End Date">
       <mat-datepicker-toggle matSuffix [for]="contractEndDate"></mat-datepicker-toggle>
       <mat-datepicker #contractEndDate></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput  formControlName="exitDate"  [matDatepicker]="exitDate" name="exitDate" placeholder="Exit Date">
+      <input matInput  formControlName="exitDate"  [matDatepicker]="exitDate"  placeholder="Exit Date">
       <mat-datepicker-toggle matSuffix [for]="exitDate"></mat-datepicker-toggle>
       <mat-datepicker #exitDate></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput formControlName="inventoryExitDate" [matDatepicker]="inventoryExitDate" name="inventoryExitDate" placeholder="Inventory Exit Date">
+      <input matInput formControlName="inventoryExitDate" [matDatepicker]="inventoryExitDate"  placeholder="Inventory Exit Date">
       <mat-datepicker-toggle matSuffix [for]="inventoryExitDate"></mat-datepicker-toggle>
       <mat-datepicker #inventoryExitDate></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput formControlName="nextVisitDate" [matDatepicker]="nextVisitDate"  name="nextVisitDate" placeholder="Next Visit Date">
+      <input matInput formControlName="nextVisitDate" [matDatepicker]="nextVisitDate"   placeholder="Next Visit Date">
       <mat-datepicker-toggle matSuffix [for]="nextVisitDate"></mat-datepicker-toggle>
       <mat-datepicker #nextVisitDate></mat-datepicker>
     </mat-form-field>
 
-  <div>
 
-    <app-upload fieldNameFront = "inventoryExit"></app-upload>
-  </div>
-
-
-
-    <mat-form-field>
-      <input matInput type="string" formControlName="inventoryExit"  name="inventoryExit" placeholder="Inventory Exit">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput type="string" formControlName="inventoryEntry"  name="inventoryEntry" placeholder="Inventory Entryr">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput type="string" formControlName="exitCalculation"  name="exitCalculation" placeholder="Exit Calculation">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput type="string" formControlName="formalNoticeLetter"  name="formalNoticeLetter" placeholder="Formal Notice Letter">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput type="string" formControlName="picturesEntryInventory"  name="picturesEntryInventory" placeholder="Pictures Entry Inventory">
-    </mat-form-field>
-    <mat-form-field>
-        <input matInput type="string" formControlName="picturesExitInventory"  name="picturesExitInventory" placeholder="Pictures Exit Inventory">
-      </mat-form-field>
 
     <mat-action-row>
       <button mat-raised-button type="submit" color="accent" [disabled]="contractInfoForm.invalid">

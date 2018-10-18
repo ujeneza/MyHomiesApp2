@@ -1,6 +1,6 @@
 export interface ContractInfo {
   id: string;
-  reresidentId: string;
+  residentId: string;
   inventoryEntryDate: Date;
   coldWaterIndex: number;
   hotWaterIndex: number;

@@ -23,6 +23,7 @@ export class DialogComponent implements OnInit {
  @ViewChild('file') file;
  @Input()
  fieldNameFront: string;
+ @Input() residentIdFile: string;
 
   public files: Set<File> = new Set();
 
@@ -78,7 +79,7 @@ export class DialogComponent implements OnInit {
     this.uploading = true;
 
     // start the upload and save the progress map
-    this.progress = this.uploadService.upload(this.files, this.data.name);
+    this.progress = this.uploadService.upload(this.files, this.data.name, this.data.residentIdFile);
     console.log(this.progress);
     // tslint:disable-next-line:forin
     for (const key in this.progress) {

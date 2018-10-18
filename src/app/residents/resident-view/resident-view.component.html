@@ -1,7 +1,166 @@
-<!-- <mat-accordion multi="false" > -->
-
 <a mat-button class="backSetting" routerLink="" (click)="onGetAllResident()">
-  <i class="material-icons">arrow_back_ios</i> Resident list</a>
+    <i class="material-icons">arrow_back_ios</i> Resident list</a>
+
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel class="matExpansionPanel" [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Personal Information
+      </mat-panel-title>
+      <mat-panel-description>
+        How to reach you?
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="dataSetting" *ngIf="resident">
+      <form [formGroup]="residentForm" class="example-form">
+
+        <div class="picture-preview">
+          <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && residentForm.get('image').valid">
+            <img [src]="imagePreview" [alt]="residentForm.value.title">
+          </div>
+          <div class="image-preview2" *ngIf="resident.imagePath">
+            <img [src]="resident.imagePath" [alt]="residentForm.value.title">
+          </div>
+          <div class="iconPicture">
+            <mat-icon matSuffix (click)="filePicker.click()">add_a_photo</mat-icon>
+            <input type="file" #filePicker (change)="onImagePicked($event)">
+          </div>
+        </div>
+        <div class="formSetting">
+
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" formControlName="firstName" placeholder="First Name:">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" formControlName="lastName" placeholder="Last Name:">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+
+          <mat-select matInput formControlName="isRentPaid" required placeholder="Is the appartement paid this month?">
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+          <!--   <input matInput type="text" formControlName="{{'isRentPaid' | questionableBoolean}}" placeholder="Is Rent Paid:" > -->
+
+          <!-- [(ngModel)]="resident.isRentPaid" -->
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <!-- <input matInput type="text" formControlName="appartmentInfo" required placeholder="Appartement"> -->
+            <mat-select formControlName="appartmentInfo"  required placeholder="Appartement "
+             (selectionChange)="updateSelectedAppartment($event.value)" >
+              <mat-option *ngFor="let appartment of appartments" selectedAppartment="appartmentInfo" [value]="appartment.id">{{ appartment.appartmentName}}</mat-option>
+            </mat-select>
+            <!-- <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>  -->
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input type="text" matInput formControlName="phoneNumber" placeholder="Phone number:">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input type="text" matInput formControlName="rent" placeholder="Rent: ">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput formControlName="contractEndDate" [matDatepicker]="contractEndDate" placeholder="Contract End Date">
+          <mat-datepicker-toggle matSuffix [for]="contractEndDate"></mat-datepicker-toggle>
+          <mat-datepicker #contractEndDate></mat-datepicker>
+          <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput formControlName="nextVisitDate" [matDatepicker]="nextVisitDate" placeholder="Next visit date">
+          <mat-datepicker-toggle matSuffix [for]="nextVisitDate"></mat-datepicker-toggle>
+          <mat-datepicker #nextVisitDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      </form>
+    </div>
+    <mat-action-row>
+        <button mat-button color="primary" (click)="onSave()">Save</button>
+      <button mat-button color="primary" (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="matExpansionPanel" [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Contract Information
+      </mat-panel-title>
+      <mat-panel-description>
+        Inform us about your contract
+        <mat-icon>border_color</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <input matInput placeholder="Country">
+    </mat-form-field>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="primary" (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+  <mat-expansion-panel class="matExpansionPanel" [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Appartment Information
+        </mat-panel-title>
+        <mat-panel-description>
+          Which appartment have you choosen?
+          <mat-icon>scatter_plot</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+          <mat-list>
+            <mat-list-item> Appartment Name: {{selectedAppartment?.appartmentName}}</mat-list-item>
+            <mat-divider> </mat-divider>
+            <mat-list-item> Appartment Code Name: {{selectedAppartment?.appartmentCodeName}} </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item> Rent: {{selectedAppartment?.rent}} </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Monthly Expense: {{selectedAppartment?.monthlyExpenses}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Ean Meter: {{selectedAppartment?.eanNumber}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Electricity Meter: {{selectedAppartment?.electricityMeter}}</mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>Hot Water Meter: {{selectedAppartment?.hotWaterMeter}}</mat-list-item>
+            <mat-divider></mat-divider>
+          </mat-list>
+
+
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Previous</button>
+        <button mat-button color="primary" (click)="nextStep()">Next</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+  <mat-expansion-panel class="matExpansionPanel" [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Resident documents
+      </mat-panel-title>
+      <mat-panel-description>
+        Share all your documents
+        <mat-icon>attachment</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <app-resident-files></app-resident-files>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="primary" (click)="nextStep()">End</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+
+
+</mat-accordion>
+
+
+
+
 <div class="mat-accordion">
   <div class="itemSetting2">
     <mat-expansion-panel>
@@ -9,57 +168,57 @@
         <p> Personal Information</p>
       </mat-expansion-panel-header>
       <div class="dataSetting" *ngIf="resident">
-        <form [formGroup]="residentForm"  class="example-form">
+        <form [formGroup]="residentForm" class="example-form">
 
           <div class="picture-preview">
             <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && residentForm.get('image').valid">
-              <img  [src]="imagePreview" [alt]="residentForm.value.title">
+              <img [src]="imagePreview" [alt]="residentForm.value.title">
             </div>
             <div class="image-preview2" *ngIf="resident.imagePath">
-                <img  [src]="resident.imagePath" [alt]="residentForm.value.title">
-              </div>
+              <img [src]="resident.imagePath" [alt]="residentForm.value.title">
+            </div>
             <div class="iconPicture">
-              <mat-icon  matSuffix (click)="filePicker.click()">add_a_photo</mat-icon>
-              <input type="file"  #filePicker (change)="onImagePicked($event)"  >
+              <mat-icon matSuffix (click)="filePicker.click()">add_a_photo</mat-icon>
+              <input type="file" #filePicker (change)="onImagePicked($event)">
             </div>
           </div>
 
           <mat-form-field class="example-full-width">
-            <input matInput type="text"  formControlName="firstName" placeholder="First Name:">
+            <input matInput type="text" formControlName="firstName" placeholder="First Name:">
           </mat-form-field>
           <mat-form-field class="example-full-width">
-            <input matInput type="text"  formControlName="lastName" placeholder="Last Name:">
+            <input matInput type="text" formControlName="lastName" placeholder="Last Name:">
           </mat-form-field>
           <mat-form-field class="example-full-width">
 
-              <mat-select matInput  formControlName="isRentPaid" required placeholder="Is the appartement paid this month?">
-                  <mat-option [value]="true">Yes</mat-option>
-                  <mat-option [value]="false">No</mat-option>
-                </mat-select>
-          <!--   <input matInput type="text" formControlName="{{'isRentPaid' | questionableBoolean}}" placeholder="Is Rent Paid:" > -->
+            <mat-select matInput formControlName="isRentPaid" required placeholder="Is the appartement paid this month?">
+              <mat-option [value]="true">Yes</mat-option>
+              <mat-option [value]="false">No</mat-option>
+            </mat-select>
+            <!--   <input matInput type="text" formControlName="{{'isRentPaid' | questionableBoolean}}" placeholder="Is Rent Paid:" > -->
 
-              <!-- [(ngModel)]="resident.isRentPaid" -->
+            <!-- [(ngModel)]="resident.isRentPaid" -->
           </mat-form-field>
           <mat-form-field class="example-full-width">
-            <input matInput type="text"  formControlName="appartmentInfo" placeholder="Room: ">
+            <input matInput type="text" formControlName="appartmentInfo" placeholder="Room: ">
           </mat-form-field>
           <mat-form-field class="example-full-width">
             <input type="text" matInput formControlName="phoneNumber" placeholder="Phone number:">
           </mat-form-field>
           <mat-form-field class="example-full-width">
-            <input type="text" matInput formControlName="rent"  placeholder="rent: ">
+            <input type="text" matInput formControlName="rent" placeholder="rent: ">
           </mat-form-field>
           <mat-form-field class="example-full-width">
-              <input matInput formControlName="contractEndDate" [matDatepicker]="contractEndDate" placeholder="Contract End Date">
-              <mat-datepicker-toggle matSuffix [for]="contractEndDate"></mat-datepicker-toggle>
-              <mat-datepicker #contractEndDate></mat-datepicker>
-              <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <input matInput formControlName="nextVisitDate" [matDatepicker]="nextVisitDate" placeholder="Next visit date">
-              <mat-datepicker-toggle matSuffix [for]="nextVisitDate"></mat-datepicker-toggle>
-              <mat-datepicker #nextVisitDate></mat-datepicker>
-            </mat-form-field>
+            <input matInput formControlName="contractEndDate" [matDatepicker]="contractEndDate" placeholder="Contract End Date">
+            <mat-datepicker-toggle matSuffix [for]="contractEndDate"></mat-datepicker-toggle>
+            <mat-datepicker #contractEndDate></mat-datepicker>
+            <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput formControlName="nextVisitDate" [matDatepicker]="nextVisitDate" placeholder="Next visit date">
+            <mat-datepicker-toggle matSuffix [for]="nextVisitDate"></mat-datepicker-toggle>
+            <mat-datepicker #nextVisitDate></mat-datepicker>
+          </mat-form-field>
 
         </form>
       </div>
@@ -108,6 +267,18 @@
     </mat-expansion-panel>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- </mat-accordion> -->
 
 <!-- <form class="example-form">

@@ -12,6 +12,7 @@ import { saveAs } from 'file-saver';
 })
 export class ResidentFilesComponent implements OnInit {
   fieldNameFront: string;
+  residentIdFile: string;
   fileResidents: FileResident[] = [];
   fileResidentsSub: Subscription;
 
@@ -32,7 +33,7 @@ export class ResidentFilesComponent implements OnInit {
         this.fileResidents = fileResidents;
       }
     );
-    console.log(this.fileResidents);
+
   }
 
     // Delete one fileResident

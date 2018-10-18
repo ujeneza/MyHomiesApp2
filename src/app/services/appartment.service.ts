@@ -56,7 +56,7 @@ export class AppartmentsService {
   getAppartments() {
     this.http
       .get<{ message: string; appartments: any }>(
-        'http://localhost:3000/api/appartments'
+        'http://localhost:3000/api/appartments/'
       )
       .pipe(
         map(appartmentData => {

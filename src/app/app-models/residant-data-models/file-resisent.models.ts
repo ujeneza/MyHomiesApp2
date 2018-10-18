@@ -4,4 +4,5 @@ name: string;
 lastModifiedDate: Date;
 filePath: string;
 fieldNameFront: string;
+residentIdFile: string;
 }

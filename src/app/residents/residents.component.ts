@@ -1,3 +1,5 @@
+import { Appartment } from './../app-models/residant-data-models/appartment-info.model';
+import { AppartmentsService } from './../services/appartment.service';
 import { Resident } from './resident.model';
 import { Component, OnInit,  OnDestroy } from '@angular/core';
 import { ResidentsService } from '../services/residents.service';
@@ -13,13 +15,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ResidentsComponent implements OnInit, OnDestroy {
   residents: Resident [] = [];
   private residentsSub: Subscription;
+  private appartmentsSub: Subscription;
+  appartments: Appartment[] = [];
+  selectedAppartment: Appartment;
 
-  constructor(private residentsService: ResidentsService, public router: Router) { }
+  constructor(private residentsService: ResidentsService,
+    public router: Router,
+    private appartmentsService: AppartmentsService) { }
 
   ngOnInit() {
     this.initGetResidents();
+    this.initGetAppartments();
   }
 
+  // Init get all residents
   initGetResidents() {
     this.residentsService.getResidents();
     this.residentsSub = this.residentsService.getResidentUpdateListener()
@@ -27,7 +36,16 @@ export class ResidentsComponent implements OnInit, OnDestroy {
       this.residents = residents;
     });
   }
-
+  // view the list of all appartments
+    initGetAppartments() {
+      this.appartmentsService.getAppartments();
+      this.appartmentsSub = this.appartmentsService
+        .getAppartmentUpdateListener()
+        .subscribe((appartments: Appartment[]) => {
+          this.appartments = appartments;
+        });
+    }
+  // delete one appartmenet
   onDelete(residentId: string) {
     this.residentsService.deleteResident(residentId);
   }

@@ -82,6 +82,8 @@ export class ResidentCreateComponent implements OnInit {
     }); */
   }
 
+  // a picture to a resident
+
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.residentForm.patchValue({ image: file });
@@ -92,6 +94,8 @@ export class ResidentCreateComponent implements OnInit {
     };
     reader.readAsDataURL(file);
   }
+
+  // add a new resident
 
   onAddNewResident() {
     const firstName = this.residentForm.get('firstName').value;
@@ -126,7 +130,7 @@ export class ResidentCreateComponent implements OnInit {
       });
   }
 
-  // get one appartment
+  // get selected appartment
   getAppartmentFromAppartmentId(id) {
     return this.appartments.filter(item => {
       return item.id === id;
