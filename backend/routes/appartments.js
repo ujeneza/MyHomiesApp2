@@ -13,7 +13,8 @@ router.post("", (req, res, next) => {
     eanNumber: req.body.eanNumber,
     electricityMeter: req.body.electricityMeter,
     hotWaterMeter: req.body.hotWaterMeter,
-    coldWaterMeter: req.body.coldWaterMeter
+    coldWaterMeter: req.body.coldWaterMeter,
+    appartmentWarranty: req.body.appartmentWarranty
   });
   console.log(appartment);
   appartment.save().then(createdAppartment => {
@@ -41,7 +42,7 @@ router.get("", (req, res, next) => {
         message: "appartment not found!"
       });
     }
-    
+
   });
 });
 
@@ -70,7 +71,8 @@ router.put("/:id", (req, res, next) => {
     eanNumber: req.body.eanNumber,
     electricityMeter: req.body.electricityMeter,
     hotWaterMeter: req.body.hotWaterMeter,
-    coldWaterMeter: req.body.coldWaterMeter
+    coldWaterMeter: req.body.coldWaterMeter,
+    appartmentWarranty: req.body.appartmentWarranty,
   });
   Appartment.updateOne({
     _id: req.params.id

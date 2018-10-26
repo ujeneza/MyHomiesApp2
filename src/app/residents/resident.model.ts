@@ -3,11 +3,11 @@ export interface Resident {
   firstName: string;
   lastName: string;
  appartmentInfo: any;
-    isRentPaid: boolean;
     phoneNumber: number;
-    rent: number;
-   contractEndDate: Date;
-  nextVisitDate: Date;
+    email: string;
+    dateofBirth: Date;
+    nationality: string;
+    residentOtherInfo: string;
   imagePath: string | File;
 
 }

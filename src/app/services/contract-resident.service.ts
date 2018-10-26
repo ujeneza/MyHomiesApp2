@@ -128,7 +128,7 @@ export class ContractResidentService {
           nextVisitDate: nextVisitDate,
         };
         this.http
-        .put("http://localhost:3000/api/contractInfo/" + id, contractInfoData)
+        .put("http://localhost:3000/api/contractInfo/" + residentId, contractInfoData)
         .subscribe(response => {
           const updatedContractInfos = [...this.contractInfos];
           const oldContractInfoIndex = updatedContractInfos.findIndex(p => p.id === id);
@@ -183,9 +183,9 @@ export class ContractResidentService {
 
   // get one contract
 
-  getContract(id: string) {
+  getContract(residentId: string) {
     return this.http.get<ContractInfo>(
-      'http://localhost:3000/api/contractInfo/' + id
+      'http://localhost:3000/api/contractInfo/' + residentId
     );
   }
 

@@ -26,7 +26,7 @@ import {
 export class ResidentViewComponent implements OnInit {
   residents: Resident[] = [];
   private residentsSub: Subscription;
-  private residentId: string;
+ residentId: string;
   resident: Resident;
   residentForm: FormGroup;
   imagePreview: any;
@@ -35,6 +35,7 @@ export class ResidentViewComponent implements OnInit {
   appartments: Appartment[] = [];
   selectedAppartment: Appartment;
   selectedAppartment2: string;
+  globalId: string;
 
 
   constructor(
@@ -92,38 +93,39 @@ export class ResidentViewComponent implements OnInit {
       lastName: new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
       firstName: new FormControl( null, {validators: [Validators.required, Validators.minLength(3)]}),
       appartmentInfo: new FormControl( null, {validators: [Validators.required]}),
-      isRentPaid: new FormControl(null, { validators: [Validators.required] }),
       phoneNumber: new FormControl(null, { validators: [Validators.required] }),
-      rent: new FormControl(null, { validators: [Validators.required] }),
-      contractEndDate: new FormControl(null, { validators: [Validators.required] }),
-      nextVisitDate: new FormControl(null, { validators: [Validators.required] }),
+      email: new FormControl(null, {validators: [Validators.minLength(3)]}),
+      dateofBirth: new FormControl(null, {validators: [Validators.minLength(3)]}),
+      nationality: new FormControl(null, {validators: [Validators.minLength(3)]}),
+      residentOtherInfo: new FormControl(null, {validators: [Validators.minLength(3)]}),
       image: new FormControl(null, {
         validators: [Validators.required],
         asyncValidators: [mimeType]})
     });
     const id = this.route.snapshot.paramMap.get("id");
+    this.globalId = id;
     this.residentsService.getResident2(id).subscribe(residentData => {
       this.resident = {
         id: residentData._id,
         firstName: residentData.firstName,
         lastName: residentData.lastName,
         appartmentInfo: residentData.appartmentInfo,
-        isRentPaid: residentData.isRentPaid,
         phoneNumber: residentData.phoneNumber,
-        rent: residentData.rent,
-        contractEndDate: residentData.contractEndDate,
-        nextVisitDate: residentData.nextVisitDate,
+        email: residentData.email,
+        dateofBirth: residentData.dateofBirth,
+        nationality: residentData.nationality,
+        residentOtherInfo: residentData.residentOtherInfo,
         imagePath: residentData.imagePath
       };
       this.residentForm.setValue({
         firstName: this.resident.firstName,
           lastName: this.resident.lastName,
           appartmentInfo: this.resident.appartmentInfo,
-          isRentPaid: this.resident.isRentPaid,
           phoneNumber: this.resident.phoneNumber,
-          rent: this.resident.rent,
-          contractEndDate: this.resident.contractEndDate,
-          nextVisitDate: this.resident.nextVisitDate,
+          email: this.resident.email,
+          dateofBirth: this.resident.dateofBirth,
+          nationality: this.resident.nationality,
+          residentOtherInfo: this.resident.residentOtherInfo,
           image: this.resident.imagePath
       });
 
@@ -169,11 +171,11 @@ export class ResidentViewComponent implements OnInit {
       this.residentForm.value.firstName,
       this.residentForm.value.lastName,
       this.residentForm.value.appartmentInfo,
-      this.residentForm.value.isRentPaid,
       this.residentForm.value.phoneNumber,
-      this.residentForm.value.rent,
-      this.residentForm.value.contractEndDate,
-      this.residentForm.value.nextVisitDate,
+      this.residentForm.value.email,
+      this.residentForm.value.dateofBirth,
+      this.residentForm.value.nationality,
+      this.residentForm.value.residentOtherInfo,
       this.residentForm.value.image
     );
   }
@@ -207,7 +209,7 @@ export class ResidentViewComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     this.residentsService.getResident(id)
       .subscribe(resident => this.resident = resident );
-  } */
+  }
 
   /*
   onSave() {

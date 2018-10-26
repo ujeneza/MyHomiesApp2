@@ -39,11 +39,11 @@ router.post("",
     lastName: req.body.lastName,
     firstName: req.body.firstName,
     appartmentInfo: req.body.appartmentInfo,
-    isRentPaid: req.body.isRentPaid,
     phoneNumber: req.body.phoneNumber,
-    rent: req.body.rent,
-    contractEndDate: req.body.contractEndDate,
-    nextVisitDate: req.body.nextVisitDate,
+    email: req.body.email,
+    dateofBirth: req.body.dateofBirth,
+    nationality: req.body.nationality,
+    residentOtherInfo: req.body.residentOtherInfo,
     imagePath: url + "/images/" + req.file.filename
   });
   resident.save().then(createdResident => {
@@ -71,11 +71,11 @@ multer({ storage: storage }).single("image"),
     lastName: req.body.lastName,
     firstName: req.body.firstName,
     appartmentInfo: req.body.appartmentInfo,
-    isRentPaid: req.body.isRentPaid,
     phoneNumber: req.body.phoneNumber,
-    rent: req.body.rent,
-    contractEndDate: req.body.contractEndDate,
-    nextVisitDate: req.body.nextVisitDate,
+    email: req.body.email,
+    dateofBirth: req.body.dateofBirth,
+    nationality: req.body.nationality,
+    residentOtherInfo: req.body.residentOtherInfo,
     imagePath: imagePath
   });
 

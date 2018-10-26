@@ -23,7 +23,8 @@ export class AppartmentsService {
     eanNumber: number,
     electricityMeter: number,
     hotWaterMeter: number,
-    coldWaterMeter: number
+    coldWaterMeter: number,
+    appartmentWarranty: number
   ) {
     const appartment: Appartment = {
       id: null,
@@ -34,7 +35,8 @@ export class AppartmentsService {
       eanNumber: eanNumber,
       electricityMeter: electricityMeter,
       hotWaterMeter: hotWaterMeter,
-      coldWaterMeter: coldWaterMeter
+      coldWaterMeter: coldWaterMeter,
+      appartmentWarranty: appartmentWarranty
     };
     this.http
       .post<{ message: string; appartmentId: string }>(
@@ -70,7 +72,8 @@ export class AppartmentsService {
               eanNumber: appartment.eanNumber,
               electricityMeter: appartment.electricityMeter,
               hotWaterMeter: appartment.hotWaterMeter,
-              coldWaterMeter: appartment.coldWaterMeter
+              coldWaterMeter: appartment.coldWaterMeter,
+              appartmentWarranty: appartment.appartmentWarranty
             };
           });
         })
@@ -80,8 +83,6 @@ export class AppartmentsService {
         this.appartmentsUpdated.next([...this.appartments]);
         // this.router.navigate(['appartments']);
       });
-
-    console.log('appartment view all');
   }
   // View one appartment
   getAppartment(id: string) {
@@ -99,7 +100,8 @@ export class AppartmentsService {
     eanNumber: number,
     electricityMeter: number,
     hotWaterMeter: number,
-    coldWaterMeter: number
+    coldWaterMeter: number,
+    appartmentWarranty: number
   ) {
     const appartment: Appartment = {
       id: id,
@@ -110,7 +112,8 @@ export class AppartmentsService {
       eanNumber: eanNumber,
       electricityMeter: electricityMeter,
       hotWaterMeter: hotWaterMeter,
-      coldWaterMeter: coldWaterMeter
+      coldWaterMeter: coldWaterMeter,
+      appartmentWarranty: appartmentWarranty
     };
     this.http
       .put('http://localhost:3000/api/appartments/' + id, appartment)

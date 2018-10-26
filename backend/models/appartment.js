@@ -8,6 +8,7 @@ const appartmentSchema = mongoose.Schema({
   electricityMeter: {type: Number},
   hotWaterMeter: {type: Number},
   coldWaterMeter:  {type: Number},
+  appartmentWarranty: {type: Number},
 });
 module.exports = mongoose.model('Appartment', appartmentSchema);
 

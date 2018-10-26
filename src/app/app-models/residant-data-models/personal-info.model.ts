@@ -5,7 +5,7 @@ export interface PersonalInfo {
   lastName: string;
   phoneNumber: number;
   email: string;
-  birthday: Date;
+  dateofBirth: Date;
   nationality: string;
-  urgentNmber: number;
+  residentOtherInfo: string;
 }

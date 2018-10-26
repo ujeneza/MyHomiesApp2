@@ -52,6 +52,9 @@ export class CreateAppartmentComponent implements OnInit {
       }),
       coldWaterMeter: new FormControl(null, {
         validators: [Validators.required]
+      }),
+      appartmentWarranty: new FormControl(null, {
+        validators: [Validators.minLength(3)]
       })
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -71,7 +74,8 @@ export class CreateAppartmentComponent implements OnInit {
             eanNumber: appartmentData.eanNumber,
             electricityMeter: appartmentData.electricityMeter,
             hotWaterMeter: appartmentData.hotWaterMeter,
-            coldWaterMeter: appartmentData.coldWaterMeter
+            coldWaterMeter: appartmentData.coldWaterMeter,
+            appartmentWarranty: appartmentData.appartmentWarranty
           };
           this.appartmentForm.setValue({
             appartmentCodeName: this.appartment.appartmentCodeName,
@@ -81,7 +85,8 @@ export class CreateAppartmentComponent implements OnInit {
               eanNumber:  this.appartment.eanNumber,
               electricityMeter:  this.appartment.electricityMeter,
               hotWaterMeter:  this.appartment.hotWaterMeter,
-              coldWaterMeter:  this.appartment.coldWaterMeter
+              coldWaterMeter:  this.appartment.coldWaterMeter,
+              appartmentWarranty:  this.appartment.appartmentWarranty
           });
         });
       } else {
@@ -109,6 +114,7 @@ export class CreateAppartmentComponent implements OnInit {
         this.appartmentForm.value.electricityMeter,
         this.appartmentForm.value.hotWaterMeter,
         this.appartmentForm.value.coldWaterMeter,
+        this.appartmentForm.value.appartmentWarranty,
 
       );
     } else {
@@ -122,6 +128,7 @@ export class CreateAppartmentComponent implements OnInit {
         this.appartmentForm.value.electricityMeter,
         this.appartmentForm.value.hotWaterMeter,
         this.appartmentForm.value.coldWaterMeter,
+        this.appartmentForm.value.appartmentWarranty,
       );
     }
     this.appartmentForm.reset();

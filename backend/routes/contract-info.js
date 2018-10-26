@@ -36,7 +36,7 @@ router.get("", (req, res, next) => {
     if (documents) {
       res.status(200).json({
         message: "Contract Info fetched successfully!",
-        contractInfod: documents
+        contractInfo: documents
       });
     } else {
       res.status(404).json({
@@ -48,8 +48,9 @@ router.get("", (req, res, next) => {
 
 
 // select a contract Info
-router.get("/:id", (req, res, next) => {
-  ContractInfo.findById(req.params.id).then(contractInfo => {
+router.get("/:residentId", (req, res, next) => {
+  console.log(req.params.residentId + 'this is the resident ID');
+  ContractInfo.findOne({residentId: req.params.residentId}).then(contractInfo => {
     if (contractInfo) {
       res.status(200).json(contractInfo);
     } else {
@@ -58,10 +59,19 @@ router.get("/:id", (req, res, next) => {
       });
     }
   });
+ /*  ContractInfo.findOne(req.params.residentId).then(contractInfo => {
+    if (contractInfo) {
+      res.status(200).json(contractInfo);
+    } else {
+      res.status(404).json({
+        message: "Contract info not found!"
+      });
+    }
+  }); */
 });
 
 // update an ContractInfo created using a ID
-router.put("/:id", (req, res, next) => {
+router.put("/:residentId", (req, res, next) => {
   const contractInfo = new ContractInfo({
     _id: req.body.id,
     residentId: req.body.residentId,
@@ -75,9 +85,9 @@ router.put("/:id", (req, res, next) => {
     hotWaterIndex: req.body.hotWaterIndex,
     nextVisitDate:req.body.nextVisitDate,
   });
-  ContractInfo.updateOne({
-    _id: req.params.id
-  }, contractInfo).then(result => {
+  ContractInfo.updateOne(
+    {residentId: req.params.residentId}
+  , contractInfo).then(result => {
     res.status(200).json({
       message: "Update ContractInfo successful!"
     });

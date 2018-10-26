@@ -8,4 +8,5 @@ export interface Appartment {
   electricityMeter: number;
   hotWaterMeter: number;
   coldWaterMeter: number;
+  appartmentWarranty: number;
 }

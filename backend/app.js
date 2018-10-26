@@ -53,37 +53,3 @@ app.use('/api/file',fileRoutes);
 module.exports = app;
 
 
-/* app.post("/api/residents", (req, res, next) => {
-  const resident = new Resident({
-    lastName: req.body.lastName,
-    firstName: req.body.firstName,
-    appartmentInfo: req.body.appartmentInfo,
-    isRentPaid: req.body.isRentPaid,
-    phoneNumber: req.body.phoneNumber,
-    rent: req.body.rent,
-    contractEndDate: req.body.contractEndDate,
-    nextVisitDate: req.body.nextVisitDate
-  });
-  resident.save().then(createdResident => {
-    res.status(201).json({
-      message: "Resident added successfully",
-      ResidentId: createdResident._id
-    });
-  });
-});
-
-app.get("/api/residents", (req, res, next) => {
-  Resident.find().then(documents => {
-    res.status(200).json({
-      message: "residents fetched successfully!",
-      residents: documents
-    });
-  });
-});
-
-app.delete("/api/residents/:id", (req, res, next) => {
-  Resident.deleteOne({ _id: req.params.id }).then(result => {
-    console.log(result);
-    res.status(200).json({ message: "Resident deleted!" });
-  });
-}); */

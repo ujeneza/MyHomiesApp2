@@ -37,11 +37,11 @@ export class ResidentsService {
             lastName: resident.lastName,
             firstName: resident.firstName,
             appartmentInfo: resident.appartmentInfo,
-            isRentPaid: resident.isRentPaid,
             phoneNumber: resident.phoneNumber,
-            rent: resident.rent,
-            contractEndDate: resident.contractEndDate,
-            nextVisitDate: resident.nextVisitDate,
+            email: resident.email,
+            dateofBirth: resident.dateofBirth,
+            nationality: resident.nationality,
+            residentOtherInfo: resident.residentOtherInfo,
             imagePath: resident.imagePath
           };
         });
@@ -66,46 +66,32 @@ export class ResidentsService {
     lastName: string,
     firstName: string,
     appartmentInfo: any,
-    isRentPaid: boolean,
     phoneNumber: number,
-    rent: number,
-    contractEndDate: Date,
-    nextVisitDate: Date,
+    email: string,
+    dateofBirth: Date,
+    nationality: string,
+    residentOtherInfo: string,
     image: File
   ) {
     const residentData = new FormData();
     residentData.append("lastName", lastName);
     residentData.append("firstName", firstName);
     residentData.append("appartmentInfo", appartmentInfo);
-    residentData.append("isRentPaid", isRentPaid.toString());
     residentData.append("phoneNumber", phoneNumber.toString());
-    residentData.append("rent", rent.toString());
-    residentData.append("contractEndDate", contractEndDate.toString());
-    residentData.append( "nextVisitDate",  nextVisitDate.toString());
+    residentData.append("email", email.toString());
+    residentData.append("dateofBirth", dateofBirth.toString());
+    residentData.append("nationality", nationality.toString());
+    residentData.append("residentOtherInfo", residentOtherInfo.toString());
     residentData.append( "image", image, lastName);
 
-    this.http.post<{ message: string; resident: Resident }>
+    return this.http.post<{ message: string; resident: Resident }>
     (
-      'http://localhost:3000/api/residents',
+      'http://localhost:3000/api/residents/',
       residentData
-    ).subscribe(responseData => {
-      const resident: Resident = {
-        id: responseData.resident.id,
-        lastName: lastName,
-            firstName: firstName,
-            appartmentInfo: appartmentInfo,
-            isRentPaid: isRentPaid,
-            phoneNumber: phoneNumber,
-            rent: rent,
-            contractEndDate: contractEndDate,
-            nextVisitDate: nextVisitDate,
-            imagePath: responseData.resident.imagePath
-      };
-      this.residents.push(resident);
-      this.emitResident();
-      this.router.navigate(["resident"]);
-    });
+    );
   }
+
+  // delete resident
 
   deleteResident(residentId: string) {
     this.http.delete("http://localhost:3000/api/residents/" + residentId)
@@ -127,11 +113,12 @@ export class ResidentsService {
       lastName: string;
       firstName: string;
       appartmentInfo: any;
-      isRentPaid: boolean;
       phoneNumber: number;
-      rent: number;
-      contractEndDate: Date;
-      nextVisitDate: Date;
+      email: string;
+      dateofBirth: Date;
+      nationality: string;
+      residentOtherInfo: string;
+
       imagePath: File }>(
       "http://localhost:3000/api/residents/" + id
     );
@@ -142,11 +129,11 @@ export class ResidentsService {
     lastName: string,
     firstName: string,
     appartmentInfo: any,
-    isRentPaid: boolean,
     phoneNumber: number,
-    rent: number,
-    contractEndDate: Date,
-    nextVisitDate: Date,
+    email: string,
+      dateofBirth: Date,
+      nationality: string,
+      residentOtherInfo: string,
     image: File | string
   ) {
       let residentData: Resident | FormData;
@@ -156,11 +143,12 @@ export class ResidentsService {
     residentData.append("lastName", lastName);
     residentData.append("firstName", firstName);
     residentData.append("appartmentInfo", appartmentInfo);
-    residentData.append("isRentPaid", isRentPaid.toString());
     residentData.append("phoneNumber", phoneNumber.toString());
-    residentData.append("rent", rent.toString());
-    residentData.append("contractEndDate", contractEndDate.toString());
-    residentData.append( "nextVisitDate",  nextVisitDate.toString());
+    residentData.append("email", email.toString());
+    residentData.append("dateofBirth", dateofBirth.toString());
+    residentData.append("nationality", nationality.toString());
+    residentData.append("residentOtherInfo", residentOtherInfo.toString());
+
     residentData.append( "image", image, lastName);
       } else {
         residentData = {
@@ -168,11 +156,11 @@ export class ResidentsService {
           lastName: lastName,
               firstName: firstName,
               appartmentInfo: appartmentInfo,
-              isRentPaid: isRentPaid,
               phoneNumber: phoneNumber,
-              rent: rent,
-              contractEndDate: contractEndDate,
-              nextVisitDate: nextVisitDate,
+              email: email,
+              dateofBirth: dateofBirth,
+              nationality: nationality,
+              residentOtherInfo: residentOtherInfo,
               imagePath: image
 
         };
@@ -187,11 +175,11 @@ export class ResidentsService {
             lastName: lastName,
                 firstName: firstName,
                 appartmentInfo: appartmentInfo,
-                isRentPaid: isRentPaid,
                 phoneNumber: phoneNumber,
-                rent: rent,
-                contractEndDate: contractEndDate,
-                nextVisitDate: nextVisitDate,
+                email: email,
+                dateofBirth: dateofBirth,
+                nationality: nationality,
+                residentOtherInfo: residentOtherInfo,
                 imagePath: image
           };
           updatedResidents[oldResidentIndex] = resident;

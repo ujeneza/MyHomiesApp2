@@ -2,7 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UploadService } from './../../upload/upload.service';
 import { Subscription } from 'rxjs';
 import { FileResident } from './../../app-models/residant-data-models/file-resisent.models';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { saveAs } from 'file-saver';
 
 @Component({
@@ -12,15 +12,23 @@ import { saveAs } from 'file-saver';
 })
 export class ResidentFilesComponent implements OnInit {
   fieldNameFront: string;
-  residentIdFile: string;
+  @Input() residentIdFile: string;
   fileResidents: FileResident[] = [];
   fileResidentsSub: Subscription;
+  globalId: string;
 
   constructor( public route: ActivatedRoute,
     public uploadService: UploadService) { }
 
   ngOnInit() {
     this.getAllFileResidents();
+    this.getResidentIdFile();
+  }
+
+  // get resident ID for filtering the documents
+  getResidentIdFile() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.globalId = id;
   }
 
   // get all files from the backend
@@ -42,7 +50,6 @@ export class ResidentFilesComponent implements OnInit {
     }
 
     // Download file
-
     downloadFileResident(filePath: string) {
       this.uploadService.downloadFileResident(filePath).subscribe(
         data => saveAs(data, filePath),

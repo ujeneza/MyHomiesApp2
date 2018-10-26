@@ -59,6 +59,7 @@ import { CreateAppartmentComponent } from './appartment/create-appartment/create
 import { ResidentFilesComponent } from './residents/resident-files/resident-files.component';
 import { ContractInfoComponent } from './residents/contract-info/contract-info.component';
 import { UploadModule } from './upload/upload.module';
+import { ResidentCardComponent } from './residents/resident-card/resident-card.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { UploadModule } from './upload/upload.module';
     CreateAppartmentComponent,
     ResidentFilesComponent,
     ContractInfoComponent,
+    ResidentCardComponent,
   ],
   imports: [
     BrowserModule,

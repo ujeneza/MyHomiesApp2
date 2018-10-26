@@ -79,7 +79,8 @@ export class UploadService {
               name: fileResident.name,
               lastModifiedDate: fileResident.lastModifiedDate,
               filePath: fileResident.filePath,
-              fieldNameFront: fileResident.fieldNameFront
+              fieldNameFront: fileResident.fieldNameFront,
+              residentIdFile: fileResident.residentIdFile
             };
           });
         })

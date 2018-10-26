@@ -11,7 +11,7 @@ import {
   FormControl,
   Validators
 } from '@angular/forms';
-import { Component, OnInit, Output, Input } from '@angular/core';
+import { Component, OnInit, Output, Input, AfterContentInit, AfterContentChecked } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 
@@ -31,6 +31,7 @@ export class ContractInfoComponent implements OnInit {
   residentIdFile: string;
   fileResidents: FileResident[] = [];
   private fileResidentsSub: Subscription;
+  @Input() residentId: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,8 +46,7 @@ export class ContractInfoComponent implements OnInit {
     this.initForm();
     this.getAllFileResidents();
   }
-
-
+//  Get all residents to be able to select contract residents
   getAllFileResidents() {
     this.uploadService.getAllFileResidents();
     this.fileResidentsSub = this.uploadService.getFileResidentUpdateListener().subscribe(
@@ -56,13 +56,10 @@ export class ContractInfoComponent implements OnInit {
     );
   }
 
-  /*public openUploadDialog() {
-    const dialogRef = this.dialog.open(FileUploadComponent, { width: '50%', height: '50%' });
-  }*/
-
+// init form add and update contract data
   initForm() {
     this.contractInfoForm = new FormGroup({
-      residentId: new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
+      residentId: new FormControl({value: null, disabled: true}, {validators: [Validators.minLength(3)]}),
       inventoryEntryDate: new FormControl(null, {validators: [Validators.required, Validators.minLength(3)]}),
       coldWaterIndex: new FormControl(null, { validators: [Validators.required]}),
       hotWaterIndex: new FormControl(null, { validators: [Validators.required] }),
@@ -75,14 +72,14 @@ export class ContractInfoComponent implements OnInit {
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('id')) {
-        this.mode = 'contractInfo/edit/';
-        this.contractInfoId = paramMap.get('id');
+        this.mode = 'contractInfo/edit/ | residents/view/';
+        this.residentId = paramMap.get('id');
         this.isLoading = true;
-        this.contractInfosService.getContract(this.contractInfoId).subscribe(contractInfoData => {
+        this.contractInfosService.getContract(this.residentId).subscribe(contractInfoData => {
           this.isLoading = false;
           this.contractInfo = {
             id: contractInfoData.id,
-            residentId: contractInfoData.residentId,
+            residentId: this.residentId,
             inventoryEntryDate: contractInfoData.inventoryEntryDate,
             coldWaterIndex: contractInfoData.coldWaterIndex,
             hotWaterIndex: contractInfoData.hotWaterIndex,
@@ -122,7 +119,7 @@ export class ContractInfoComponent implements OnInit {
     this.isLoading = true;
     if (this.mode === 'residents/new || contractInfo/new') {
       this.contractInfosService.addNewContract(
-        this.contractInfoForm.value.residentId,
+        this.contractInfoForm.value.residentId = this.residentId,
         this.contractInfoForm.value.inventoryEntryDate,
         this.contractInfoForm.value.coldWaterIndex,
         this.contractInfoForm.value.hotWaterIndex,

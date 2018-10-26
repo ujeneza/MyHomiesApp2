@@ -1,10 +1,11 @@
 
 <!-- Contract -->
 <mat-card class="cardSetUp">
-  <app-upload labelName="Contract" fieldNameFront="contract">
+  <app-upload labelName="Contract" fieldNameFront="contract" residentIdFile="{{residentIdFile}}">
   </app-upload>
   <div *ngFor="let fileResident of fileResidents">
     <div class="fileInfoAdjustement" *ngIf="fileResident.fieldNameFront=='contract'">
+      <div *ngIf="fileResident.residentIdFile === residentIdFile">
       <mat-divider> </mat-divider>
       <mat-list>
         <mat-list-item style="  height:initial">
@@ -15,8 +16,6 @@
             <span style="word-wrap: break-word; white-space: pre-wrap;">
               <span style=" font-style: italic;">Upload date: </span> {{fileResident.lastModifiedDate |
               date:"dd/MM/yyyy"}} </span>
-            <span>{{fileResident.fieldNameFront}}</span>
-            <span> {{fileResident.residentIdFile}}</span>
           </p>
         </mat-list-item>
       </mat-list>
@@ -31,14 +30,16 @@
           </i></button>
       </div>
     </div>
+    </div>
   </div>
 </mat-card>
 <!-- Inventory Entry -->
 <mat-card class="cardSetUp">
-    <app-upload labelName="Inventory Entry" fieldNameFront="inventoryEntry">
+    <app-upload labelName="Inventory Entry" fieldNameFront="inventoryEntry" residentIdFile="{{residentIdFile}}" >
     </app-upload>
     <div *ngFor="let fileResident of fileResidents">
       <div class="fileInfoAdjustement" *ngIf="fileResident.fieldNameFront=='inventoryEntry'">
+        <div *ngIf="fileResident.residentIdFile ===residentIdFile">
         <mat-divider> </mat-divider>
         <mat-list>
           <mat-list-item style="  height:initial">
@@ -49,7 +50,6 @@
               <span style="word-wrap: break-word; white-space: pre-wrap;">
                 <span style=" font-style: italic;">Upload date: </span> {{fileResident.lastModifiedDate |
                 date:"dd/MM/yyyy"}} </span>
-              <span>{{fileResident.fieldNameFront}}</span>
             </p>
           </mat-list-item>
         </mat-list>
@@ -65,13 +65,15 @@
         </div>
       </div>
     </div>
+    </div>
   </mat-card>
 <!-- pictucture Entry -->
   <mat-card class="cardSetUp">
-      <app-upload labelName="Inventory Pictures Entry" fieldNameFront="picturesEntryInventory">
+      <app-upload labelName="Inventory Pictures Entry" fieldNameFront="picturesEntryInventory" residentIdFile="{{residentIdFile}}">
       </app-upload>
       <div *ngFor="let fileResident of fileResidents">
         <div class="fileInfoAdjustement" *ngIf="fileResident.fieldNameFront=='picturesEntryInventory'">
+          <div *ngIf="fileResident.residentIdFile === residentIdFile">
           <mat-divider> </mat-divider>
           <mat-list>
             <mat-list-item style="  height:initial">
@@ -82,7 +84,6 @@
                 <span style="word-wrap: break-word; white-space: pre-wrap;">
                   <span style=" font-style: italic;">Upload date: </span> {{fileResident.lastModifiedDate |
                   date:"dd/MM/yyyy"}} </span>
-                <span>{{fileResident.fieldNameFront}}</span>
               </p>
             </mat-list-item>
           </mat-list>
@@ -97,5 +98,6 @@
               </i></button>
           </div>
         </div>
+      </div>
       </div>
     </mat-card>
