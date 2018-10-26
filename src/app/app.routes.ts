@@ -17,8 +17,11 @@ const routes: Routes = [
   {path: 'appartment/edit/:id', component: CreateAppartmentComponent},
   {path: 'appartment/new', component: CreateAppartmentComponent},
   {path: 'contractInfo/new', component: ContractInfoComponent},
+<<<<<<< HEAD
   {path: 'contractInfo/edit/:id', component: ContractInfoComponent},
   {path: 'residentFiles', component: ResidentFilesComponent},
+=======
+>>>>>>> 60a33c6450639d91c8651c288eaff3f29af7df71
   {path: '**', redirectTo: '/residents', pathMatch: 'full' }
  ];
 
