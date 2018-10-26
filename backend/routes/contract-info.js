@@ -49,7 +49,7 @@ router.get("", (req, res, next) => {
 
 // select a contract Info
 router.get("/:residentId", (req, res, next) => {
-  console.log(req.params.residentId + 'this is the resident ID');
+
   ContractInfo.findOne({residentId: req.params.residentId}).then(contractInfo => {
     if (contractInfo) {
       res.status(200).json(contractInfo);
@@ -97,8 +97,8 @@ router.put("/:residentId", (req, res, next) => {
 
 // delete an contractInfo
 
-router.delete("/:id", (req, res, next) => {
-  ContractInfo.deleteOne({ _id: req.params.id }).then(result => {
+router.delete("/:residentId", (req, res, next) => {
+  ContractInfo.deleteOne({ residentId: req.params.residentId}).then(result => {
     res.status(200).json({ message: "contractInfo deleted!" });
   });
 });

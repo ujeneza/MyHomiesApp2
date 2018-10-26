@@ -190,10 +190,10 @@ export class ContractResidentService {
   }
 
 // Delete contract
-deleteContract(contractId: string) {
-  this.http.delete('http://localhost:3000/api/contractInfo/' + contractId)
+deleteContract(residentId: string) {
+  this.http.delete('http://localhost:3000/api/contractInfo/' + residentId)
     .subscribe(() => {
-      const updatedContractInfo = this.contractInfos.filter(contractInfo => contractInfo.id !== contractId);
+      const updatedContractInfo = this.contractInfos.filter(contractInfo => contractInfo.residentId !== residentId);
       this.contractInfos = updatedContractInfo;
       this.contractInfosUpdated.next([...this.contractInfos]);
     });

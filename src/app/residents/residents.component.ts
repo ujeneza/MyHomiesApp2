@@ -6,6 +6,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ResidentsService } from '../services/residents.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-residents',
@@ -32,6 +33,8 @@ export class ResidentsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.initGetResidents();
+    this. initGetAppartments();
 
   }
 
@@ -52,35 +55,10 @@ export class ResidentsComponent implements OnInit {
       });
   }
 
-  // get selected appartment
-  getAppartmentFromAppartmentId(id) {
-
-    return 'hello';
-    // return this.appartmentsService.getAppartment(id)
-    // .subscribe(responseData => {
-    //   const appartment: Appartment = {
-    //   id: responseData.id,
-    //   appartmentCodeName: responseData.appartmentCodeName,
-    //   appartmentName: responseData.appartmentName
-    // } as Appartment;
-    //   console.log(appartment.appartmentName + 'appartment');
-    //   this.appartmentId = appartment.appartmentName; });
-
-  }
-
-   // get selected appartment
-   getAppartmentFromAppartmentId2(id) {
-
-    return this.appartments.filter(item => {
-      return item.id === id;
-    })[0];
-  }
-
- updateSelectedAppartment(selectedAppartmentId) {
-  this.getAppartmentFromAppartmentId(
-      selectedAppartmentId
-    );
-    console.log(this.selectedAppartment + 'selectedAppartment');
+  getAppartmentOfResident(resident: Resident): Appartment {
+   return this.appartments.filter(item => {
+    return resident.appartmentInfo === item.id;
+   })[0];
   }
   // view the list of all appartments
   initGetAppartments() {

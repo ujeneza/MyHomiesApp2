@@ -1,5 +1,5 @@
-<div class="grid-container" *ngIf="residents.length">
-  <button mat-stroked-button  disabled color="primary" class="globalCard" *ngFor="let resident of residents" let i = index>
+<div class="grid-container">
+  <button mat-stroked-button  disabled color="primary" class="globalCard">
     <mat-tab-group dynamicHeight >
       <mat-tab  label="{{resident.lastName}} {{resident.firstName}}">
         <mat-card class="residentHeader">
@@ -12,6 +12,7 @@
           <mat-list-item>
             <p mat-line  >Is the flat paid :<span [ngStyle]="{color: onGetColor(true)}"> Yes</span></p>
             <p mat-line >Flat : {{resident.appartmentInfo}} </p>
+            <p mat-line >FlatName : {{appartment?.appartmentName}} </p>
             <p mat-line>Phone Number: {{resident.phoneNumber}} </p>
             <p mat-line>Email: {{resident.email}}  </p>
             <p mat-line>Contract End date: 18/08/2018 </p>
@@ -48,7 +49,7 @@
     </button>
   </div>
 
-    <p class="mat-body-1" *ngIf="residents.length <= 0"> No resident added yet</p>
+
 
 
 
