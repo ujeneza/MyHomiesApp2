@@ -49,7 +49,6 @@ router.post("", multer({ storage: storage }).array('file',4),
 (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
   console.log(req.files);
-<<<<<<< HEAD
   console.log('file added successfully');
   const fileResident = new FileResident ({
     name: req.files[0].originalname,
@@ -59,24 +58,14 @@ router.post("", multer({ storage: storage }).array('file',4),
     residentIdFile: req.body.residentIdFile
   });
   fileResident.save().then(createdFileResident => {
-=======
-  const contract = new FileResident ({
-    contract: url + "/uploads/" + req.files[0].fieldname +"/" + req.files[0].filename
-  });
-  console.log(contract);
-  contract.save().then(createdContract => {
->>>>>>> 60a33c6450639d91c8651c288eaff3f29af7df71
     res.status(201).json({
       message: "Contract added successfully",
-      contractInfo: {
-        ...createdContract,
-        id: createdContract._id
+      fileResident: {
+        ...createdFileResident,
+        id: createdFileResident._id
       }
     });
-<<<<<<< HEAD
     console.log(fileResident);
-=======
->>>>>>> 60a33c6450639d91c8651c288eaff3f29af7df71
   });
 });
 
@@ -97,7 +86,6 @@ router.get("", (req, res, next) => {
   });
 });
 
-<<<<<<< HEAD
 // get one file
 /* router.get("/:id", (req, res, next) => {
   FileResident.findById(req.params.id).then(fileResident => {
@@ -132,8 +120,6 @@ router.get("/:fileName", function(req,res,next){
   const fileName = path.join(__dirname,'../uploads') +'/'+ req.params.fileName;
   res.sendFile(fileName);
 });
-=======
->>>>>>> 60a33c6450639d91c8651c288eaff3f29af7df71
 
 /* router.get('/:filePath', function (req, res){
     filePath = req.params.filePath;

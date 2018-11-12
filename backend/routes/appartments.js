@@ -42,10 +42,6 @@ router.get("", (req, res, next) => {
         message: "appartment not found!"
       });
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 60a33c6450639d91c8651c288eaff3f29af7df71
   });
 });
 

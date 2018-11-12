@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 import { FileResident } from './../../app-models/residant-data-models/file-resisent.models';
 import { Component, OnInit, ViewChild, Inject, EventEmitter, Output, Input } from '@angular/core';
-=======
-import { Component, OnInit, ViewChild, Inject, EventEmitter, Output } from '@angular/core';
->>>>>>> 60a33c6450639d91c8651c288eaff3f29af7df71
 import { MatDialogRef } from '@angular/material';
 import { UploadService } from '../upload.service';
 import { forkJoin } from 'rxjs/observable/forkJoin';
@@ -56,7 +52,6 @@ export class DialogComponent implements OnInit {
     this.file.nativeElement.click();
   }
 
-<<<<<<< HEAD
   closeDialogdelete() {
     this.closeDialog2();
   }
@@ -71,18 +66,12 @@ export class DialogComponent implements OnInit {
   }
 
 
-=======
->>>>>>> 60a33c6450639d91c8651c288eaff3f29af7df71
   closeDialog() {
     this.childEvent.emit(this.file);
     // if everything was uploaded already, just close the dialog
     if (this.uploadSuccessful) {
-<<<<<<< HEAD
       this.closeDialog2();
       return ( this.dialogRef.close());
-=======
-      return this.dialogRef.close();
->>>>>>> 60a33c6450639d91c8651c288eaff3f29af7df71
     }
 
 

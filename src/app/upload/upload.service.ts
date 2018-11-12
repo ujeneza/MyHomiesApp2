@@ -10,7 +10,7 @@ import {
 } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 
-const url = 'http://localhost:3000/api/file';
+const url = 'http://localhost:3000/api/file/';
 @Injectable({
   providedIn: 'root'
 })
@@ -67,7 +67,7 @@ export class UploadService {
   }
 
   // get all files
-  getFileResidents() {
+  getAllFileResidents() {
     this.http
       .get<{ message: string; fileResidents: any }>(url)
       .pipe(
@@ -95,7 +95,6 @@ export class UploadService {
   getFileResidentUpdateListener() {
     return this.fileResidentsUpdate.asObservable();
   }
-<<<<<<< HEAD
 
 /*   // get on file
   getFileResident(id: string) {
@@ -139,6 +138,4 @@ export class UploadService {
       headers: new HttpHeaders().append('Content-Type', 'application/json')
     });
   } */
-=======
->>>>>>> 60a33c6450639d91c8651c288eaff3f29af7df71
 }

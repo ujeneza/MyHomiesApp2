@@ -14,7 +14,6 @@ import { saveAs } from 'file-saver/FileSaver';
 })
 export class UploadComponent {
   fileResidents: FileResident[] = [];
-<<<<<<< HEAD
   fileResidentsSub: Subscription;
   fileResident: FileResident;
 
@@ -75,28 +74,4 @@ export class UploadComponent {
   } */
 
 
-=======
-  private fileResidentsSub: Subscription;
-
-  @Input()
-  file: string;
-  constructor(public dialog: MatDialog, public uploadService: UploadService) {}
-
-  public openUploadDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      data: { file: 'contract', name: 'Contract' },
-      width: '50%',
-      height: '50%'
-    });
-  }
-
-  onCloseDialog() {
-    this.uploadService.getFileResidents();
-    this.fileResidentsSub = this.uploadService.getFileResidentUpdateListener().subscribe(
-      (fileResidents: FileResident[]) => {
-        this.fileResidents = fileResidents;
-      }
-    );
-  }
->>>>>>> 60a33c6450639d91c8651c288eaff3f29af7df71
 }

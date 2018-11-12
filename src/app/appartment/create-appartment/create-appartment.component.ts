@@ -64,7 +64,6 @@ export class CreateAppartmentComponent implements OnInit {
         this.isLoading = true;
         this.appartmentsService.getAppartment(this.appartmentId).subscribe(appartmentData => {
           this.isLoading = false;
-          console.log('update');
           this.appartment = {
             id: appartmentData.id,
             appartmentCodeName: appartmentData.appartmentCodeName,

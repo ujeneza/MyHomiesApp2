@@ -113,7 +113,6 @@ export class ContractResidentService {
     nextVisitDate: Date,
   ) {
 
-    console.log('update function');
     const contractInfoData: ContractInfo = {
           id: id,
           residentId: residentId,

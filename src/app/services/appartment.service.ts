@@ -51,7 +51,6 @@ export class AppartmentsService {
         this.router.navigate(['appartments']);
       });
 
-    console.log('save');
   }
 
   // View all appartments
