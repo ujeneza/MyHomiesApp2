@@ -10,4 +10,5 @@ export interface ContractInfo {
   exitDate: Date;
   inventoryExitDate: Date;
   nextVisitDate: Date;
+  contractRecordedDate: Date;
 }

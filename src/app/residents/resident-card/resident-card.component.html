@@ -11,11 +11,11 @@
         <mat-list >
           <mat-list-item>
             <p mat-line  >Is the flat paid :<span [ngStyle]="{color: onGetColor(true)}"> Yes</span></p>
-            <p mat-line >Flat : {{resident.appartmentInfo}} </p>
-            <p mat-line name ="Flat name">FlatName : {{appartment?.appartmentName}} </p>
+            <p mat-line >Flat Name : {{appartment?.appartmentName}} </p>
             <p mat-line>Phone Number: {{resident.phoneNumber}} </p>
             <p mat-line>Email: {{resident.email}}  </p>
-            <p mat-line>Contract End date: 18/08/2018 </p>
+            <p mat-line>Contract End date: {{contractInfo?.contractEndDate  |
+              date:"dd/MM/yyyy"}}</p>
           </mat-list-item>
         </mat-list>
         <mat-card-actions class="matCardActionButton">

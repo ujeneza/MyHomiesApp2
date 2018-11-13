@@ -1,3 +1,4 @@
+import { ContractInfo } from './../../app-models/residant-data-models/contract-Info.model';
 import { Appartment } from './../../app-models/residant-data-models/appartment-info.model';
 import { ContractResidentService } from './../../services/contract-resident.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,6 +16,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ResidentCardComponent implements OnInit {
   @Input() resident: Resident;
   @Input() appartment: Appartment;
+  @Input() contractInfo: ContractInfo;
 
   private residentsSub: Subscription;
   constructor(private residentsService: ResidentsService,

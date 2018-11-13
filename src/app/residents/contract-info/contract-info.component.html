@@ -61,6 +61,13 @@
       <mat-datepicker #nextVisitDate></mat-datepicker>
     </mat-form-field>
 
+    <mat-form-field>
+      <input matInput formControlName="contractRecordedDate" [matDatepicker]="contractRecordedDate"   placeholder="contract Recorded Date">
+      <mat-datepicker-toggle matSuffix [for]="contractRecordedDate"></mat-datepicker-toggle>
+      <mat-datepicker #contractRecordedDate></mat-datepicker>
+    </mat-form-field>
+
+
 
 
     <mat-action-row>

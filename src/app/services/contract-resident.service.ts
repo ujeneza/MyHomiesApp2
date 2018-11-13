@@ -5,7 +5,7 @@ import { ContractInfo } from './../app-models/residant-data-models/contract-Info
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { identifierModuleUrl } from '@angular/compiler';
+
 
 
 @Injectable({
@@ -29,6 +29,7 @@ export class ContractResidentService {
   exitDate: Date,
   inventoryExitDate: Date,
   nextVisitDate: Date,
+  contractRecordedDate: Date,
 ) {
   const contractInfo: ContractInfo = {
     id: null,
@@ -42,6 +43,7 @@ export class ContractResidentService {
     exitDate: exitDate,
     inventoryExitDate: inventoryExitDate,
     nextVisitDate: nextVisitDate,
+    contractRecordedDate: contractRecordedDate,
   };
   this.http
     .post<{ message: string; contractInfoId: string }>(
@@ -67,7 +69,7 @@ export class ContractResidentService {
     contractEndDate: Date,
     exitDate: Date,
     inventoryExitDate: Date,
-    nextVisitDate: Date,
+
   ) {
     console.log('Add function');
     const contractInfo: ContractInfo = {
@@ -81,7 +83,7 @@ export class ContractResidentService {
       entryDate: entryDate,
       exitDate: exitDate,
       inventoryExitDate: inventoryExitDate,
-      nextVisitDate: nextVisitDate,
+
     };
     this.http
       .post<{ message: string; contractInfoId: string }>(
@@ -111,6 +113,7 @@ export class ContractResidentService {
     exitDate: Date,
     inventoryExitDate: Date,
     nextVisitDate: Date,
+    contractRecordedDate: Date,
   ) {
 
     const contractInfoData: ContractInfo = {
@@ -125,6 +128,7 @@ export class ContractResidentService {
           exitDate: exitDate,
           inventoryExitDate: inventoryExitDate,
           nextVisitDate: nextVisitDate,
+          contractRecordedDate: contractRecordedDate,
         };
         this.http
         .put("http://localhost:3000/api/contractInfo/" + residentId, contractInfoData)
@@ -143,6 +147,7 @@ export class ContractResidentService {
             exitDate: exitDate,
             inventoryExitDate: inventoryExitDate,
             nextVisitDate: nextVisitDate,
+            contractRecordedDate: contractRecordedDate,
           };
           updatedContractInfos[oldContractInfoIndex] = contractInfo;
           this.contractInfos = updatedContractInfos;
@@ -152,12 +157,14 @@ export class ContractResidentService {
     }
 
   // get all contracts
-  getResidents() {
+
+  getContractInfos() {
     this.http
       .get<{ message: string; contractInfos: any }>(
         'http://localhost:3000/api/contractInfo/'
       )
-      .pipe(map((contractInfoData) => {
+      .pipe(
+        map(contractInfoData => {
         return contractInfoData.contractInfos.map(contractInfo => {
           return {
             id: contractInfo._id,
@@ -171,11 +178,12 @@ export class ContractResidentService {
             exitDate: contractInfo.exitDate,
             inventoryExitDate: contractInfo.inventoryExitDate,
             nextVisitDate: contractInfo.nextVisitDate,
+            contractRecordedDate: contractInfo.contractRecordedDate,
           };
         });
       }))
-      .subscribe(transformedContractInfo => {
-        this.contractInfos = transformedContractInfo;
+      .subscribe(transformedContractInfos => {
+        this.contractInfos = transformedContractInfos;
         this.contractInfosUpdated.next([...this.contractInfos]);
       });
   }
@@ -198,4 +206,9 @@ deleteContract(residentId: string) {
     });
 }
 
+// update listener
+
+getContractInfoUpdateListener() {
+  return this.contractInfosUpdated.asObservable();
+}
 }

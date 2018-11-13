@@ -208,7 +208,7 @@ export class ResidentsService {
     phoneNumber: number,
     rent: number,
     contractEndDate: Date,
-    nextVisitDate: Date) {
+   Date) {
       const resident: Resident = {
         id: _id,
         lastName: lastName,
@@ -218,7 +218,7 @@ export class ResidentsService {
         phoneNumber: phoneNumber,
         rent: rent,
         contractEndDate: contractEndDate,
-        nextVisitDate: nextVisitDate};
+        };
         this.http
         .put("http://localhost:3000/api/residents/" + _id, resident)
         .subscribe(response => {

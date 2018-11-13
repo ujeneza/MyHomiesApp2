@@ -69,10 +69,11 @@ export class ContractInfoComponent implements OnInit {
       exitDate: new FormControl(null, {validators: [Validators.required]}),
       inventoryExitDate: new FormControl(null, {validators: [Validators.required]}),
       nextVisitDate: new FormControl(null, {validators: [Validators.required]}),
+      contractRecordedDate: new FormControl(null, {validators: [Validators.minLength(3)]}),
     });
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('id')) {
-        this.mode = 'contractInfo/edit/ | residents/view/';
+        this.mode = 'contractInfo/edit/' || 'residents/view/';
         this.residentId = paramMap.get('id');
         this.isLoading = true;
         this.contractInfosService.getContract(this.residentId).subscribe(contractInfoData => {
@@ -89,6 +90,7 @@ export class ContractInfoComponent implements OnInit {
             exitDate: contractInfoData.exitDate,
             inventoryExitDate: contractInfoData.inventoryExitDate,
             nextVisitDate: contractInfoData.nextVisitDate,
+            contractRecordedDate: contractInfoData.contractRecordedDate,
           };
           this.contractInfoForm.setValue({
             residentId: this.contractInfo.residentId,
@@ -101,6 +103,7 @@ export class ContractInfoComponent implements OnInit {
             exitDate: this.contractInfo.exitDate,
             inventoryExitDate: this.contractInfo.inventoryExitDate,
             nextVisitDate: this.contractInfo.nextVisitDate,
+            contractRecordedDate: this.contractInfo.contractRecordedDate,
           });
         });
       } else {
@@ -117,7 +120,7 @@ export class ContractInfoComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    if (this.mode === 'residents/new || contractInfo/new') {
+    if (this.mode === 'residents/new' || 'contractInfo/new') {
       this.contractInfosService.addNewContract(
         this.contractInfoForm.value.residentId = this.residentId,
         this.contractInfoForm.value.inventoryEntryDate,
@@ -129,6 +132,7 @@ export class ContractInfoComponent implements OnInit {
         this.contractInfoForm.value.exitDate,
         this.contractInfoForm.value.inventoryExitDate,
         this.contractInfoForm.value.nextVisitDate,
+        this.contractInfoForm.value.contractRecordedDate,
 
       );
     } else {
@@ -144,9 +148,9 @@ export class ContractInfoComponent implements OnInit {
         this.contractInfoForm.value.exitDate,
         this.contractInfoForm.value.inventoryExitDate,
         this.contractInfoForm.value.nextVisitDate,
+        this.contractInfoForm.value.contractRecordedDate,
       );
     }
-    this.contractInfoForm.reset();
   }
 
 }

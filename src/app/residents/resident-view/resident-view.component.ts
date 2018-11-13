@@ -220,12 +220,12 @@ export class ResidentViewComponent implements OnInit {
     const phoneNumber  = this.residentForm.get('phoneNumber').value;
     const rent  = this.residentForm.get('rent').value;
     const contractEndDate  = this.residentForm.get('contractEndDate').value;
-    const nextVisitDate  = this.residentForm.get('nextVisitDate').value;
+
 
     // tslint:disable-next-line:max-line-length
 
     this.residentsService.updateResident
-    (this.residentId, firstName, lastName, appartmentInfo, isRentPaid, phoneNumber, rent, contractEndDate, nextVisitDate).subscribe();
+    (this.residentId, firstName, lastName, appartmentInfo, isRentPaid, phoneNumber, rent, contractEndDate, .subscribe();
     console.log(this.resident.firstName);
   } */
 
@@ -237,10 +237,10 @@ export class ResidentViewComponent implements OnInit {
     const phoneNumber  = this.residentForm.get('phoneNumber').value;
     const rent  = this.residentForm.get('rent').value;
     const contractEndDate  = this.residentForm.get('contractEndDate').value;
-    const nextVisitDate  = this.residentForm.get('nextVisitDate').value;
+
 
     this.residentsService.updateResident
-    (this.residentId, firstName, lastName, appartmentInfo, isRentPaid, phoneNumber, rent, contractEndDate, nextVisitDate);
+    (this.residentId, firstName, lastName, appartmentInfo, isRentPaid, phoneNumber, rent, contractEndDate, );
   } */
 
   onDelete(residentId: string) {

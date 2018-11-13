@@ -1,6 +1,6 @@
 const mongoose = require ('mongoose');
 const contractInfoSchema = mongoose.Schema({
-  reresidentId: {type: String},
+  residentId: {type: String},
   inventoryEntryDate:{type: Date},
   inventoryExitDate: {type: Date},
   contractSignDate:{type: Date},
@@ -10,6 +10,7 @@ const contractInfoSchema = mongoose.Schema({
   coldWaterIndex: {type: Number},
   hotWaterIndex: {type: Number},
   nextVisitDate: {type: Date},
+  contractRecordedDate: {type: Date},
 
 });
 module.exports = mongoose.model('contractInfo',contractInfoSchema);

@@ -1,3 +1,4 @@
+import { ContractInfo } from './../app-models/residant-data-models/contract-Info.model';
 import { map } from 'rxjs/operators';
 import { Appartment } from './../app-models/residant-data-models/appartment-info.model';
 import { AppartmentsService } from './../services/appartment.service';
@@ -7,6 +8,7 @@ import { ResidentsService } from '../services/residents.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isNgTemplate } from '@angular/compiler';
+import { ContractResidentService } from '../services/contract-resident.service';
 
 @Component({
   selector: 'app-residents',
@@ -17,24 +19,29 @@ export class ResidentsComponent implements OnInit {
   residents: Resident[] = [];
   private residentsSub: Subscription;
   private appartmentsSub: Subscription;
+  private contractInfosSub: Subscription;
   appartments: Appartment[] = [];
+  contractInfos: ContractInfo[] = [];
   selectedAppartment: Appartment;
   residentId: string;
   appartmentsId: any[];
   appartmentId: any;
   resident: Resident;
   appartment: Appartment;
+  contractInfo: ContractInfo;
 
   constructor(
     private residentsService: ResidentsService,
     public router: Router,
     private route: ActivatedRoute,
-    private appartmentsService: AppartmentsService
+    private appartmentsService: AppartmentsService,
+    private contractResidentService: ContractResidentService
   ) {}
 
   ngOnInit() {
     this.initGetResidents();
-    this. initGetAppartments();
+    this.initGetAppartments();
+    this.initGetContractInfos();
 
   }
 
@@ -60,8 +67,25 @@ export class ResidentsComponent implements OnInit {
     return resident.appartmentInfo === item.id;
    })[0];
   }
+
+  getContractOfResident(resident: Resident): ContractInfo {
+    return this.contractInfos.filter(item => {
+     return resident.id === item.residentId;
+    })[0];
+   }
   // view the list of all appartments
-  initGetAppartments() {
+  initGetContractInfos() {
+    this.contractResidentService.getContractInfos();
+    this.contractInfosSub = this.contractResidentService
+    .getContractInfoUpdateListener()
+      .subscribe((contractInfos: ContractInfo[]) => {
+        this.contractInfos = contractInfos;
+      });
+  }
+
+   // view the list of all contractInfos
+
+   initGetAppartments()  {
     this.appartmentsService.getAppartments();
     this.appartmentsSub = this.appartmentsService
       .getAppartmentUpdateListener()
@@ -69,6 +93,7 @@ export class ResidentsComponent implements OnInit {
         this.appartments = appartments;
       });
   }
+
   // delete one resident
   onDelete(residentId: string) {
     this.residentsService.deleteResident(residentId);
