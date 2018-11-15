@@ -5,7 +5,8 @@
   <td mat-cell *matCellDef="let element">name  </td>
 </ng-container>
 
-  <form [formGroup]="contractInfoForm" (submit)="onSaveContractInfo()">
+  <form [formGroup]="contractInfoForm"
+  (submit)="onSaveContractInfo(); saveButtonClick('Contract created!', 'Info');">
     <mat-form-field >
       <input matInput type="text"   formControlName="residentId" value="{{residentId}}" minlength="3" placeholder="Resident ID">
       <mat-error>Please enter your last name</mat-error>

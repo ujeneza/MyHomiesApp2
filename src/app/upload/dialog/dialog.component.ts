@@ -1,9 +1,21 @@
 import { FileResident } from './../../app-models/residant-data-models/file-resisent.models';
-import { Component, OnInit, ViewChild, Inject, EventEmitter, Output, Input } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Inject,
+  EventEmitter,
+  Output,
+  Input
+} from '@angular/core';
+import {
+  MatSnackBar,
+  MatDialogRef,
+  MatSnackBarConfig
+} from '@angular/material';
 import { UploadService } from '../upload.service';
 import { forkJoin } from 'rxjs/observable/forkJoin';
-import {MAT_DIALOG_DATA} from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -20,26 +32,26 @@ export class DialogComponent implements OnInit {
   uploadSuccessful = false;
   fileResidents: FileResident[] = [];
   private fileResidentsSub: Subscription;
- @ViewChild('file') file;
- @Input()
- fieldNameFront: string;
- @Input() residentIdFile: string;
+  @ViewChild('file') file;
+  @Input()
+  fieldNameFront: string;
+  @Input() residentIdFile: string;
 
   public files: Set<File> = new Set();
   @Output() private childEvent = new EventEmitter();
 
-  constructor(public dialogRef: MatDialogRef<DialogComponent>,
-              public uploadService: UploadService,
-              @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(
+    public dialogRef: MatDialogRef<DialogComponent>,
+    public uploadService: UploadService,
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
-  ngOnInit() {
-  }
-
-
+  ngOnInit() {}
 
   onFilesAdded() {
     const files: { [key: string]: File } = this.file.nativeElement.files;
-     console.log(this.data.name + 'log this.data');
+    console.log(this.data.name + 'log this.data');
     for (const key in files) {
       // tslint:disable-next-line:radix
       if (!isNaN(parseInt(key))) {
@@ -58,28 +70,30 @@ export class DialogComponent implements OnInit {
 
   closeDialog2() {
     this.uploadService.getAllFileResidents();
-    this.fileResidentsSub = this.uploadService.getFileResidentUpdateListener().subscribe(
-      (fileResidents: FileResident[]) => {
+    this.fileResidentsSub = this.uploadService
+      .getFileResidentUpdateListener()
+      .subscribe((fileResidents: FileResident[]) => {
         this.fileResidents = fileResidents;
-      }
-    );
+      });
   }
-
 
   closeDialog() {
     this.childEvent.emit(this.file);
     // if everything was uploaded already, just close the dialog
     if (this.uploadSuccessful) {
       this.closeDialog2();
-      return ( this.dialogRef.close());
+      return this.dialogRef.close();
     }
-
 
     // set the component state to "uploading"
     this.uploading = true;
 
     // start the upload and save the progress map
-    this.progress = this.uploadService.upload(this.files, this.data.name, this.data.residentIdFile);
+    this.progress = this.uploadService.upload(
+      this.files,
+      this.data.name,
+      this.data.residentIdFile
+    );
     console.log(this.progress);
     // tslint:disable-next-line:forin
     for (const key in this.progress) {
@@ -117,7 +131,17 @@ export class DialogComponent implements OnInit {
       // ... and the component is no longer uploading
       this.uploading = false;
     });
-
   }
 
+
+  closeDialogAndAddFile(message: any, action: string) {
+    if (!this.canBeClosed) {
+      const config = new MatSnackBarConfig();
+      config.duration = 2000;
+      config.panelClass = ['green-snackbar'];
+      config.horizontalPosition = 'right';
+      this.snackBar.open(message, action, config);
+    } else {
+    }
+  }
 }

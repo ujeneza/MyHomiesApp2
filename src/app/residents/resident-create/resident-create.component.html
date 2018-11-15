@@ -1,7 +1,10 @@
-<mat-tab-group dynamicHeight #tabGroup (selectedTabChange)="onChangeTab($event)">
-  <mat-tab  label="Resident info"  >
+<mat-tab-group dynamicHeight #tabGroup index="tabGroup.selectedIndex">
+  <!-- Resident Personal data -->
+  <mat-tab label="Resident info">
+    <!-- Resident Personal data -->
     <mat-card>
-      <form [formGroup]="residentForm" >
+
+      <form [formGroup]="residentForm">
         <div class="picture-preview">
           <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && residentForm.get('image').valid">
             <img [src]="imagePreview" [alt]="residentForm.value.firstName">
@@ -48,37 +51,52 @@
           <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
         </mat-form-field>
         <mat-form-field>
-            <input matInput formControlName="nationality" type="text" name="nationality" required minlength="3" placeholder="Nationality">
-            <mat-error>Please enter the nationality</mat-error>
-            <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
-          </mat-form-field>
-          <mat-form-field>
-              <textarea matInput formControlName="residentOtherInfo" type="text" name="residentOtherInfo"  minlength="3" placeholder="Other">  </textarea>
-              <mat-error>Please enter the other data</mat-error>
-              <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
-            </mat-form-field>
+          <input matInput formControlName="nationality" type="text" name="nationality" required minlength="3"
+            placeholder="Nationality">
+          <mat-error>Please enter the nationality</mat-error>
+          <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput formControlName="residentOtherInfo" type="text" name="residentOtherInfo" minlength="3"
+            placeholder="Other">  </textarea>
+          <mat-error>Please enter the other data</mat-error>
+          <!-- <mat-error *ngIf="name.invalid">please entered a title</mat-error> -->
+        </mat-form-field>
 
         <mat-action-row>
-          <button mat-raised-button type="submit" color="accent" [disabled]="residentForm.invalid" (click)="onAddNewResident(); disabledTabInit(); onUpdateEntryResidentData()">
+          <button mat-raised-button [ngStyle]="{display:hiddenSaveButton()}" type="submit" color="accent" [disabled]="residentForm.invalid"
+            (click)="onAddNewResident();
+                     disabledTabInit();
+                     hiddenUpdateButton();
+                     hiddenSaveButton();
+                     saveButtonClick('Resident saved!', 'Info');
+                     tabGroup.selectedIndex = 1">
+            Save</button>
+          <button mat-raised-button [ngStyle]="{display:hiddenUpdateButton()}" type="submit" c olor="accent" [disabled]="residentForm.invalid"
+            (click)=" onSave2(); saveButtonClick('Resident updated!', 'Info');">
+            Update</button>
 
-            Next</button>
-
-          <!--   <button mat-button color="primary">Edit</button>
-
-                  <button mat-button  color="warn" >Delete</button> -->
+          <button mat-button color="primary" [disabled]="residentForm.invalid" (click)='tabGroup.selectedIndex = 1'>Next</button>
         </mat-action-row>
+
       </form>
     </mat-card>
-    <button mat-button aria-label="Saved" class="openSnackBarCss">
-    </button>
+    <button mat-button aria-label="Saved" class="openSnackBarCss"> </button>
+
+
   </mat-tab>
-  <mat-tab  label="Contract Info"  disabled="{{disabledTab}}">
+  <!-- Resident Contract information-->
+  <mat-tab label="Contract Info">
 
     <div>
-        <app-contract-info [residentId] = "globalIdComponent"> </app-contract-info>
+      <app-contract-info [residentId]="globalIdComponent"> </app-contract-info>
+
+      <button mat-button color="primary" (click)='tabGroup.selectedIndex = 2'>Next</button>
+      <button mat-button color="primary" (click)='tabGroup.selectedIndex = 0'>Previous</button>
     </div>
   </mat-tab>
-  <mat-tab label="Appartment Info" disabled="{{disabledTab}}">
+  <!-- Resident Appartment Info-->
+  <mat-tab label="Appartment Info">
     <mat-card>
       <mat-list>
         <mat-list-item> Appartment Name: {{selectedAppartment?.appartmentName}}</mat-list-item>
@@ -96,9 +114,18 @@
         <mat-list-item>Hot Water Meter: {{selectedAppartment?.hotWaterMeter}}</mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>
+      <button mat-button color="primary" (click)='tabGroup.selectedIndex = 3'>Next</button>
+      <button mat-button color="primary" (click)='tabGroup.selectedIndex = 1'>Previous</button>
     </mat-card>
   </mat-tab>
+  <!-- Resident Document data-->
   <mat-tab label="Document" disabled="{{disabledTab}}">
-    <app-resident-files [residentIdFile] = "globalIdComponent" ></app-resident-files>
+    <app-resident-files [residentIdFile]="globalIdComponent"></app-resident-files>
+    <div class="buttonLastPageSetUp">
+      <button mat-button color="primary" (click)='tabGroup.selectedIndex = 2'>Previous</button>
+      <button mat-button color="primary" (click)='tabGroup.selectedIndex = 0'>First page</button>
+      <button class="buttonSetUpLastPage" mat-raised-button color="accent" (click)=" residentDataControl();">Back to
+        home</button>
+    </div>
   </mat-tab>
 </mat-tab-group>

@@ -101,12 +101,22 @@ router.put("/:residentId", (req, res, next) => {
 
 // delete an contractInfo
 
-router.delete("/:residentId", (req, res, next) => {
+/* router.delete("/:residentId", (req, res, next) => {
   ContractInfo.deleteOne({
     residentId: req.params.residentId
   } || {
     id: req.params.id
   }).then(result => {
+    res.status(200).json({
+      message: "contractInfo deleted!"
+    });
+  });
+}); */
+
+router.delete("/:residentId", (req, res, next) => {
+  ContractInfo.deleteMany(
+     {residentId : req.params.residentId}
+   ).then(result => {
     res.status(200).json({
       message: "contractInfo deleted!"
     });

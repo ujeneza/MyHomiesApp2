@@ -3,11 +3,10 @@ import { map } from 'rxjs/operators';
 import { Appartment } from './../app-models/residant-data-models/appartment-info.model';
 import { AppartmentsService } from './../services/appartment.service';
 import { Resident } from './resident.model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ResidentsService } from '../services/residents.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { isNgTemplate } from '@angular/compiler';
 import { ContractResidentService } from '../services/contract-resident.service';
 
 @Component({

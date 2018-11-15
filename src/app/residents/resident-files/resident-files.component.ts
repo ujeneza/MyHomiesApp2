@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { UploadService } from './../../upload/upload.service';
 import { Subscription } from 'rxjs';
@@ -17,8 +18,12 @@ export class ResidentFilesComponent implements OnInit {
   fileResidentsSub: Subscription;
   globalId: string;
 
-  constructor( public route: ActivatedRoute,
-    public uploadService: UploadService) { }
+  constructor(
+    public route: ActivatedRoute,
+    public uploadService: UploadService,
+    private router: Router,
+
+  ) {}
 
   ngOnInit() {
     this.getAllFileResidents();
@@ -35,29 +40,29 @@ export class ResidentFilesComponent implements OnInit {
   getAllFileResidents() {
     this.uploadService.getAllFileResidents();
     this.fileResidentsSub = this.uploadService
-    .getFileResidentUpdateListener()
-    .subscribe(
-      (fileResidents: FileResident[]) => {
+      .getFileResidentUpdateListener()
+      .subscribe((fileResidents: FileResident[]) => {
         this.fileResidents = fileResidents;
-      }
-    );
-
+      });
   }
 
-    // Delete one fileResident
-    onDelete(fileResidentId: string) {
-      this.uploadService.deleteFileResident(fileResidentId);
-    }
+  // Delete one fileResident
+  onDelete(fileResidentId: string) {
+    this.uploadService.deleteFileResident(fileResidentId);
+  }
 
-    // Download file
-    downloadFileResident(filePath: string) {
-      this.uploadService.downloadFileResident(filePath).subscribe(
-        data => saveAs(data, filePath),
-        err => {
-          console.log('Problem while downloading the file.');
-          console.error(err);
-        }
-      );
-    }
+  // Download file
+  downloadFileResident(filePath: string) {
+    this.uploadService.downloadFileResident(filePath).subscribe(
+      data => saveAs(data, filePath),
+      err => {
+        console.log('Problem while downloading the file.');
+        console.error(err);
+      }
+    );
+  }
 
+  residentDataControl() {
+    this.router.navigate(['/residents']);
+  }
 }

@@ -12,7 +12,7 @@ import {
   Validators
 } from '@angular/forms';
 import { Component, OnInit, Output, Input, AfterContentInit, AfterContentChecked } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 
 
 @Component({
@@ -40,6 +40,7 @@ export class ContractInfoComponent implements OnInit {
     public route: ActivatedRoute,
     public dialog: MatDialog ,
     public uploadService: UploadService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -151,6 +152,14 @@ export class ContractInfoComponent implements OnInit {
         this.contractInfoForm.value.contractRecordedDate,
       );
     }
+  }
+
+  saveButtonClick (message: string, action: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 2000;
+    config.panelClass = ['green-snackbar'];
+    config.horizontalPosition = 'right';
+    this.snackBar.open(message, action, config);
   }
 
 }

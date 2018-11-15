@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { FileResident } from './../app-models/residant-data-models/file-resisent.models';
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatSnackBar, MatDialog, MatSnackBarConfig } from '@angular/material';
 import { DialogComponent } from './dialog/dialog.component';
 import { UploadService } from './upload.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -27,6 +27,7 @@ export class UploadComponent {
     public dialog: MatDialog,
     public uploadService: UploadService,
     public router: Router,
+    private snackBar: MatSnackBar,
   ) {}
 
   public openUploadDialog() {
@@ -58,6 +59,15 @@ export class UploadComponent {
         console.error(err);
       }
     );
+  }
+
+   // mat snack bar
+   saveButtonClick (message: string, action: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 2000;
+    config.panelClass = ['green-snackbar'];
+    config.horizontalPosition = 'right';
+    this.snackBar.open(message, action, config);
   }
   /*
  downloadFileResident(id: string) {

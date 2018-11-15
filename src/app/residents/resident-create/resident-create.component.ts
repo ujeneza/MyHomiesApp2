@@ -5,7 +5,7 @@ import { mimeType } from './mime-type.validator';
 // tslint:disable:max-line-length
 import { Resident } from '../resident.model';
 import { ResidentsService } from '../../services/residents.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -13,7 +13,9 @@ import {
   Validators
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatSnackBar, MatTabChangeEvent } from '@angular/material';
+import { MatSnackBar, MatTabChangeEvent, MatSnackBarConfig, MatStep, MatHorizontalStepper } from '@angular/material';
+import { inlineInterpolate } from '@angular/core/src/view';
+import { toBase64String } from '@angular/compiler/src/output/source_map';
 
 @Component({
   selector: 'app-resident-create',
@@ -31,6 +33,8 @@ export class ResidentCreateComponent implements OnInit {
   resident: Resident;
   globalIdComponent: any;
 
+
+
   constructor(
     private snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
@@ -43,11 +47,16 @@ export class ResidentCreateComponent implements OnInit {
   ngOnInit() {
     this.initForm();
     this.initGetAppartments();
+    this.hiddenUpdateButton();
+
 
     this.selectedAppartment = this.getAppartmentFromAppartmentId(
       this.residentForm.get('appartmentInfo').value
     );
+
   }
+
+
 
   // Disable the other tables on init.
   disabledTabInit() {
@@ -64,14 +73,7 @@ export class ResidentCreateComponent implements OnInit {
     }
   }
 
-  // Event when changing the tab
-  onChangeTab = (tabChangeEvent: MatTabChangeEvent) => {
-    if (tabChangeEvent.index === 0) {
-      console.log('index => ', tabChangeEvent.index);
-    } else if (this.residentForm.valid) {
-      console.log('tabChangeEvent => ', tabChangeEvent);
-    }
-  }
+
 
   // init form
 
@@ -87,10 +89,16 @@ export class ResidentCreateComponent implements OnInit {
         validators: [Validators.required]
       }),
       phoneNumber: new FormControl(null, { validators: [Validators.required] }),
-      email: new FormControl(null, {validators: [Validators.minLength(3)]}),
-      dateofBirth: new FormControl(null, {validators: [Validators.minLength(3)]}),
-      nationality: new FormControl(null, {validators: [Validators.minLength(3)]}),
-      residentOtherInfo: new FormControl(null, {validators: [Validators.minLength(3)]}),
+      email: new FormControl(null, { validators: [Validators.minLength(3)] }),
+      dateofBirth: new FormControl(null, {
+        validators: [Validators.minLength(3)]
+      }),
+      nationality: new FormControl(null, {
+        validators: [Validators.minLength(3)]
+      }),
+      residentOtherInfo: new FormControl(null, {
+        validators: [Validators.minLength(3)]
+      }),
 
       image: new FormControl(null, {
         validators: [Validators.required],
@@ -123,7 +131,6 @@ export class ResidentCreateComponent implements OnInit {
     const dateofBirth = this.residentForm.get('dateofBirth').value;
     const nationality = this.residentForm.get('nationality').value;
     const residentOtherInfo = this.residentForm.get('residentOtherInfo').value;
-
     const image = this.residentForm.get('image').value;
     this.residentsService
       .addNewResident(
@@ -152,13 +159,11 @@ export class ResidentCreateComponent implements OnInit {
         };
         this.getIDwhileSaving(resident.id);
       });
-     this.residentForm.reset();
   }
   // Get id from backend
-getIDwhileSaving(id) {
- return this.globalIdComponent = id;
-}
-
+  getIDwhileSaving(id) {
+    return (this.globalIdComponent = id);
+  }
 
   // view the list of all appartments
   initGetAppartments() {
@@ -182,55 +187,51 @@ getIDwhileSaving(id) {
       selectedAppartmentId
     );
   }
-
-
-  // Update an resident
-  onUpdateEntryResidentData() {
-    this.residentForm = new FormGroup({
-      lastName: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)]
-      }),
-      firstName: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)]
-      }),
-      appartmentInfo: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      phoneNumber: new FormControl(null, { validators: [Validators.required] }),
-      email: new FormControl(null, {validators: [Validators.minLength(3)]}),
-      dateofBirth: new FormControl(null, {validators: [Validators.minLength(3)]}),
-      nationality: new FormControl(null, {validators: [Validators.minLength(3)]}),
-      residentOtherInfo: new FormControl(null, {validators: [Validators.minLength(3)]}),
-      image: new FormControl(null, {
-        validators: [Validators.required],
-        asyncValidators: [mimeType]
-      })
-    });
-    const id = this.globalIdComponent;
-    this.residentsService.getResident2(id).subscribe(residentData => {
-      this.resident = {
-        id: residentData._id,
-        firstName: residentData.firstName,
-        lastName: residentData.lastName,
-        appartmentInfo: residentData.appartmentInfo,
-        phoneNumber: residentData.phoneNumber,
-        email: residentData.email,
-        dateofBirth: residentData.dateofBirth,
-        nationality: residentData.nationality,
-        residentOtherInfo: residentData.residentOtherInfo,
-        imagePath: residentData.imagePath
-      };
-      this.residentForm.setValue({
-        firstName: this.resident.firstName,
-        lastName: this.resident.lastName,
-        appartmentInfo: this.resident.appartmentInfo,
-        phoneNumber: this.resident.phoneNumber,
-        email: this.resident.email,
-        dateofBirth: this.resident.dateofBirth,
-        nationality: this.resident.nationality,
-        residentOtherInfo: this.resident.residentOtherInfo,
-        image: this.resident.imagePath
-      });
-    });
+  // Save data while updating
+  onSave2() {
+    this.residentsService.updateResident(
+      this.globalIdComponent,
+      this.residentForm.value.firstName,
+      this.residentForm.value.lastName,
+      this.residentForm.value.appartmentInfo,
+      this.residentForm.value.phoneNumber,
+      this.residentForm.value.email,
+      this.residentForm.value.dateofBirth,
+      this.residentForm.value.nationality,
+      this.residentForm.value.residentOtherInfo,
+      this.residentForm.value.image
+    );
   }
+// hidden the button save or the button update
+  hiddenUpdateButton() {
+   if (this.globalIdComponent === undefined) {
+     return 'none';
+   } else {
+     return 'inline';
+   }
+  }
+
+  hiddenSaveButton() {
+    if (this.globalIdComponent === undefined) {
+      return 'inline';
+    } else {
+      return 'none';
+    }
+  }
+
+  // General controle
+
+  residentDataControl() {
+    this.router.navigate(['/residents']);
+  }
+
+  // mat snack bar
+  saveButtonClick (message: string, action: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 2000;
+    config.panelClass = ['green-snackbar'];
+    config.horizontalPosition = 'right';
+    this.snackBar.open(message, action, config);
+  }
+
 }

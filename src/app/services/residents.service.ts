@@ -185,7 +185,6 @@ export class ResidentsService {
           updatedResidents[oldResidentIndex] = resident;
           this.residents = updatedResidents;
           this.residentsUpdated.next([...this.residents]);
-          this.router.navigate(["resident"]);
 
         });
     }

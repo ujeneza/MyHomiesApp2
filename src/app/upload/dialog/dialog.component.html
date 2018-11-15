@@ -1,4 +1,4 @@
-<input type="file" #file style="display: none" (change)="onFilesAdded()" multiple />
+<input type="file" #message [name]="data.label" #file style="display: none" (change)="onFilesAdded()" multiple />
 <div class="container" fxLayout="column" fxLayoutAlign="space-evenly stretch">
   <h1 mat-dialog-title>{{data.label}}</h1>
   <div>
@@ -23,6 +23,6 @@
   <!-- This are the actions of the dialog, containing the primary and the cancel button-->
   <mat-dialog-actions class="actions">
     <button *ngIf="showCancelButton" mat-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button color="primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
+    <button mat-raised-button color="primary" [disabled]="!canBeClosed" (click)="closeDialog();  closeDialogAndAddFile(message.name + ' added',  'Info');">{{primaryButtonText}}</button>
   </mat-dialog-actions>
 </div>

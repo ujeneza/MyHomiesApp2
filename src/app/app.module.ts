@@ -60,6 +60,7 @@ import { ResidentFilesComponent } from './residents/resident-files/resident-file
 import { ContractInfoComponent } from './residents/contract-info/contract-info.component';
 import { UploadModule } from './upload/upload.module';
 import { ResidentCardComponent } from './residents/resident-card/resident-card.component';
+import { SnackBarComponent } from './design-tools/snack-bar/snack-bar.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import { ResidentCardComponent } from './residents/resident-card/resident-card.c
     ResidentFilesComponent,
     ContractInfoComponent,
     ResidentCardComponent,
+    SnackBarComponent,
   ],
   imports: [
     BrowserModule,
