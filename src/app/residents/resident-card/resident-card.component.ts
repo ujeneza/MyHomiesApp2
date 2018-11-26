@@ -1,3 +1,4 @@
+import { UploadService } from './../../upload/upload.service';
 import { ContractInfo } from './../../app-models/residant-data-models/contract-Info.model';
 import { Appartment } from './../../app-models/residant-data-models/appartment-info.model';
 import { ContractResidentService } from './../../services/contract-resident.service';
@@ -19,30 +20,33 @@ export class ResidentCardComponent implements OnInit {
   @Input() contractInfo: ContractInfo;
 
   private residentsSub: Subscription;
-  constructor(private residentsService: ResidentsService,
+  constructor(
+    private residentsService: ResidentsService,
     private contractInfoSerive: ContractResidentService,
     public router: Router,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    public uploadService: UploadService
+  ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  // delete one resident with all contracts and files
+  onDelete(residentId: string) {
+    this.residentsService.deleteResident(residentId);
+    this.contractInfoSerive.deleteContract(residentId);
+    this.uploadService.deleteFileResidentUsingResidentId(residentId);
   }
 
-
-    // delete one resident
-    onDelete(residentId: string) {
-      this.residentsService.deleteResident(residentId);
-      this.contractInfoSerive.deleteContract(residentId);
+  // color when the rent is paid or not
+  onGetColor(isRentPaid: boolean) {
+    if (true) {
+      return 'green';
+    } else if (false) {
+      return 'red';
     }
-
-    onGetColor(isRentPaid: boolean) {
-      if (true) {
-        return 'green';
-      } else if (false) {
-        return 'red';
-      }
-    }
-    // view current resident
-    onViewResident(id: string) {
-      this.router.navigate(['/residents', 'view', id]);
-    }
+  }
+  // view current resident
+  onViewResident(id: string) {
+    this.router.navigate(['/residents', 'view', id]);
+  }
 }

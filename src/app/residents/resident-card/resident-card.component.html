@@ -1,57 +1,52 @@
-<div class="grid-container">
-  <button mat-stroked-button  disabled color="primary" class="globalCard">
-    <mat-tab-group dynamicHeight >
-      <mat-tab  label="{{resident.lastName}} {{resident.firstName}}">
-        <mat-card class="residentHeader">
-          <mat-card-header >
-            <img  mat-card-avatar class="example-header-image" [src]="resident.imagePath" [alt]="resident.lastName">
-            <!-- <div mat-card-avatar class="example-header-image"></div> -->
-          </mat-card-header>
-        </mat-card>
-        <mat-list >
-          <mat-list-item>
-            <p mat-line  >Is the flat paid :<span [ngStyle]="{visibility: onGetColor(true)}"> Yes</span></p>
-            <p mat-line >Flat Name : {{appartment?.appartmentName}} </p>
-            <p mat-line>Phone Number: {{resident.phoneNumber}} </p>
-            <p mat-line>Email: {{resident.email}}  </p>
-            <p mat-line>Contract End date: {{contractInfo?.contractEndDate |
-              date:"dd/MM/yyyy"}}</p>
-              <p mat-line>Next visit Date: {{contractInfo?.nextVisitDate |
-                date:"dd/MM/yyyy"}}</p>
-          </mat-list-item>
-        </mat-list>
-        <mat-card-actions class="matCardActionButton">
-          <button mat-button color="primary" (click)="onViewResident(resident.id)">Edit</button>
-          <button mat-button color="accent" (click)="onDelete(resident.id)"> Delete</button>
-        </mat-card-actions>
-      </mat-tab>
-      <mat-tab label="To do">
-        <mat-card  class="residentHeader">
-          <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
-          </mat-card-header>
-        </mat-card>
-        <mat-list>
-          <mat-list-item>
-            <h6 mat-line>id: {{resident.id}} </h6>
-            <h6 mat-line>Install the security alarm </h6>
-            <h6 mat-line>Paint the door </h6>
-            <h6 mat-line>Replace the windows </h6>
-            <h6 mat-line>Add water protections</h6>
-          </mat-list-item>
-        </mat-list>
 
-        <mat-card-actions class="matCardActionButton">
-          <button mat-button color="primary">Edit</button>
-          <button mat-button color="warn"> Delete</button>
-        </mat-card-actions>
+  <button mat-stroked-button disabled color="primary" class="globalCard">
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="{{resident.lastName}} {{resident.firstName}}">
+      <mat-card class="residentHeader">
+        <mat-card-header>
+          <img mat-card-avatar class="example-header-image" [src]="resident.imagePath" [alt]="resident.lastName">
+          <!-- <div mat-card-avatar class="example-header-image"></div> -->
+        </mat-card-header>
+      </mat-card>
+      <mat-list>
+        <mat-list-item>
+          <p mat-line>Is the flat paid :<span [ngStyle]="{color: onGetColor(true)}"> Yes</span></p>
+          <p mat-line>Flat Name : {{appartment?.appartmentName}} </p>
+          <p mat-line>Phone Number: {{resident.phoneNumber}} </p>
+          <p mat-line>Email: {{resident.email}} </p>
+          <p mat-line>Contract End date: {{contractInfo?.contractEndDate |
+            date:"dd/MM/yyyy"}}</p>
+          <p mat-line>Next visit Date: {{contractInfo?.nextVisitDate |
+            date:"dd/MM/yyyy"}}</p>
+        </mat-list-item>
+      </mat-list>
+      <mat-card-actions class="matCardActionButton">
+        <button mat-button color="primary" (click)="onViewResident(resident.id)">Edit</button>
+        <button mat-button color="accent" (click)="onDelete(resident.id)"> Delete</button>
+      </mat-card-actions>
+    </mat-tab>
+    <mat-tab label="To do">
+      <mat-card class="residentHeader">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+        </mat-card-header>
+      </mat-card>
+      <mat-list>
+        <mat-list-item>
+          <h6 mat-line>id: {{resident.id}} </h6>
+          <h6 mat-line>Install the security alarm </h6>
+          <h6 mat-line>Paint the door </h6>
+          <h6 mat-line>Replace the windows </h6>
+          <h6 mat-line>Add water protections</h6>
+        </mat-list-item>
+      </mat-list>
 
-      </mat-tab>
-    </mat-tab-group>
-    </button>
-  </div>
+      <mat-card-actions class="matCardActionButton">
+        <button mat-button color="primary">Edit</button>
+        <button mat-button color="warn"> Delete</button>
+      </mat-card-actions>
 
-
-
-
+    </mat-tab>
+  </mat-tab-group>
+  </button>
 

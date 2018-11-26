@@ -101,5 +101,13 @@
       </div>
       </div>
     </mat-card>
+<div *ngFor="let fileResident of fileResidents">
+  <span>{{fileResident.id}}
+      <button mat-mini-fab color="warn" (click)="onDelete(fileResident.id)" class="buttonIconFile" matTooltip="Delete the file"
+      aria-label="Button that displays a tooltip when focused or hovered over"><i class="material-icons">
+        delete_sweep
+      </i></button>
+  </span>
 
+</div>
    <!--  <button mat-raised-button  color="accent" (click)=" residentDataControl();" >Back to the resident</button> -->

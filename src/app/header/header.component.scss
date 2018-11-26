@@ -1,4 +1,128 @@
-.spacer{
-  flex: 1 1 auto;
+
+// header up
+.logo {
+  height: 100% !important;
+  width: 100% !important;
+  grid-area: logo;
+
 }
+
+.textLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.textLogoTitle {
+  font-size: 3em;
+  font-weight: bold;
+}
+
+
+.searchArea {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  grid-area: searchArea;
+}
+
+.empty {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-top: 0.5em;
+
+  grid-area: empty;
+}
+
+.asideLeftHeaderUp {
+  grid-area: asideRight;
+}
+
+.asideRightHeaderUp {
+  grid-area: asideleft
+}
+
+.headerUp {
+  display: grid;
+  padding-top: 1em;
+  grid: " asideRightHeaderUp logo searchArea    asideLeftHeaderUp" 3fr
+         "asideRightHeaderUp  logo empty        asideLeftHeaderUp" 5fr
+         / 1fr                4fr  6fr          1fr;
+  grid-area: headerUp;
+}
+
+// header down
+.asideLeftHeaderdown {
+grid-area: asideLeftHeaderdown;
+
+}
+.asideRightHeaderDown {
+  grid-area: asideRightHeaderDown;
+}
+.residentData {
+ grid-area: residentData;
+}
+
+.takeAction {
+  grid-area: takeAction;
+}
+
+.todo {
+  grid-area: todo;
+}
+
+.userConnection {
+  grid-area: userConnection;
+}
+
+.headerDown {
+  display: grid;
+  grid: " asideRightHeaderDown residentData takeAction  todo    userConnection   asideLeftHeaderDown"
+         / 1fr       2.5fr        2.5fr       2.5fr             2.5fr                      1fr;
+  grid-area: headerDown;
+  height: 1em;
+}
+
+
+// global container
+.container {
+  display: grid;
+  grid: "headerUp" 4fr
+        "headerDown" 1.8fr;
+  color:rgb(13, 19, 53);
+  height: 13em;
+
+}
+
+.mat-menu-panel {
+  min-width: 112px;
+  max-width: 1000px !important;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: calc(100vh - 48px);
+  border-radius: 2px;
+  outline: 0;
+}
+.matpanelExpansion {
+  width: 100%;
+  padding-top:0.5em;
+  padding-bottom: 0.5em;
+}
+
+.matpanelExpansionLogin {
+  width: 100%;
+  padding-top:0.5em;
+  padding-bottom: 0.5em;
+}
+
+.expensionPanelContainer {
+  width: 30em;
+  height: 14em;;
+}
+
 

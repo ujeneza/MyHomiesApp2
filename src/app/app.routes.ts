@@ -7,6 +7,7 @@ import { ResidentCreateComponent } from './residents/resident-create/resident-cr
 import { ResidentsComponent } from './residents/residents.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, Router } from '@angular/router';
+import { ValidatorsComponent } from './design-tools/validators/validators.component';
 
 const routes: Routes = [
   {path: '', component: ResidentsComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'contractInfo/new', component: ContractInfoComponent},
   {path: 'contractInfo/edit/:id', component: ContractInfoComponent},
   {path: 'residentFiles', component: ResidentFilesComponent},
+  {path: 'validators', component: ValidatorsComponent},
   {path: '**', redirectTo: '/residents', pathMatch: 'full' }
  ];
 

@@ -1,10 +1,15 @@
-.grid-container{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-self: auto;
+
+.flexForResidentContainer{
+display: flex;
+flex-direction: row;
+justify-content: center;
+flex-wrap: wrap;
 }
+.flexForResidentItem{
+width: 26em;
+
+}
+
 
 .globalCard{
   margin-top: 1rem;

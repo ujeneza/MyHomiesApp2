@@ -1,6 +1,8 @@
-<a mat-button class="backSetting" routerLink="" (click)="onGetAllResident()">
-    <i class="material-icons">arrow_back_ios</i> Resident list</a>
 
+<button mat-raised-button color="accent"
+ (click)="residentDataControl()"> <i class="material-icons">
+    account_balance
+    </i> Home page</button>
 <mat-accordion class="example-headers-align">
   <mat-expansion-panel class="matExpansionPanel" [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
     <mat-expansion-panel-header>
@@ -71,11 +73,15 @@
               </mat-form-field>
 
       </div>
+      <mat-action-row>
+        <button mat-raised-button color="accent" (click)="onSave();  saveButtonClick('Personal Data updated!', 'Info');">Update</button>
+      </mat-action-row>
+
       </form>
     </div>
     <mat-action-row>
-        <button mat-button color="primary" (click)="onSave()">Save</button>
-      <button mat-button color="primary" (click)="nextStep()">Next</button>
+        <button mat-button color="primary" (click)="nextStep()" (click)="onSave()">Next</button>
+
     </mat-action-row>
   </mat-expansion-panel>
 
@@ -122,7 +128,10 @@
             <mat-list-item>Hot Water Meter: {{selectedAppartment?.hotWaterMeter}}</mat-list-item>
             <mat-divider></mat-divider>
           </mat-list>
+          <mat-action-row>
+              <button mat-raised-button color="accent" (click)="setStep(0);  saveButtonClick('Update Appartment Field', 'Info');">Change flat</button>
 
+          </mat-action-row>
 
       <mat-action-row>
         <button mat-button color="warn" (click)="prevStep()">Previous</button>
@@ -143,6 +152,10 @@
     </mat-expansion-panel-header>
 
     <app-resident-files [residentIdFile] = "globalId" ></app-resident-files>
+
+    <mat-action-row>
+        <button mat-raised-button color="accent" (click)="residentDataControl()">Home Page</button>
+    </mat-action-row>
 
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Previous</button>
@@ -259,7 +272,7 @@
       <mat-icon matSuffix>mode_edit</mat-icon>
     </mat-form-field>
 
-    
+
   </form>
 </div>
  -->

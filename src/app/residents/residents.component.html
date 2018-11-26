@@ -1,9 +1,8 @@
-<div *ngFor="let resident of residents">
-  <app-resident-card
-  [resident]=resident
-  [appartment]= "getAppartmentOfResident(resident)"
-  [contractInfo] = "getContractOfResident(resident)"></app-resident-card>
+<div class=" flexForResidentContainer">
+  <div *ngFor="let resident of residents" class="flexForResidentItem">
+
+
+    <app-resident-card [resident]=resident [appartment]="getAppartmentOfResident(resident)" [contractInfo]="getContractOfResident(resident)"></app-resident-card>
+  </div>
 </div>
-
-
 <p class="mat-body-1" *ngIf="residents.length <= 0"> No resident added yet</p>

@@ -81,7 +81,7 @@ export class ResidentsService {
     residentData.append("email", email.toString());
     residentData.append("dateofBirth", dateofBirth.toString());
     residentData.append("nationality", nationality.toString());
-    residentData.append("residentOtherInfo", residentOtherInfo.toString());
+    residentData.append("residentOtherInfo", residentOtherInfo);
     residentData.append( "image", image, lastName);
 
     return this.http.post<{ message: string; resident: Resident }>

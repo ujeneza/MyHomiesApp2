@@ -1,11 +1,83 @@
-<mat-toolbar color="primary" class="navBarSet">
-   <button mat-button routerLink="resident"> <i class="material-icons">
-      apps
-      </i> MyHomiesApp</button>
-      <span class="spacer"></span>
-  <button mat-button routerLink="./residents/new" routerLinkActive ="mat-accent" > <i class="material-icons">
-    person_add
-    </i> New resident</button>
-</mat-toolbar>
+<div class="container">
+
+  <div class="headerUp">
+    <div class="asideLeftHeaderUp"></div>
+    <button mat-button routerLink="resident" class="logo">
+      <div class="textLogo">
+        <span class="textLogoTitle"> Rent & </span>
+        <span class="textLogoTitle">Optimize</span>
+      </div>
+    </button>
 
 
+    <div routerLink="resident" routerLinkActive="active">
+
+    </div>
+    <div class="searchArea">
+      <button mat-button>Contact & Help</button>
+      <button mat-button><i class="material-icons">
+          search
+        </i></button>
+    </div>
+    <div class="empty">
+      <button mat-fab color="" class="Addbutton" routerLink="./residents/new" routerLinkActive="mat-accent"> <i class="material-icons">
+          person_add
+        </i> </button>
+    </div>
+    <div class="asideRightHeaderDown"></div>
+  </div>
+
+  <div class="headerDown">
+    <div class="asideRightHeaderDown"></div>
+    <div class="residentData">
+      <mat-expansion-panel class="matpanelExpansion" hideToggle ="true"   (click)="openDialog()">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Residents
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container matExpansionPanelContent *ngTemplateOutlet="residentExpansionPanelContent"></ng-container>
+      </mat-expansion-panel>
+    </div>
+    <div class="takeAction">
+      <mat-expansion-panel class="matpanelExpansion"  hideToggle ="true">
+        <mat-expansion-panel-header class="matpanelExpansionHeader">
+          <mat-panel-title>
+            Take actions
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>Aff</p>
+        <p>B</p>
+      </mat-expansion-panel>
+    </div>
+    <div class="todo">
+      <mat-expansion-panel class="matpanelExpansion"  hideToggle ="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            To do list
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>A ffffdd</p>
+        <p>B</p>
+      </mat-expansion-panel>
+    </div>
+    <div class="userConnection">
+      <mat-expansion-panel class="matpanelExpansionLogin">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <i class="material-icons">
+              perm_identity
+            </i>
+            Login
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>B</p>
+      </mat-expansion-panel>
+    </div>
+    <div class="asideLeftHeaderDown"></div>
+  </div>
+
+</div>
+<ng-template #residentExpansionPanelContent class="expensionPanelContainer">
+  hello
+</ng-template>

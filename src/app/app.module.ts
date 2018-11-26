@@ -61,6 +61,9 @@ import { ContractInfoComponent } from './residents/contract-info/contract-info.c
 import { UploadModule } from './upload/upload.module';
 import { ResidentCardComponent } from './residents/resident-card/resident-card.component';
 import { SnackBarComponent } from './design-tools/snack-bar/snack-bar.component';
+import { ValidatorsComponent } from './design-tools/validators/validators.component';
+import { SearchComponent } from './search/search.component';
+import { DialogOverviewComponent } from './design-tools/dialog-overview/dialog-overview.component';
 
 
 @NgModule({
@@ -78,6 +81,9 @@ import { SnackBarComponent } from './design-tools/snack-bar/snack-bar.component'
     ContractInfoComponent,
     ResidentCardComponent,
     SnackBarComponent,
+    ValidatorsComponent,
+    SearchComponent,
+    DialogOverviewComponent,
   ],
   imports: [
     BrowserModule,

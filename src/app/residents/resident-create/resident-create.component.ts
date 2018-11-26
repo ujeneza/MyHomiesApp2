@@ -1,9 +1,9 @@
+import { Resident } from './../resident.model';
 import { Appartment } from './../../app-models/residant-data-models/appartment-info.model';
 import { Subscription } from 'rxjs';
 import { AppartmentsService } from './../../services/appartment.service';
 import { mimeType } from './mime-type.validator';
 // tslint:disable:max-line-length
-import { Resident } from '../resident.model';
 import { ResidentsService } from '../../services/residents.service';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import {
@@ -26,11 +26,14 @@ export class ResidentCreateComponent implements OnInit {
   value = 'Clear me';
   residentForm: FormGroup;
   imagePreview: any;
-  private appartmentsSub: Subscription;
+  appartmentsSub: Subscription;
+  residentsSub: Subscription;
   appartments: Appartment[] = [];
   selectedAppartment: Appartment;
+  selectedResident: Resident;
   disabledTab: boolean;
   resident: Resident;
+  residents: Resident[] = [];
   globalIdComponent: any;
 
 
@@ -48,11 +51,7 @@ export class ResidentCreateComponent implements OnInit {
     this.initForm();
     this.initGetAppartments();
     this.hiddenUpdateButton();
-
-
-    this.selectedAppartment = this.getAppartmentFromAppartmentId(
-      this.residentForm.get('appartmentInfo').value
-    );
+    this.initGetAllResidents();
 
   }
 
@@ -88,8 +87,9 @@ export class ResidentCreateComponent implements OnInit {
       appartmentInfo: new FormControl(null, {
         validators: [Validators.required]
       }),
-      phoneNumber: new FormControl(null, { validators: [Validators.required] }),
-      email: new FormControl(null, { validators: [Validators.minLength(3)] }),
+      phoneNumber: new FormControl(null, { validators: [Validators.required,
+        Validators.pattern('((\\+32-?))?[0-9]{9}')] }),
+      email: new FormControl(null, { validators: [Validators.minLength(3), Validators.email] }),
       dateofBirth: new FormControl(null, {
         validators: [Validators.minLength(3)]
       }),
@@ -175,6 +175,16 @@ export class ResidentCreateComponent implements OnInit {
       });
   }
 
+  // view all the residents
+  initGetAllResidents() {
+    this.residentsService.getResidents();
+    this.residentsSub = this.residentsService
+    .getResidentUpdateListener()
+    .subscribe((residents: Resident[]) => {
+      this.residents = residents;
+    });
+  }
+
   // get selected appartment
   getAppartmentFromAppartmentId(id) {
     return this.appartments.filter(item => {
@@ -182,10 +192,29 @@ export class ResidentCreateComponent implements OnInit {
     })[0];
   }
 
+
   updateSelectedAppartment(selectedAppartmentId) {
     this.selectedAppartment = this.getAppartmentFromAppartmentId(
       selectedAppartmentId
     );
+
+
+  }
+
+    // get selected appartment and check if it is already assigned
+    getResidentFromAppartmentId(id) {
+      return this.residents.filter(item => {
+        return item.appartmentInfo === id;
+      })[0];
+    }
+
+  updateSelectedResident(selectedResident) {
+    this.selectedResident = this.getResidentFromAppartmentId(selectedResident);
+    if (this.selectedResident) {
+      console.log('yes found');
+    } else {
+      console.log('No not found');
+    }
   }
   // Save data while updating
   onSave2() {
@@ -234,4 +263,11 @@ export class ResidentCreateComponent implements OnInit {
     this.snackBar.open(message, action, config);
   }
 
+  selectedFlatControl(id) {
+    if (id) {
+      console.log('the appartment has been already select');
+    } else {
+      console.log('You can selected the appartment');
+    }
+  }
 }

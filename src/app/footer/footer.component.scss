@@ -1,22 +1,7 @@
 
-.mat-toolbar{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  height: 50%;
-  padding-bottom: 1rem;
-  justify-items: center;
-
- /*  background-image: url("/MyHomiesPictures/window-3042834_1280.jpg");
-  background-repeat: no-repeat; /* Do not repeat the image */
-
- /*  outline-style: solid;
-  outline-color: #3f51b5; */
-
-}
 .address{
-  font-size: 13px;
-  color: white;
+  font-size: 1em;
+  color: #505050;
   display: flex;
   text-align: center;
   flex-direction: column;
@@ -25,16 +10,24 @@
   flex-wrap: wrap;
   word-wrap:break-word;
   height: 100%;
-  width: 70%;
+  width: auto;
+  padding-bottom: 1.5em;
+  padding-top: 1.5em;
+  background: rgb(227,229,240);
+background: linear-gradient(5deg, rgba(227,229,240,1) 5%, rgba(252,252,252,1) 30%);
+border-top:2em solid #ebebeb;
 }
 span{
   white-space: normal;
+  padding: 0.3em;
 
 }
 .title{
   text-decoration: underline;
-  font-size: 15px;
+  font-size: 1.5em;
 }
+
+
 
 
 

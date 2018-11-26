@@ -8,7 +8,7 @@ import {
   HttpEventType,
   HttpResponse
 } from '@angular/common/http';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, identity } from 'rxjs';
 
 const url = 'http://localhost:3000/api/file/';
 @Injectable({
@@ -101,10 +101,22 @@ export class UploadService {
     return this.http.get<FileResident>(url + id);
   } */
 
-  // Delete a file
+  // Delete a file using ID
 
   deleteFileResident(fileResidentId: string) {
     this.http.delete(url + fileResidentId).subscribe(() => {
+      const updatedFileResidents = this.fileResidents.filter(
+        fileResident => fileResident.id !== fileResidentId
+      );
+      this.fileResidents = updatedFileResidents;
+      this.fileResidentsUpdate.next([...this.fileResidents]);
+    });
+  }
+
+  // delete file using ResidentID
+
+  deleteFileResidentUsingResidentId(fileResidentId: string) {
+    this.http.delete(url + 'residentFile/' + fileResidentId).subscribe(() => {
       const updatedFileResidents = this.fileResidents.filter(
         fileResident => fileResident.id !== fileResidentId
       );

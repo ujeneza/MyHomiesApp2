@@ -1,3 +1,4 @@
+import {MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { Appartment } from './../../app-models/residant-data-models/appartment-info.model';
 import { AppartmentsService } from './../../services/appartment.service';
 import { mimeType } from './../resident-create/mime-type.validator';
@@ -39,6 +40,7 @@ export class ResidentViewComponent implements OnInit {
 
 
   constructor(
+    private snackBar: MatSnackBar,
     private residentsService: ResidentsService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -204,6 +206,35 @@ export class ResidentViewComponent implements OnInit {
     this.step--;
   }
 
+  // controle data
+
+  residentDataControl() {
+    this.router.navigate(['/residents']);
+  }
+// pop message while saving
+  saveButtonClick (message: string, action: string) {
+    const config = new MatSnackBarConfig();
+    config.duration = 2000;
+    config.panelClass = ['green-snackbar'];
+    config.horizontalPosition = 'right';
+    this.snackBar.open(message, action, config);
+  }
+// delete resident with all the contract and files
+  onDelete(residentId: string) {
+    this.residentsService.deleteResident(residentId);
+  }
+
+// back to the main page
+  onViewAllResident() {
+    this.router.navigate(["resident"]);
+  }
+
+  globalDataControl() {
+    if (this.residentForm.invalid) {
+      console.log('form invalid');
+    }
+  }
+}
 
   /*   getResidentId(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -242,12 +273,3 @@ export class ResidentViewComponent implements OnInit {
     this.residentsService.updateResident
     (this.residentId, firstName, lastName, appartmentInfo, isRentPaid, phoneNumber, rent, contractEndDate, );
   } */
-
-  onDelete(residentId: string) {
-    this.residentsService.deleteResident(residentId);
-  }
-
-  onViewAllResident() {
-    this.router.navigate(["resident"]);
-  }
-}

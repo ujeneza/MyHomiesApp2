@@ -1,3 +1,5 @@
+import { UploadService } from './../upload/upload.service';
+import { FileResident } from './../app-models/residant-data-models/file-resisent.models';
 import { ContractInfo } from './../app-models/residant-data-models/contract-Info.model';
 import { map } from 'rxjs/operators';
 import { Appartment } from './../app-models/residant-data-models/appartment-info.model';
@@ -21,6 +23,7 @@ export class ResidentsComponent implements OnInit {
   private contractInfosSub: Subscription;
   appartments: Appartment[] = [];
   contractInfos: ContractInfo[] = [];
+  residentFiles: FileResident[] = [];
   selectedAppartment: Appartment;
   residentId: string;
   appartmentsId: any[];
@@ -28,13 +31,15 @@ export class ResidentsComponent implements OnInit {
   resident: Resident;
   appartment: Appartment;
   contractInfo: ContractInfo;
+  residentFile: FileResident;
 
   constructor(
     private residentsService: ResidentsService,
     public router: Router,
     private route: ActivatedRoute,
     private appartmentsService: AppartmentsService,
-    private contractResidentService: ContractResidentService
+    private contractResidentService: ContractResidentService,
+    public uploadService: UploadService
   ) {}
 
   ngOnInit() {
@@ -60,17 +65,25 @@ export class ResidentsComponent implements OnInit {
 
       });
   }
-
+// get apprtement of the resident
   getAppartmentOfResident(resident: Resident): Appartment {
    return this.appartments.filter(item => {
     return resident.appartmentInfo === item.id;
    })[0];
   }
 
+  // get contract of the resident
   getContractOfResident(resident: Resident): ContractInfo {
     return this.contractInfos.filter(item => {
      return resident.id === item.residentId;
     })[0];
+   }
+
+
+   // view all files
+
+   initGetResidentFiles() {
+     this.uploadService.getAllFileResidents();
    }
   // view the list of all appartments
   initGetContractInfos() {
@@ -97,6 +110,7 @@ export class ResidentsComponent implements OnInit {
   onDelete(residentId: string) {
     this.residentsService.deleteResident(residentId);
   }
+
 
   onGetColor(isRentPaid: boolean) {
     if (true) {

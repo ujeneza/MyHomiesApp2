@@ -18,7 +18,10 @@
 input[type="file"] {
   visibility: hidden;
 }
-
+.buttonContractInfoAlign{
+  position: relative;
+  bottom: 35px;
+}
 .picture-preview{
   display: flex;
   justify-content: center !important;
@@ -60,6 +63,11 @@ input[type="file"] {
 .buttonSetUpLastPage{
   position: relative;
   left: 25px;
+}
+
+.flexEndButtom{
+  display:flex;
+  justify-content: flex-end;
 }
 
 
