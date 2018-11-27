@@ -44,7 +44,12 @@ import { MatAutocompleteModule,
   MatTooltipModule,
   MatTreeModule,
   MatFormFieldModule,
+  MAT_DATE_LOCALE,
+  DateAdapter,
+  MAT_DATE_FORMATS,
   } from '@angular/material';
+
+  import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -64,6 +69,7 @@ import { SnackBarComponent } from './design-tools/snack-bar/snack-bar.component'
 import { ValidatorsComponent } from './design-tools/validators/validators.component';
 import { SearchComponent } from './search/search.component';
 import { DialogOverviewComponent } from './design-tools/dialog-overview/dialog-overview.component';
+import { from } from 'rxjs';
 
 
 @NgModule({
@@ -133,9 +139,9 @@ import { DialogOverviewComponent } from './design-tools/dialog-overview/dialog-o
     MatInputModule,
     MatFormFieldModule,
     FlexLayoutModule,
-    UploadModule
+    UploadModule,
   ],
-  providers: [],
+  providers: [ {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

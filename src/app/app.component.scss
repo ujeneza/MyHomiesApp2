@@ -9,7 +9,8 @@ body{
 
 .asideTop {
   grid-area: asideTop;
-  height: 2em;
+  height: auto;
+  min-height: 2em;
   background-color: #ebebeb;
 }
 

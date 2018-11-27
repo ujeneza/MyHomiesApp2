@@ -30,7 +30,7 @@
   <div class="headerDown">
     <div class="asideRightHeaderDown"></div>
     <div class="residentData">
-      <mat-expansion-panel class="matpanelExpansion" hideToggle ="true"   (click)="openDialog()">
+      <mat-expansion-panel class="matpanelExpansion" hideToggle ="true" >
         <mat-expansion-panel-header>
           <mat-panel-title>
             Residents
@@ -46,8 +46,11 @@
             Take actions
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <p>Aff</p>
-        <p>B</p>
+        <div class = "groupButtonMenu" >
+        <button class="menuButtonDown" mat-button>Resident Onboarding</button>
+        <button class="menuButtonDown" mat-button>Resident Offboarding </button>
+        <button class="menuButtonDown" mat-button>Manage Appartments</button>
+        </div>
       </mat-expansion-panel>
     </div>
     <div class="todo">
@@ -57,8 +60,10 @@
             To do list
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <p>A ffffdd</p>
-        <p>B</p>
+        <div class = "groupButtonMenu" >
+            <button class="menuButtonDown" mat-button>New tasks</button>
+            <button class="menuButtonDown" mat-button>Manage taks</button>
+            </div>
       </mat-expansion-panel>
     </div>
     <div class="userConnection">

@@ -125,4 +125,20 @@ grid-area: asideLeftHeaderdown;
   height: 14em;;
 }
 
+.menuButtonDown {
+display: flex !important;
+justify-content: flex-start;
+ width: 100%;
+ color: #0d1335;
+ padding: 0;
+}
+.groupButtonMenu {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.mat-expansion-panel-body {
+  padding:0 !important;
+}
 

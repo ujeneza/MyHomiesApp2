@@ -85,7 +85,7 @@ export class ResidentCreateComponent implements OnInit {
         validators: [Validators.required, Validators.minLength(3)]
       }),
       appartmentInfo: new FormControl(null, {
-        validators: [Validators.required]
+        validators: [Validators.required, this.validateSelectedAppartment.bind(this)]
       }),
       phoneNumber: new FormControl(null, { validators: [Validators.required,
         Validators.pattern('((\\+32-?))?[0-9]{9}')] }),
@@ -208,13 +208,17 @@ export class ResidentCreateComponent implements OnInit {
       })[0];
     }
 
-  updateSelectedResident(selectedResident) {
-    this.selectedResident = this.getResidentFromAppartmentId(selectedResident);
-    if (this.selectedResident) {
-      console.log('yes found');
+
+  validateSelectedAppartment(c: FormControl) {
+    const apartmenetSelected = this.getResidentFromAppartmentId(c.value);
+    if (apartmenetSelected) {
+      return {
+        errorApartmentSelected: {isValid: false}
+      };
     } else {
-      console.log('No not found');
+      return null;
     }
+
   }
   // Save data while updating
   onSave2() {
@@ -270,4 +274,5 @@ export class ResidentCreateComponent implements OnInit {
       console.log('You can selected the appartment');
     }
   }
+
 }
