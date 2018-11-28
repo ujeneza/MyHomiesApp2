@@ -3,10 +3,12 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
 
+
 const residentRoutes = require("./routes/residents");
 const appartmentRoutes = require("./routes/appartments");
 const contractInfoRoutes = require("./routes/contract-info");
-var fileRoutes = require('./routes/file');
+const fileRoutes = require('./routes/file');
+const userRoutes = require("./routes/user");
 
 const app = express();
 
@@ -34,7 +36,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -48,6 +50,7 @@ app.use("/api/residents", residentRoutes);
 app.use("/api/appartments", appartmentRoutes);
 app.use("/api/contractInfo", contractInfoRoutes);
 app.use('/api/file',fileRoutes);
+app.use("/api/user", userRoutes);
 
 
 module.exports = app;

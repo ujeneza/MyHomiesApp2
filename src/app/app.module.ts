@@ -1,10 +1,11 @@
+import { AuthInterceptor } from './auth/auth-interceptor';
 import { AppRoutingModule } from './app.routes';
 import { QuestionableBooleanPipe } from './pipes/boolean-to-text';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { Routes, RouterModule} from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatAutocompleteModule,
@@ -70,6 +71,8 @@ import { ValidatorsComponent } from './design-tools/validators/validators.compon
 import { SearchComponent } from './search/search.component';
 import { DialogOverviewComponent } from './design-tools/dialog-overview/dialog-overview.component';
 import { from } from 'rxjs';
+import { SignupComponent } from './auth/signup/signup.component';
+import { LoginComponent } from './auth/login/login.component';
 
 
 @NgModule({
@@ -90,6 +93,8 @@ import { from } from 'rxjs';
     ValidatorsComponent,
     SearchComponent,
     DialogOverviewComponent,
+    SignupComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -141,7 +146,9 @@ import { from } from 'rxjs';
     FlexLayoutModule,
     UploadModule,
   ],
-  providers: [ {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}],
+  providers: [ {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+              {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+             ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,8 @@
+import { Router } from '@angular/router';
+import { AuthService } from './../auth/auth.service';
+import { Subscription } from 'rxjs';
 import { DialogOverviewComponent } from './../design-tools/dialog-overview/dialog-overview.component';
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input,  OnDestroy } from '@angular/core';
 import { MatMenuTrigger, MatExpansionPanel } from '@angular/material';
 import { ViewEncapsulation } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -11,29 +14,36 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
   styleUrls: ['./header.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   panelOpenState = false;
   panelExpension: MatExpansionPanel;
+  userIsAuthenticated = false;
+  private authListenerSubs: Subscription;
 
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+    private authService: AuthService,
+    private router: Router) { }
   name = 'ujeneza';
   animal = 'poppy';
 
-  ngOnInit() {}
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogOverviewComponent, {
-      data: {name: this.name, animal: this.animal},
-      width: '50%',
-      height: '50%'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+  ngOnInit() {
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+      });
   }
 
+  onLogout() {
+    this.authService.logout();
+    this.router.navigate(['login']);
+  }
+
+  ngOnDestroy() {
+    this.authListenerSubs.unsubscribe();
+  }
 
   expandedPanelResident() {
     this.panelExpension.open();

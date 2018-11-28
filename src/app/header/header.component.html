@@ -18,9 +18,15 @@
       <button mat-button><i class="material-icons">
           search
         </i></button>
+        <button mat-button (click)="onLogout()"  matTooltip="Log-out" *ngIf="userIsAuthenticated"><i class="material-icons" style="color:green">
+          how_to_reg
+          </i></button>
+          <button mat-button *ngIf="!userIsAuthenticated" matTooltip="Log-in"><i class="material-icons"  style="color: red">
+            person
+            </i></button>
     </div>
     <div class="empty">
-      <button mat-fab color="" class="Addbutton" routerLink="./residents/new" routerLinkActive="mat-accent"> <i class="material-icons">
+      <button *ngIf="userIsAuthenticated" mat-fab color="" class="Addbutton" routerLink="./residents/new" routerLinkActive="mat-accent"> <i class="material-icons">
           person_add
         </i> </button>
     </div>
@@ -29,7 +35,7 @@
 
   <div class="headerDown">
     <div class="asideRightHeaderDown"></div>
-    <div class="residentData">
+    <div class="residentData" *ngIf="userIsAuthenticated" >
       <mat-expansion-panel class="matpanelExpansion" hideToggle ="true" >
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -39,7 +45,7 @@
         <ng-container matExpansionPanelContent *ngTemplateOutlet="residentExpansionPanelContent"></ng-container>
       </mat-expansion-panel>
     </div>
-    <div class="takeAction">
+    <div class="takeAction" *ngIf="userIsAuthenticated">
       <mat-expansion-panel class="matpanelExpansion"  hideToggle ="true">
         <mat-expansion-panel-header class="matpanelExpansionHeader">
           <mat-panel-title>
@@ -53,7 +59,7 @@
         </div>
       </mat-expansion-panel>
     </div>
-    <div class="todo">
+    <div class="todo" *ngIf="userIsAuthenticated">
       <mat-expansion-panel class="matpanelExpansion"  hideToggle ="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -76,7 +82,17 @@
             Login
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <p>B</p>
+        <ul>
+          <li *ngIf="!userIsAuthenticated">
+            <button class="loginButtom" mat-raised-button color="primary" routerLink="/login" routerLinkActive="mat-accent">Login</button>
+          </li>
+          <li *ngIf="!userIsAuthenticated">
+            <button class="loginButtom" mat-button routerLink="/signup" routerLinkActive="mat-accent">Signup </button>
+          </li>
+          <li *ngIf="userIsAuthenticated">
+            <button class="loginButtom"  mat-button (click)="onLogout()">Logout</button>
+          </li>
+        </ul>
       </mat-expansion-panel>
     </div>
     <div class="asideLeftHeaderDown"></div>
