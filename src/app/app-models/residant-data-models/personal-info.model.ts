@@ -8,4 +8,5 @@ export interface PersonalInfo {
   dateofBirth: Date;
   nationality: string;
   residentOtherInfo: string;
+  creator: string;
 }

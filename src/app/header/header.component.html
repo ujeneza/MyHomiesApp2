@@ -21,7 +21,7 @@
         <button mat-button (click)="onLogout()"  matTooltip="Log-out" *ngIf="userIsAuthenticated"><i class="material-icons" style="color:green">
           how_to_reg
           </i></button>
-          <button mat-button *ngIf="!userIsAuthenticated" matTooltip="Log-in"><i class="material-icons"  style="color: red">
+          <button mat-button  routerLink="/signup" *ngIf="!userIsAuthenticated" matTooltip="Log-in"><i class="material-icons"  style="color: red">
             person
             </i></button>
     </div>

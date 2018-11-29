@@ -2,6 +2,7 @@ const express = require("express");
 const Resident = require("../models/resident");
 const multer = require("multer");
 const router= express.Router();
+const checkAuth = require("../middleware/check-auth");
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -30,7 +31,7 @@ const storage = multer.diskStorage({
 });
 
 // Add a new resident
-router.post("",
+router.post("", checkAuth,
  multer({ storage: storage }).single("image"),
  (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
@@ -44,7 +45,8 @@ router.post("",
     dateofBirth: req.body.dateofBirth,
     nationality: req.body.nationality,
     residentOtherInfo: req.body.residentOtherInfo,
-    imagePath: url + "/images/" + req.file.filename
+    imagePath: url + "/images/" + req.file.filename,
+    creator: req.userData.userId
   });
   resident.save().then(createdResident => {
     res.status(201).json({
@@ -59,6 +61,7 @@ router.post("",
 });
 // Update a resident
 router.put("/:id",
+checkAuth,
 multer({ storage: storage }).single("image"),
 (req,res,next) => {
   let imagePath = req.body.imagePath;
@@ -76,20 +79,28 @@ multer({ storage: storage }).single("image"),
     dateofBirth: req.body.dateofBirth,
     nationality: req.body.nationality,
     residentOtherInfo: req.body.residentOtherInfo,
-    imagePath: imagePath
+    imagePath: imagePath,
+    creator: req.userData.userId
   });
-  Resident.updateOne({_id: req.params.id}, resident).then(result => {
-    res.status(200).json({ message: "Update successful!" });
+  Resident.updateOne({_id: req.params.id, creator: req.userData.userId}, resident).then(result => {
+    if (result.nModified > 0) {
+      res.status(200).json({ message: "Update successful!" });
+    } else {
+      res.status(401).json({ message: "Not authorized!" });
+    }
   });
 });
 
 // Get all residents
-router.get("", (req, res, next) => {
-  Resident.find().then(documents => {
-    res.status(200).json({
-      message: "residents fetched successfully!",
-      residents: documents
-    });
+router.get("", checkAuth, (req, res, next) => {
+  Resident.find({creator: req.userData.userId}).then(documents => {
+    if (documents) {
+      res.status(200).json({
+       message: "residents fetched successfully!",
+       residents: documents });
+    } else {
+      res.status(401).json({ message: "Not authorized!" });
+    }
   });
 });
 
@@ -105,11 +116,14 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.delete("/:id", (req, res, next) => {
-  Resident.deleteOne({ _id: req.params.id }).then(result => {
+  Resident.deleteOne({ _id: req.params.id}).then(result => {
     console.log(result);
-    res.status(200).json({ message: "Resident deleted!" });
+    if (result.n > 0) {
+      res.status(200).json({ message: "Deletion successful!" });
+    } else {
+      res.status(401).json({ message: "Not authorized!" });
+    }
   });
 });
-
 
 module.exports = router;

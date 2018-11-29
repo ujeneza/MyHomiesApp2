@@ -6,6 +6,16 @@ const User = require("../models/user");
 
 const router = express.Router();
 
+router.get("", (req, res, next) => {
+  console.log(req.body);
+  User.find().then(documents => {
+    res.status(200).json({
+      message: "user fetched successfully!",
+      User: documents
+    });
+  });
+});
+
 router.post("/signup", (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then(hash => {
     const user = new User({
@@ -53,7 +63,8 @@ router.post("/login", (req, res, next) => {
       );
       res.status(200).json({
         token: token,
-        expiresIn: 3600
+        expiresIn: 3600,
+        userId: fetchedUser._id
       });
     })
     .catch(err => {
@@ -62,5 +73,7 @@ router.post("/login", (req, res, next) => {
       });
     });
 });
+
+
 
 module.exports = router;

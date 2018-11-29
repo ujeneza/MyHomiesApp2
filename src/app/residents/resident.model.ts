@@ -9,5 +9,6 @@ export interface Resident {
     nationality: string;
     residentOtherInfo: string;
   imagePath: string | File;
+  creator: string;
 
 }

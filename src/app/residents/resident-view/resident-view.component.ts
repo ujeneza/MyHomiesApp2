@@ -1,3 +1,4 @@
+import { AuthService } from './../../auth/auth.service';
 import {MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { Appartment } from './../../app-models/residant-data-models/appartment-info.model';
 import { AppartmentsService } from './../../services/appartment.service';
@@ -37,6 +38,9 @@ export class ResidentViewComponent implements OnInit {
   selectedAppartment: Appartment;
   selectedAppartment2: string;
   globalId: string;
+  userIsAuthenticated = false;
+  userId: string;
+  private authStatusSub: Subscription;
 
 
   constructor(
@@ -46,7 +50,8 @@ export class ResidentViewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private appartmentsService: AppartmentsService,
-    private element: ElementRef
+    private element: ElementRef,
+    private authService: AuthService
   ) {
     this.element.nativeElement.object = this.selectedAppartment;
   }
@@ -117,7 +122,9 @@ export class ResidentViewComponent implements OnInit {
         dateofBirth: residentData.dateofBirth,
         nationality: residentData.nationality,
         residentOtherInfo: residentData.residentOtherInfo,
-        imagePath: residentData.imagePath
+        imagePath: residentData.imagePath,
+        creator: residentData.creator,
+
       };
       this.residentForm.setValue({
         firstName: this.resident.firstName,

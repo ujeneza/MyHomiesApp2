@@ -1,3 +1,4 @@
+import { AuthService } from './../../auth/auth.service';
 import { UploadService } from './../../upload/upload.service';
 import { ContractInfo } from './../../app-models/residant-data-models/contract-Info.model';
 import { Appartment } from './../../app-models/residant-data-models/appartment-info.model';
@@ -18,14 +19,18 @@ export class ResidentCardComponent implements OnInit {
   @Input() resident: Resident;
   @Input() appartment: Appartment;
   @Input() contractInfo: ContractInfo;
-
+  userId: string;
+  private authStatusSub: Subscription;
   private residentsSub: Subscription;
+
   constructor(
     private residentsService: ResidentsService,
     private contractInfoSerive: ContractResidentService,
     public router: Router,
     private route: ActivatedRoute,
-    public uploadService: UploadService
+    public uploadService: UploadService,
+    private authService: AuthService
+
   ) {}
 
   ngOnInit() {}

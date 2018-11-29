@@ -8,6 +8,7 @@ const residentSchema = mongoose.Schema({
   dateofBirth:  {type: Date},
   nationality:  {type: String},
   residentOtherInfo:  {type: String},
-  imagePath: { type: String}
+  imagePath: { type: String},
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
 });
 module.exports = mongoose.model('Resident', residentSchema);

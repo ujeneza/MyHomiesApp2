@@ -1,3 +1,4 @@
+import { AuthService } from './../../auth/auth.service';
 import { Resident } from './../resident.model';
 import { Appartment } from './../../app-models/residant-data-models/appartment-info.model';
 import { Subscription } from 'rxjs';
@@ -35,6 +36,9 @@ export class ResidentCreateComponent implements OnInit {
   resident: Resident;
   residents: Resident[] = [];
   globalIdComponent: any;
+  userIsAuthenticated = false;
+  userId: string;
+  private authStatusSub: Subscription;
 
 
 
@@ -44,7 +48,8 @@ export class ResidentCreateComponent implements OnInit {
     private residentsService: ResidentsService,
     private router: Router,
     private appartmentsService: AppartmentsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -155,7 +160,8 @@ export class ResidentCreateComponent implements OnInit {
           dateofBirth: dateofBirth,
           nationality: nationality,
           residentOtherInfo: residentOtherInfo,
-          imagePath: responseData.resident.imagePath
+          imagePath: responseData.resident.imagePath,
+          creator: null
         };
         this.getIDwhileSaving(resident.id);
       });

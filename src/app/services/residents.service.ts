@@ -42,7 +42,8 @@ export class ResidentsService {
             dateofBirth: resident.dateofBirth,
             nationality: resident.nationality,
             residentOtherInfo: resident.residentOtherInfo,
-            imagePath: resident.imagePath
+            imagePath: resident.imagePath,
+            creator: resident.creator
           };
         });
       }))
@@ -118,6 +119,7 @@ export class ResidentsService {
       dateofBirth: Date;
       nationality: string;
       residentOtherInfo: string;
+      creator: string;
 
       imagePath: File }>(
       "http://localhost:3000/api/residents/" + id
@@ -148,7 +150,6 @@ export class ResidentsService {
     residentData.append("dateofBirth", dateofBirth.toString());
     residentData.append("nationality", nationality.toString());
     residentData.append("residentOtherInfo", residentOtherInfo.toString());
-
     residentData.append( "image", image, lastName);
       } else {
         residentData = {
@@ -161,31 +162,15 @@ export class ResidentsService {
               dateofBirth: dateofBirth,
               nationality: nationality,
               residentOtherInfo: residentOtherInfo,
-              imagePath: image
+              imagePath: image,
+              creator: null
 
         };
       }
         this.http
         .put("http://localhost:3000/api/residents/" + id, residentData)
         .subscribe(response => {
-          const updatedResidents = [...this.residents];
-          const oldResidentIndex = updatedResidents.findIndex(p => p.id === id);
-          const resident = {
-            id: id,
-            lastName: lastName,
-                firstName: firstName,
-                appartmentInfo: appartmentInfo,
-                phoneNumber: phoneNumber,
-                email: email,
-                dateofBirth: dateofBirth,
-                nationality: nationality,
-                residentOtherInfo: residentOtherInfo,
-                imagePath: image
-          };
-          updatedResidents[oldResidentIndex] = resident;
-          this.residents = updatedResidents;
           this.residentsUpdated.next([...this.residents]);
-
         });
     }
 

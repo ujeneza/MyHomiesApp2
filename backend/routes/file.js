@@ -5,6 +5,7 @@ const path = require('path');
 const IncomingForm = require('formidable').IncomingForm;
 const fs = require('fs');
 const FileResident = require("../models/file");
+const jwt = require("jsonwebtoken");
 
 
 

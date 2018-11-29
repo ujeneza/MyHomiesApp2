@@ -1,3 +1,4 @@
+import { AuthService } from './../auth/auth.service';
 import { UploadService } from './../upload/upload.service';
 import { FileResident } from './../app-models/residant-data-models/file-resisent.models';
 import { ContractInfo } from './../app-models/residant-data-models/contract-Info.model';
@@ -16,7 +17,7 @@ import { ContractResidentService } from '../services/contract-resident.service';
   templateUrl: './residents.component.html',
   styleUrls: ['./residents.component.scss']
 })
-export class ResidentsComponent implements OnInit {
+export class ResidentsComponent implements OnInit, OnDestroy {
   residents: Resident[] = [];
   private residentsSub: Subscription;
   private appartmentsSub: Subscription;
@@ -32,6 +33,9 @@ export class ResidentsComponent implements OnInit {
   appartment: Appartment;
   contractInfo: ContractInfo;
   residentFile: FileResident;
+  userIsAuthenticated = false;
+  userId: string;
+  private authStatusSub: Subscription;
 
   constructor(
     private residentsService: ResidentsService,
@@ -39,7 +43,8 @@ export class ResidentsComponent implements OnInit {
     private route: ActivatedRoute,
     private appartmentsService: AppartmentsService,
     private contractResidentService: ContractResidentService,
-    public uploadService: UploadService
+    public uploadService: UploadService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -52,6 +57,7 @@ export class ResidentsComponent implements OnInit {
   // Init get all residents
   initGetResidents() {
     this.residentsService.getResidents();
+    this.userId = this.authService.getUserId();
     this.residentsSub = this.residentsService
       .getResidentUpdateListener()
       .subscribe((residents: Resident[]) => {
@@ -59,11 +65,15 @@ export class ResidentsComponent implements OnInit {
         this.appartmentsId = this.residents.map(residentData => {
           return residentData.appartmentInfo;
         });
-        /* this.appartmentsId.forEach(element => {
-          this.getAppartmentFromAppartmentId(element);
-        }); */
 
       });
+      this.userIsAuthenticated = this.authService.getIsAuth();
+      this.authStatusSub = this.authService
+        .getAuthStatusListener()
+        .subscribe(isAuthenticated => {
+          this.userIsAuthenticated = isAuthenticated;
+          this.userId = this.authService.getUserId();
+        });
   }
 // get apprtement of the resident
   getAppartmentOfResident(resident: Resident): Appartment {
@@ -122,5 +132,9 @@ export class ResidentsComponent implements OnInit {
   // view current resident
   onViewResident(id: string) {
     this.router.navigate(['/residents', 'view', id]);
+  }
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
   }
 }
