@@ -6,16 +6,6 @@ const User = require("../models/user");
 
 const router = express.Router();
 
-router.get("", (req, res, next) => {
-  console.log(req.body);
-  User.find().then(documents => {
-    res.status(200).json({
-      message: "user fetched successfully!",
-      User: documents
-    });
-  });
-});
-
 router.post("/signup", (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then(hash => {
     const user = new User({
@@ -32,7 +22,7 @@ router.post("/signup", (req, res, next) => {
       })
       .catch(err => {
         res.status(500).json({
-          error: err
+          message: "You are already registered! Please contact the the system administrator to recover your password"
         });
       });
   });
@@ -44,7 +34,7 @@ router.post("/login", (req, res, next) => {
     .then(user => {
       if (!user) {
         return res.status(401).json({
-          message: "Auth failed"
+          message: "Authentification failed! Your email or your password is not correct"
         });
       }
       fetchedUser = user;
@@ -53,7 +43,7 @@ router.post("/login", (req, res, next) => {
     .then(result => {
       if (!result) {
         return res.status(401).json({
-          message: "Auth failed"
+          message: "Authentification failed! Your email or your password is not correct"
         });
       }
       const token = jwt.sign(
@@ -69,11 +59,9 @@ router.post("/login", (req, res, next) => {
     })
     .catch(err => {
       return res.status(401).json({
-        message: "Auth failed"
+        message: "Invalid authentication credentials!"
       });
     });
 });
-
-
 
 module.exports = router;

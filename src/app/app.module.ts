@@ -1,3 +1,4 @@
+import { ErrorInterceptor } from './error-interceptor';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { AppRoutingModule } from './app.routes';
 import { QuestionableBooleanPipe } from './pipes/boolean-to-text';
@@ -73,6 +74,8 @@ import { DialogOverviewComponent } from './design-tools/dialog-overview/dialog-o
 import { from } from 'rxjs';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
+import { ErrorComponent } from './error/error/error.component';
+
 
 
 @NgModule({
@@ -95,6 +98,7 @@ import { LoginComponent } from './auth/login/login.component';
     DialogOverviewComponent,
     SignupComponent,
     LoginComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -147,8 +151,10 @@ import { LoginComponent } from './auth/login/login.component';
     UploadModule,
   ],
   providers: [ {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-              {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+               {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+               { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
              ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule { }

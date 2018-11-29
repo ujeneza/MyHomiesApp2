@@ -83,9 +83,12 @@ multer({ storage: storage }).single("image"),
     creator: req.userData.userId
   });
   Resident.updateOne({_id: req.params.id, creator: req.userData.userId}, resident).then(result => {
-    if (result.nModified > 0) {
+    console.log(result.n + "update");
+    if (result.n > 0) {
       res.status(200).json({ message: "Update successful!" });
-    } else {
+    }
+    else
+    {
       res.status(401).json({ message: "Not authorized!" });
     }
   });

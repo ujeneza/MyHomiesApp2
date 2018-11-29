@@ -4,7 +4,7 @@
   <th mat-header-cell *matHeaderCellDef> Name </th>
   <td mat-cell *matCellDef="let element">name  </td>
 </ng-container>
-
+<div class="contractInfoContainer">
   <form [formGroup]="contractInfoForm"
   (submit)="onSaveContractInfo(); saveButtonClick('Contract created!', 'Info');">
     <mat-form-field >
@@ -84,6 +84,6 @@
   <button mat-button aria-label="Saved" class="openSnackBarCss">
   </button>
 
-
+</div>
 
 

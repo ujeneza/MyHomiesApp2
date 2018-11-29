@@ -21,7 +21,7 @@
         <button mat-button (click)="onLogout()"  matTooltip="Log-out" *ngIf="userIsAuthenticated"><i class="material-icons" style="color:green">
           how_to_reg
           </i></button>
-          <button mat-button  routerLink="/signup" *ngIf="!userIsAuthenticated" matTooltip="Log-in"><i class="material-icons"  style="color: red">
+          <button mat-button  routerLink="/login" *ngIf="!userIsAuthenticated" matTooltip="Log-in"><i class="material-icons"  style="color: red">
             person
             </i></button>
     </div>
@@ -90,7 +90,7 @@
             <button class="loginButtom" mat-button routerLink="/signup" routerLinkActive="mat-accent">Signup </button>
           </li>
           <li *ngIf="userIsAuthenticated">
-            <button class="loginButtom"  mat-button (click)="onLogout()">Logout</button>
+            <button class="loginButtom" mat-raised-button color="accent" (click)="onLogout()">Logout</button>
           </li>
         </ul>
       </mat-expansion-panel>

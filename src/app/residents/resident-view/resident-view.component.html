@@ -115,6 +115,7 @@
           <mat-icon>scatter_plot</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
+        <div class="apartmentContainer">
           <mat-list>
             <mat-list-item> Appartment Name: {{selectedAppartment?.appartmentName}}</mat-list-item>
             <mat-divider> </mat-divider>
@@ -131,6 +132,7 @@
             <mat-list-item>Hot Water Meter: {{selectedAppartment?.hotWaterMeter}}</mat-list-item>
             <mat-divider></mat-divider>
           </mat-list>
+        </div>
           <mat-action-row>
               <button mat-raised-button color="accent" (click)="setStep(0);  saveButtonClick('Update Appartment Field', 'Info');">Change flat</button>
 
