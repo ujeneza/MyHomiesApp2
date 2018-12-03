@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ResidentViewComponent } from './residents/resident-view/resident-view.component';
 import { CommonModule } from '@angular/common';
 
+
 import {MAT_DATE_LOCALE} from '@angular/material';
 
   import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';

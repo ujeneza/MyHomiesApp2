@@ -18,15 +18,18 @@
       <button mat-button><i class="material-icons">
           search
         </i></button>
-        <button mat-button (click)="onLogout()"  matTooltip="Log-out" *ngIf="userIsAuthenticated"><i class="material-icons" style="color:green">
+      <button mat-button (click)="onLogout()" matTooltip="Log-out" *ngIf="userIsAuthenticated"><i class="material-icons"
+          style="color:green">
           how_to_reg
-          </i></button>
-          <button mat-button  routerLink="/auth/login" *ngIf="!userIsAuthenticated" matTooltip="Log-in"><i class="material-icons"  style="color: red">
-            person
-            </i></button>
+        </i></button>
+      <button mat-button routerLink="/auth/login" *ngIf="!userIsAuthenticated" matTooltip="Log-in"><i class="material-icons"
+          style="color: red">
+          person
+        </i></button>
     </div>
     <div class="empty">
-      <button *ngIf="userIsAuthenticated" mat-fab color="" class="Addbutton" routerLink="./residents/new" routerLinkActive="mat-accent"> <i class="material-icons">
+      <button *ngIf="userIsAuthenticated" mat-fab color="" class="Addbutton" routerLink="./residents/new"
+        routerLinkActive="mat-accent"> <i class="material-icons">
           person_add
         </i> </button>
     </div>
@@ -34,16 +37,124 @@
   </div>
 
   <div class="headerDown">
+
     <div class="asideRightHeaderDown"></div>
-    <div class="residentData" *ngIf="userIsAuthenticated" >
-      <mat-expansion-panel class="matpanelExpansion" hideToggle ="true" >
+
+    <!-- les données du resident -->
+    <div class="residentData" *ngIf="userIsAuthenticated" (mouseenter)="onButtonMenuOverlay(); initGetResidents();"
+      (mouseleave)=" onCloseButtonMenu()">
+      <button class="menuButton" mat-raised-button> Resident data</button>
+    </div>
+    <div  (mouseleave)=" onCloseButtonMenu()" (mouseenter)="onButtonMenuOverlay()" (click)="onCloseButtonMenu()" class="menuContainer" [hidden]="hiddenMenuContainer">
+      <h4 class="titleMenu"> View and edit all your residents </h4>
+      <ng-container matExpansionPanelContent *ngTemplateOutlet="residentExpansionPanelContent"></ng-container>
+    </div>
+
+    <!--  take actions -->
+
+    <div class="takeAction" *ngIf="userIsAuthenticated">
+        <button class="menuButton" mat-raised-button> Take actions</button>
+
+   <!--    <div (mouseenter)="onButtonMenuOverlay()" (mouseleave)=" onCloseButtonMenu()" (click)=" onCloseButtonMenu()"
+        class="menuContainer" [hidden]="hiddenMenuContainer">
+        <ng-container matExpansionPanelContent *ngTemplateOutlet="takeAction"></ng-container>
+      </div> -->
+    </div>
+    <div class="todo" *ngIf="userIsAuthenticated">
+      <button class="menuButton" mat-raised-button> To do</button>
+    </div>
+    <div class="userConnection">
+      <mat-expansion-panel class="matpanelExpansionLogin">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Residents
+            <i class="material-icons">
+              perm_identity
+            </i>
+            Login
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <ng-container matExpansionPanelContent *ngTemplateOutlet="residentExpansionPanelContent"></ng-container>
+        <ul>
+          <li *ngIf="!userIsAuthenticated">
+            <button class="loginButtom" mat-raised-button color="primary" routerLink="auth/login" routerLinkActive="mat-accent">Login</button>
+          </li>
+          <li *ngIf="!userIsAuthenticated">
+            <button class="loginButtom" mat-button routerLink="/auth/signup" routerLinkActive="mat-accent">Signup
+            </button>
+          </li>
+          <li *ngIf="userIsAuthenticated">
+            <button class="loginButtom" mat-raised-button color="accent" (click)="onLogout()">Logout</button>
+          </li>
+        </ul>
       </mat-expansion-panel>
+    </div>
+    <div class="asideLeftHeaderDown"></div>
+  </div>
+
+</div>
+
+<ng-template #residentExpansionPanelContent>
+  <div class="ngTemplateConfig">
+    <div class="matToolBarResidentData" *ngFor="let resident of residents">
+      <mat-toolbar (click)="onViewResident(resident.id)" class="residentOverviewMenu">
+        <mat-toolbar-row>
+          <span mat-card-avatar> <img mat-card-avatar class="example-header-image" [src]="resident.imagePath" [alt]="resident.lastName">
+          </span>
+          <span class="example-spacer"></span>
+          <span>{{resident.firstName}} &nbsp; </span>
+          <span> {{resident.lastName}}</span>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template  #takeAction>
+  <div>
+    <div>
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <span mat-card-avatar> <i class="material-icons">
+              account_circle
+            </i></span>
+          <span class="example-spacer"></span>
+          <button class="menuButtonDown" mat-button>Resident Onboarding</button>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
+  </div>
+  <div>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <span mat-card-avatar> <i class="material-icons">
+            account_circle
+          </i></span>
+        <span class="example-spacer"></span>
+        <button class="menuButtonDown" mat-button>Resident Offboarding </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
+  <div>
+    <mat-toolbar>
+      <mat-toolbar-row>
+        <span mat-card-avatar> <i class="material-icons">
+            account_circle
+          </i></span>
+        <span class="example-spacer"></span>
+        <button class="menuButtonDown" mat-button>Resident Offboarding </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+  </div>
+</ng-template>
+
+
+<!-- <div class="headerDown">
+    <div class="asideRightHeaderDown"></div>
+    <div class="residentData" *ngIf="userIsAuthenticated" >
+      <button mat-raised-button> Resident data</button>
+      <div class="menuContains">
+          <ng-container matExpansionPanelContent *ngTemplateOutlet="residentExpansionPanelContent"></ng-container>
+      </div>
+
     </div>
     <div class="takeAction" *ngIf="userIsAuthenticated">
       <mat-expansion-panel class="matpanelExpansion"  hideToggle ="true">
@@ -96,9 +207,4 @@
       </mat-expansion-panel>
     </div>
     <div class="asideLeftHeaderDown"></div>
-  </div>
-
-</div>
-<ng-template #residentExpansionPanelContent class="expensionPanelContainer">
-  hello
-</ng-template>
+  </div> -->

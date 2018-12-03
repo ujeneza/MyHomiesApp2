@@ -82,7 +82,8 @@ grid-area: asideLeftHeaderdown;
 
 .headerDown {
   display: grid;
-  grid: " asideRightHeaderDown residentData takeAction  todo    userConnection   asideLeftHeaderDown"
+  grid: " asideRightHeaderDown residentData    takeAction     todo            userConnection   asideLeftHeaderDown" 4em
+        " asideRightHeaderDown menuContainer   menuContainer  menuContainer      empty1              asideLeftHeaderDown" 5em
          / 1fr       2.5fr        2.5fr       2.5fr             2.5fr                      1fr;
   grid-area: headerDown;
   height: 1em;
@@ -120,10 +121,7 @@ grid-area: asideLeftHeaderdown;
   padding-bottom: 0.5em;
 }
 
-.expensionPanelContainer {
-  width: 30em;
-  height: 14em;;
-}
+
 
 Li.menuButtonDown {
 display: flex !important;
@@ -165,5 +163,65 @@ ul {
 .loginButtom{
   width: 100%;
 
+}
+
+.menuContainer{
+  color:#0c2058;
+ z-index: 10;
+ background-color: white;
+ grid-area: menuContainer;
+}
+
+.menuButton {
+  width: 100%;
+  height: 100%;
+}
+
+.ngTemplateConfig {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+justify-content: space-between;
+  background-color: white;
+}
+.matToolBarResidentData{
+  width: 50%;
+
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.residentOverviewMenu {
+  color:#0c2058;
+  background-color: white;
+  margin-top: 0.1em;
+  margin-left: 0.1em;
+  -webkit-box-shadow: 2px 3px 5px 0px rgba(207,207,207,1);
+  -moz-box-shadow: 2px 3px 5px 0px rgba(207,207,207,1);
+  box-shadow: 2px 3px 5px 0px rgba(207,207,207,1);
+}
+
+.titleMenu {
+
+  border-bottom: 1px solid #b4b4b4;
+  border-top: 1px solid #b4b4b4;
+    padding-bottom: 0.5em;
+    padding-left: 1em;
+    color: #505050;
+    font-size: 0.5em;
+    margin-bottom: 14px;
+    margin-top: 0px;
+    font-size: 0.9em;
+}
+
+.example-header-image {
+  background-size: cover;
+  height: 4rem;
+  width: 4rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
