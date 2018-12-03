@@ -1,6 +1,4 @@
 import { AuthGuard } from './auth/auth.guard';
-import { SignupComponent } from './auth/signup/signup.component';
-import { LoginComponent } from './auth/login/login.component';
 import { ResidentFilesComponent } from './residents/resident-files/resident-files.component';
 import { ContractInfoComponent } from './residents/contract-info/contract-info.component';
 import { CreateAppartmentComponent } from './appartment/create-appartment/create-appartment.component';
@@ -11,9 +9,12 @@ import { ResidentsComponent } from './residents/residents.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { ValidatorsComponent } from './design-tools/validators/validators.component';
+import { PageNotFoundComponent } from './error/page-not-found/page-not-found.component';
+import { AuthRoutingModule } from './auth/auth-routing.module';
 
 const routes: Routes = [
-  {path: '', component: ResidentsComponent, canActivate: [AuthGuard]},
+  // {path: '', component: PageNotFoundComponent},
+  {path: '404', component: PageNotFoundComponent},
   {path: 'residents', component: ResidentsComponent, canActivate: [AuthGuard]},
   {path: 'residents/new', component: ResidentCreateComponent, canActivate: [AuthGuard]},
   {path: 'residents/view/:id', component: ResidentViewComponent, canActivate: [AuthGuard]},
@@ -24,9 +25,8 @@ const routes: Routes = [
   {path: 'contractInfo/edit/:id', component: ContractInfoComponent, canActivate: [AuthGuard]},
   {path: 'residentFiles', component: ResidentFilesComponent, canActivate: [AuthGuard]},
   {path: 'validators', component: ValidatorsComponent, canActivate: [AuthGuard]},
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
-  {path: '**', redirectTo: '/residents', pathMatch: 'full' }
+  {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
+ // {path: '**', redirectTo: '/404', pathMatch: 'full' }
  ];
 
 

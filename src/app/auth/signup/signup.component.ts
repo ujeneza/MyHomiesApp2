@@ -12,6 +12,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupComponent implements OnInit, OnDestroy {
   isLoading = false;
+  hide = false;
   private authStatusSub: Subscription;
 
   constructor(public authService: AuthService) {}

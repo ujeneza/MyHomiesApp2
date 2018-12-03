@@ -37,7 +37,7 @@ export class AuthService {
     this.http
       .post('http://localhost:3000/api/user/signup', authData)
       .subscribe(() => {
-        this.router.navigate(['/']);
+        this.router.navigate(['./login']);
       }, error => {
         this.authStatusListener.next(false);
       });
@@ -65,7 +65,7 @@ export class AuthService {
           );
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate, this.userId);
-          this.router.navigate(['/']);
+          this.router.navigate(['../residents']);
         }
       }, error => {
         this.authStatusListener.next(false);
@@ -95,7 +95,7 @@ export class AuthService {
     this.userId = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
-    this.router.navigate(['/']);
+    this.router.navigate(['/auth/login']);
   }
 
   private setAuthTimer(duration: number) {

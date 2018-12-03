@@ -21,7 +21,8 @@
                       formControlName="entryDate"
                       [matDatepicker]="entryDate"
                       placeholder="Entry Date"
-                      (dateChange) = "onChangeCurrentEntryDateValue($event)" >
+                      (dateChange) = "onChangeCurrentEntryDateValue($event)"
+                      (input)= "onChangeCurrentEntryDateValue($event)">
       <mat-datepicker-toggle matSuffix [for]="entryDate" ></mat-datepicker-toggle>
       <mat-datepicker #entryDate  ></mat-datepicker>
     </mat-form-field>
