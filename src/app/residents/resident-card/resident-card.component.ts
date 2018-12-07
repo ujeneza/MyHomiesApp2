@@ -20,6 +20,7 @@ export class ResidentCardComponent implements OnInit {
   @Input() appartment: Appartment;
   @Input() contractInfo: ContractInfo;
   userId: string;
+  isRentPaid = true;
   private authStatusSub: Subscription;
   private residentsSub: Subscription;
 
@@ -43,10 +44,10 @@ export class ResidentCardComponent implements OnInit {
   }
 
   // color when the rent is paid or not
-  onGetColor(isRentPaid: boolean) {
-    if (true) {
+  onGetColor() {
+    if (this.isRentPaid === true) {
       return 'green';
-    } else if (false) {
+    } else if (this.isRentPaid === false) {
       return 'red';
     }
   }

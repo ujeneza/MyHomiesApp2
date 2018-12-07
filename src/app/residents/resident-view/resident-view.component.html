@@ -4,6 +4,7 @@
     account_balance
     </i> Home page</button>
 <mat-accordion class="example-headers-align">
+ <!--  resident info -->
   <mat-expansion-panel class="matExpansionPanel" [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -87,7 +88,7 @@
 
     </mat-action-row>
   </mat-expansion-panel>
-
+<!--   contract info -->
   <mat-expansion-panel class="matExpansionPanel" [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -98,13 +99,14 @@
         <mat-icon>border_color</mat-icon>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <app-contract-info [residentId]= "globalId"> </app-contract-info>
+    <app-contract-info [residentId]= "globalId"> Hello!  This is my contract info ! </app-contract-info>
 
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Previous</button>
       <button mat-button color="primary" (click)="nextStep()">Next</button>
     </mat-action-row>
   </mat-expansion-panel>
+  <!-- appartment info -->
   <mat-expansion-panel class="matExpansionPanel" [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -143,7 +145,7 @@
         <button mat-button color="primary" (click)="nextStep()">Next</button>
       </mat-action-row>
     </mat-expansion-panel>
-
+    <!-- file data -->
   <mat-expansion-panel class="matExpansionPanel" [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title>

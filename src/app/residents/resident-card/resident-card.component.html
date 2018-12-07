@@ -10,7 +10,7 @@
       </mat-card>
       <mat-list>
         <mat-list-item>
-          <p mat-line>Is the flat paid :<span [ngStyle]="{color: onGetColor(true)}"> Yes</span></p>
+          <p mat-line>Is the flat paid :<span [ngStyle]="{color: onGetColor()}"> {{isRentPaid | questionableBoolean}}</span></p>
           <p mat-line>Flat Name : {{appartment?.appartmentName}} </p>
           <p mat-line>Phone Number: {{resident.phoneNumber}} </p>
           <p mat-line>Email: {{resident.email}} </p>

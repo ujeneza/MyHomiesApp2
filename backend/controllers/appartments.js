@@ -1,10 +1,10 @@
 const express = require("express");
 const Appartment = require("../models/appartment");
-const multer = require("multer");
 const router = express.Router();
 
 // Add a new appartment in the database
-router.post("", (req, res, next) => {
+
+exports.createAppartment = function (req, res, next) {
   const appartment = new Appartment({
     appartmentCodeName: req.body.appartmentCodeName,
     appartmentName: req.body.appartmentName,
@@ -27,10 +27,10 @@ router.post("", (req, res, next) => {
 
     });
   });
-});
+};
 
 // View all appartments
-router.get("", (req, res, next) => {
+exports.getAppartments = function (req, res, next) {
   Appartment.find().then(documents => {
     if (documents) {
       res.status(200).json({
@@ -43,10 +43,10 @@ router.get("", (req, res, next) => {
       });
     }
   });
-});
+};
 
 // select an appartment
-router.get("/:id", (req, res, next) => {
+exports.getAppartment = function (req, res, next) {
   Appartment.findById(req.params.id).then(appartment => {
     if (appartment) {
       res.status(200).json(appartment);
@@ -56,11 +56,11 @@ router.get("/:id", (req, res, next) => {
       });
     }
   });
-});
+};
 
 
 // update an appartment created using a ID
-router.put("/:id", (req, res, next) => {
+exports.updateAppartment = function (req, res, next) {
   const appartment = new Appartment({
     _id: req.body.id,
     appartmentCodeName: req.body.appartmentCodeName,
@@ -80,14 +80,13 @@ router.put("/:id", (req, res, next) => {
       message: "Update appartment successful!"
     });
   });
-});
+};
 
 // delete an appartment
 
-router.delete("/:id", (req, res, next) => {
+exports.deleteAppartment = function (req, res, next) {
   Appartment.deleteOne({ _id: req.params.id }).then(result => {
     res.status(200).json({ message: "Post deleted!" });
   });
-});
+};
 
-module.exports = router;

@@ -4,7 +4,7 @@ const multer = require("multer");
 const router = express.Router();
 
 // add contract information
-router.post("", (req, res, next) => {
+exports.createContract = function (req, res, next) {
   const contractInfo = new ContractInfo({
     residentId: req.body.residentId,
     inventoryEntryDate: req.body.inventoryEntryDate,
@@ -28,11 +28,11 @@ router.post("", (req, res, next) => {
       }
     });
   });
-});
+};
 
 
 // View all contracts info
-router.get("", (req, res, next) => {
+exports.getContracts = function (req, res, next) {
   ContractInfo.find().sort({contractRecordedDate: -1}).then(documents => {
     if (documents) {
       res.status(200).json({
@@ -45,11 +45,11 @@ router.get("", (req, res, next) => {
       });
     }
   });
-});
+};
 
 
 // select a contract Info
-router.get("/:residentId", (req, res, next) => {
+exports.getContract = function (req, res, next)  {
 
   ContractInfo.findOne({
     residentId: req.params.residentId
@@ -62,19 +62,10 @@ router.get("/:residentId", (req, res, next) => {
       });
     }
   });
-  /*  ContractInfo.findOne(req.params.residentId).then(contractInfo => {
-     if (contractInfo) {
-       res.status(200).json(contractInfo);
-     } else {
-       res.status(404).json({
-         message: "Contract info not found!"
-       });
-     }
-   }); */
-});
+};
 
 // update an ContractInfo created using a ID
-router.put("/:residentId", (req, res, next) => {
+exports.udpateContract = function (req, res, next)  {
   const contractInfo = new ContractInfo({
     _id: req.body.id,
     residentId: req.body.residentId,
@@ -97,23 +88,10 @@ router.put("/:residentId", (req, res, next) => {
     });
   });
   console.log(contractInfo);
-});
+};
 
-// delete an contractInfo
-
-/* router.delete("/:residentId", (req, res, next) => {
-  ContractInfo.deleteOne({
-    residentId: req.params.residentId
-  } || {
-    id: req.params.id
-  }).then(result => {
-    res.status(200).json({
-      message: "contractInfo deleted!"
-    });
-  });
-}); */
-
-router.delete("/:residentId", (req, res, next) => {
+// delete a contract using resident ID
+exports.deleteContract = function (req, res, next)  {
   ContractInfo.deleteMany(
      {residentId : req.params.residentId}
    ).then(result => {
@@ -121,26 +99,6 @@ router.delete("/:residentId", (req, res, next) => {
       message: "contractInfo deleted!"
     });
   });
-});
+};
 
-/*  router.delete("/:residentId" || "/:id", (req, res, next) => {
-  if ("/:id" === req.body.id) {
-    ContractInfo.deleteOne({
-      _id: req.params.id
-    }).then(result => {
-      res.status(200).json({
-        message: "contractInfo deleted! From ID"
-      });
-    });
-  } else {
-    ContractInfo.deleteOne({
-      residentId: req.params.residentId
-    }).then(result => {
-      res.status(200).json({
-        message: "contractInfo deleted! from ID"
-      });
-    });
-  }
-});  */
 
-module.exports = router;
