@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 
 
 
@@ -15,6 +16,8 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+const BACKEND_URL_RESIDENT = environment.apiUrl + '/residents/';
+
 @Injectable({
 
   providedIn: "root"
@@ -28,7 +31,7 @@ export class ResidentsService {
   getResidents() {
     this.http
       .get<{ message: string; residents: any }>(
-        "http://localhost:3000/api/residents"
+        BACKEND_URL_RESIDENT
       )
       .pipe(map((residentData) => {
         return residentData.residents.map(resident => {
@@ -87,7 +90,7 @@ export class ResidentsService {
 
     return this.http.post<{ message: string; resident: Resident }>
     (
-      'http://localhost:3000/api/residents/',
+      BACKEND_URL_RESIDENT,
       residentData
     );
   }
@@ -95,7 +98,7 @@ export class ResidentsService {
   // delete resident
 
   deleteResident(residentId: string) {
-    this.http.delete("http://localhost:3000/api/residents/" + residentId)
+    this.http.delete(BACKEND_URL_RESIDENT  + residentId)
       .subscribe(() => {
         const updatedResident = this.residents.filter(resident => resident.id !== residentId);
         this.residents = updatedResident;
@@ -105,7 +108,7 @@ export class ResidentsService {
 
   getResident(id: string) {
     return this.http.get<Resident>(
-      "http://localhost:3000/api/residents/" + id
+      BACKEND_URL_RESIDENT + id
     );
   }
   getResident2(id: string) {
@@ -122,7 +125,7 @@ export class ResidentsService {
       creator: string;
 
       imagePath: File }>(
-      "http://localhost:3000/api/residents/" + id
+        BACKEND_URL_RESIDENT + id
     );
   }
 
@@ -168,7 +171,7 @@ export class ResidentsService {
         };
       }
         this.http
-        .put("http://localhost:3000/api/residents/" + id, residentData)
+        .put(BACKEND_URL_RESIDENT + id, residentData)
         .subscribe(response => {
           this.residentsUpdated.next([...this.residents]);
         });

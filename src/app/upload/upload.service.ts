@@ -9,8 +9,10 @@ import {
   HttpResponse
 } from '@angular/common/http';
 import { Subject, Observable, identity } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
-const url = 'http://localhost:3000/api/file/';
+
+const url = environment.apiUrl + '/file/';
 @Injectable({
   providedIn: 'root'
 })

@@ -4,7 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
+
+
+const BACKEND_URL_APARTMENT = environment.apiUrl + '/appartments/';
 @Injectable({
   providedIn: 'root'
 })
@@ -40,7 +44,7 @@ export class AppartmentsService {
     };
     this.http
       .post<{ message: string; appartmentId: string }>(
-        'http://localhost:3000/api/appartments',
+        BACKEND_URL_APARTMENT,
         appartment
       )
       .subscribe(responseData => {
@@ -57,7 +61,7 @@ export class AppartmentsService {
   getAppartments() {
     this.http
       .get<{ message: string; appartments: any }>(
-        'http://localhost:3000/api/appartments/'
+        BACKEND_URL_APARTMENT
       )
       .pipe(
         map(appartmentData => {
@@ -86,7 +90,7 @@ export class AppartmentsService {
   // View one appartment
   getAppartment(id: string) {
     return this.http.get<Appartment>(
-      'http://localhost:3000/api/appartments/' + id
+      BACKEND_URL_APARTMENT + id
     );
   }
   // Update an appartment
@@ -115,7 +119,7 @@ export class AppartmentsService {
       appartmentWarranty: appartmentWarranty
     };
     this.http
-      .put('http://localhost:3000/api/appartments/' + id, appartment)
+      .put(BACKEND_URL_APARTMENT + id, appartment)
       .subscribe(response => {
         const updatedAppartments = [...this.appartments];
         const oldAppartmentIndex = updatedAppartments.findIndex(
@@ -130,7 +134,7 @@ export class AppartmentsService {
   // Delete an appartment
   deleteAppartment(appartmentId: string) {
     this.http
-      .delete('http://localhost:3000/api/appartments/' + appartmentId)
+      .delete(BACKEND_URL_APARTMENT + appartmentId)
       .subscribe(() => {
         const updatedAppartments = this.appartments.filter(
           appartment => appartment.id !== appartmentId

@@ -31,9 +31,7 @@ const storage = multer.diskStorage({
 });
 
 // Add a new resident
-router.post("", checkAuth,
- multer({ storage: storage }).single("image"),
- (req, res, next) => {
+exports.createResident = function (req, res, next) {
   const url = req.protocol + "://" + req.get("host");
   console.log(req.file);
   const resident = new Resident({
@@ -58,12 +56,9 @@ router.post("", checkAuth,
 
     });
   });
-});
+};
 // Update a resident
-router.put("/:id",
-checkAuth,
-multer({ storage: storage }).single("image"),
-(req,res,next) => {
+exports.updateResident = function (req, res, next) {
   let imagePath = req.body.imagePath;
   if (req.file) {
     const url = req.protocol + "://" + req.get("host");
@@ -92,10 +87,10 @@ multer({ storage: storage }).single("image"),
       res.status(401).json({ message: "Not authorized!" });
     }
   });
-});
+};
 
 // Get all residents
-router.get("", checkAuth, (req, res, next) => {
+exports.getAllResident = function (req, res, next) {
   Resident.find({creator: req.userData.userId}).then(documents => {
     if (documents) {
       res.status(200).json({
@@ -105,10 +100,10 @@ router.get("", checkAuth, (req, res, next) => {
       res.status(401).json({ message: "Not authorized!" });
     }
   });
-});
+};
 
 // Get one resident
-router.get("/:id", (req, res, next) => {
+exports.getResident = function (req, res, next)  {
   Resident.findById(req.params.id).then(resident => {
     if (resident) {
       res.status(200).json(resident);
@@ -116,9 +111,11 @@ router.get("/:id", (req, res, next) => {
       res.status(404).json({ message: "Post not found!" });
     }
   });
-});
+};
 
-router.delete("/:id", (req, res, next) => {
+// delete resident
+
+exports.deleteResident = function (req, res, next) {
   Resident.deleteOne({ _id: req.params.id}).then(result => {
     console.log(result);
     if (result.n > 0) {
@@ -127,6 +124,6 @@ router.delete("/:id", (req, res, next) => {
       res.status(401).json({ message: "Not authorized!" });
     }
   });
-});
+};
 
-module.exports = router;
+

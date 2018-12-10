@@ -7,7 +7,7 @@ const fs = require('fs');
 const FileResident = require("../models/file");
 const jwt = require("jsonwebtoken");
 
-
+const fileController = require("../controllers/file")
 
 // type files
 const MIME_TYPE_MAP = {
@@ -48,186 +48,23 @@ const storage = multer.diskStorage({
 router.post("", multer({
     storage: storage
   }).array('file', 4),
-  // .array('file',5)
-  (req, res, next) => {
-    const url = req.protocol + "://" + req.get("host");
-    console.log(req.files);
-    console.log('file added successfully');
-    const fileResident = new FileResident({
-      name: req.files[0].originalname,
-      lastModifiedDate: Date.now(),
-      filePath: req.files[0].filename,
-      fieldNameFront: req.body.fieldNameFront,
-      residentIdFile: req.body.residentIdFile
-    });
-    fileResident.save().then(createdFileResident => {
-      res.status(201).json({
-        message: "Contract added successfully",
-        fileResident: {
-          ...createdFileResident,
-          id: createdFileResident._id
-        }
-      });
-      console.log(fileResident);
-    });
-  });
+ fileController.createFile);
 
 
 // View all contracts files
-router.get("", (req, res, next) => {
-  FileResident.find().then(documents => {
-    if (documents) {
-      res.status(200).json({
-        message: "File Info fetched successfully!",
-        fileResidents: documents
-      });
-    } else {
-      res.status(404).json({
-        message: "File Info not found!"
-      });
-    }
-  });
-});
-
-// get one file
-/* router.get("/:id", (req, res, next) => {
-  FileResident.findById(req.params.id).then(fileResident => {
-    if (fileResident) {
-      res.status(200).json(fileResident);
-      console.log(fileResident);
-    } else {
-      res.status(404).json({ message: "Post not found!" });
-    }
-  });
-}); */
-
-// Delete a file
+router.get("", fileController.getFiles);
 
 
-router.delete("/residentFile/:residentIdFile", (req, res, next) => {
-  FileResident.deleteMany(
-    {residentIdFile: req.params.residentIdFile  }).then(result => {
-      console.log(req.params.residentIdFile + " result residentIdFile");
-    if (result) {
-      res.status(200).json({
-        message: "File deleted successfully! from Resident Id",
 
-      });
-    } else {
-      res.status(404).json({
-        message: "File Info not found!"
-      });
-    }
-  });
-});
+router.delete("/residentFile/:residentIdFile", fileController.deleteFilesResidentId);
 
-router.delete("/:id", (req, res, next) => {
-  FileResident.deleteOne(
-    {_id: req.params.id  }).then(result => {
-      console.log(req.params.id + " result ID");
-    if (result) {
-      res.status(200).json({
-        message: "File deleted successfully! from ID",
-
-      });
-    } else {
-      res.status(404).json({
-        message: "File Info not found!"
-      });
-    }
-  });
-});
+// Delete resident
+router.delete("/:id", fileController.deleteFile);
 
 
 
 // Download files
-router.get("/:fileName", function (req, res, next) {
-  console.log('download function');
-  const fileName = path.join(__dirname, '../uploads') + '/' + req.params.fileName;
-  res.sendFile(fileName);
-});
+router.get("/:fileName", fileController.downloadFile);
 
-
-/* router.delete("/:id", (req, res, next) => {
-  FileResident.deleteOne(
-    {_id: req.params.id  }).then(result => {
-      console.log(req.params.id + " result ID");
-    if (result) {
-      res.status(200).json({
-        message: "File deleted successfully! from ID",
-
-      });
-    } else {
-      res.status(404).json({
-        message: "File Info not found!"
-      });
-    }
-  });
-}); */
-
-/* router.get('/:filePath', function (req, res){
-    filePath = req.params.filePath;
-    const dirname = path.resolve(".")+'';
-    var img = fs.readFileSync(dirname  + file);
-    res.writeHead(200, {'Content-Type': 'image/jpg' });
-    res.end(img, 'binary');
-}); */
-
-// Download files
-/* router.post("/download", function(req,res,next){
-  console.log(req.body.filePath);
-  filepath = path.join(__dirname,'../uploads') +'/'+ req.body.filePath;
-  res.sendFile(req.body.filepath);
-  // res.download(filepath, req.body.filePath);
-}); */
-
-
-// formidable, example marche
-/*
-router.post("", (req, res, next) =>{
-  const form = new IncomingForm();
-  let readStream;
-  form.on('file', (field, file) => {
-
-
-    // Do something with the file
-    // e.g. save it to the database
-    // you can access it using file.path
-    console.log(contract);
-    console.log('file', file.name);
-    readStream = fs.createReadStream(file.path);
-  });
-  form.on('end', () => {
-    res.json();
-  });
-  form.parse(req);
-});
-// essai à supprimer
- /* const url = req.protocol + "://" + req.get("host");
-    const contract = new FileResident ({
-      contract: url + "/file/" + req.file.filename
-    });
-    contract.save().then(createdContract => {
-      res.status(201).json({
-        message: "contract added successfully",
-        contract: {
-          ...createdContract,
-          id: createdContract ._id
-        }
-      });
-    });
-
-    router.get("/:id", (req, res, next) => {
-  FileResident.findById(req.params.id).then(fileResident => {
-    if (fileResident) {
-      res.status(200).json(fileResident);
-      console.log(fileResident);
-    } else {
-      res.status(404).json({ message: "Post not found!" });
-    }
-  });
-});
-
-    */
 
 module.exports = router;

@@ -5,9 +5,10 @@ import { ContractInfo } from './../app-models/residant-data-models/contract-Info
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 
-
+const BACKEND_URL_CONTRACTINFO = environment.apiUrl + '/contractInfo/';
 @Injectable({
   providedIn: 'root'
 })
@@ -47,7 +48,7 @@ export class ContractResidentService {
   };
   this.http
     .post<{ message: string; contractInfoId: string }>(
-      'http://localhost:3000/api/contractInfo',
+      BACKEND_URL_CONTRACTINFO,
       contractInfo
     )
     .subscribe(responseData => {
@@ -131,7 +132,7 @@ export class ContractResidentService {
           contractRecordedDate: contractRecordedDate,
         };
         this.http
-        .put("http://localhost:3000/api/contractInfo/" + residentId, contractInfoData)
+        .put(BACKEND_URL_CONTRACTINFO + residentId, contractInfoData)
         .subscribe(response => {
           const updatedContractInfos = [...this.contractInfos];
           const oldContractInfoIndex = updatedContractInfos.findIndex(p => p.id === id);
@@ -161,7 +162,7 @@ export class ContractResidentService {
   getContractInfos() {
     this.http
       .get<{ message: string; contractInfos: any }>(
-        'http://localhost:3000/api/contractInfo/'
+        BACKEND_URL_CONTRACTINFO
       )
       .pipe(
         map(contractInfoData => {
@@ -192,13 +193,13 @@ export class ContractResidentService {
 
   getContract(residentId: string) {
     return this.http.get<ContractInfo>(
-      'http://localhost:3000/api/contractInfo/' + residentId
+      BACKEND_URL_CONTRACTINFO + residentId
     );
   }
 
 // Delete contract
 deleteContract(residentId: string) {
-  this.http.delete('http://localhost:3000/api/contractInfo/' + residentId)
+  this.http.delete(BACKEND_URL_CONTRACTINFO + residentId)
     .subscribe(() => {
       const updatedContractInfo = this.contractInfos.filter(contractInfo => contractInfo.residentId !== residentId);
       this.contractInfos = updatedContractInfo;

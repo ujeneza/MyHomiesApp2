@@ -45,11 +45,7 @@ const storage = multer.diskStorage({
 
 
 // Add contract files
-router.post("", multer({
-    storage: storage
-  }).array('file', 4),
-  // .array('file',5)
-  (req, res, next) => {
+exports.createFile = function (req, res, next) {
     const url = req.protocol + "://" + req.get("host");
     console.log(req.files);
     console.log('file added successfully');
@@ -70,11 +66,11 @@ router.post("", multer({
       });
       console.log(fileResident);
     });
-  });
+  };
 
 
 // View all contracts files
-router.get("", (req, res, next) => {
+exports.getFiles = function (req, res, next) {
   FileResident.find().then(documents => {
     if (documents) {
       res.status(200).json({
@@ -87,24 +83,11 @@ router.get("", (req, res, next) => {
       });
     }
   });
-});
-
-// get one file
-/* router.get("/:id", (req, res, next) => {
-  FileResident.findById(req.params.id).then(fileResident => {
-    if (fileResident) {
-      res.status(200).json(fileResident);
-      console.log(fileResident);
-    } else {
-      res.status(404).json({ message: "Post not found!" });
-    }
-  });
-}); */
-
-// Delete a file
+};
 
 
-router.delete("/residentFile/:residentIdFile", (req, res, next) => {
+// delete file using resident id
+exports.deleteFilesResidentId = function (req, res, next) {
   FileResident.deleteMany(
     {residentIdFile: req.params.residentIdFile  }).then(result => {
       console.log(req.params.residentIdFile + " result residentIdFile");
@@ -119,9 +102,10 @@ router.delete("/residentFile/:residentIdFile", (req, res, next) => {
       });
     }
   });
-});
+};
 
-router.delete("/:id", (req, res, next) => {
+// delete on file
+exports.deleteFile = function (req, res, next){
   FileResident.deleteOne(
     {_id: req.params.id  }).then(result => {
       console.log(req.params.id + " result ID");
@@ -136,16 +120,15 @@ router.delete("/:id", (req, res, next) => {
       });
     }
   });
-});
-
+};
 
 
 // Download files
-router.get("/:fileName", function (req, res, next) {
+exports.downloadFile = function (req, res, next) {
   console.log('download function');
   const fileName = path.join(__dirname, '../uploads') + '/' + req.params.fileName;
   res.sendFile(fileName);
-});
+};
 
 
 /* router.delete("/:id", (req, res, next) => {
@@ -230,4 +213,3 @@ router.post("", (req, res, next) =>{
 
     */
 
-module.exports = router;
